@@ -65,7 +65,7 @@ public interface EtudiantDao {
 	/**
 	 * Supprimer un étudiant, 
 	 * @param id
-	 * @return Boolean
+	 * @return Booleanvvdvvvf
 	 */
 	Boolean supprimer(int id);
 	
