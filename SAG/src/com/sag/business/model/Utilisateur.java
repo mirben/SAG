@@ -38,10 +38,10 @@ public class Utilisateur {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getStatut() {
+	public Statut getStatut() {
 		return statut;
 	}
-	public void setStatut(String statut) {
+	public void setStatut(Statut statut) {
 		this.statut = statut;
 	}
 	
