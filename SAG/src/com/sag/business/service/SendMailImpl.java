@@ -17,7 +17,7 @@ public class SendMailImpl {
 	private String SMTP_HOST1 = null;
 	private String LOGIN_SMTP1 = null;
 	private String IMAP_ACCOUNT1 = null;
-	private String PASSWORD_SMTP1;
+	private String PASSWORD_SMTP1 = null;
 	
 	/**
 	 * 
