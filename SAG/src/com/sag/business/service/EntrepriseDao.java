@@ -37,6 +37,11 @@ public interface EntrepriseDao {
 	 * @return Entreprise
 	 */
 	Collection<Entreprise> chercherTous(int offset , int limite);
+	 /**
+	  * Sauvagarder un entreprise.
+	  * @param entreprise
+	  * @return Entreprise
+	  */
 	Entreprise sauvagarder(Entreprise entreprise);
 	Boolean supprimer(int id);
 	

@@ -4,6 +4,10 @@ import java.util.Collection;
 
 import com.sag.business.model.Offre;
 
+/**
+ * @author tuan
+ *
+ */
 public interface OffreDao {
 
 	Offre chercherParID(int id);
