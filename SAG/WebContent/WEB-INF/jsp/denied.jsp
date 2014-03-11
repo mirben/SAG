@@ -14,31 +14,35 @@
 		omit-xml-declaration="true" />
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
-<head>
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-resources/css/style.css" />
-<title>Accès refusé</title>
-</head>
-<body>
-	<jsp:include page="/WEB-INF/jsp/header.jsp" />
-	<div class="row">
-		<h3 id="banner">Accès non authorisé</h3>
-
-		<c:if test="${not empty error}">
-			<div>
-				<p><jsp:text>Echec de l'authentification</jsp:text></p>
-				<!-- Affiche l'erreur de sécurité -->
-				<jsp:text>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</jsp:text>
+		<head>
+			<link type="text/css" rel="stylesheet"
+				href="${pageContext.request.contextPath}/public-resources/css/style.css" />
+			<link rel="stylesheet"
+				href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+			<script
+				src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+			<title>Accès refusé</title>
+		</head>
+		<body>
+			<jsp:include page="/WEB-INF/jsp/header.jsp" />
+			<div class="row">
+				<h3 id="banner">Accès non authorisé</h3>
+		
+				<c:if test="${not empty error}">
+					<div>
+						<p><jsp:text>Echec de l'authentification</jsp:text></p>
+						<!-- Affiche l'erreur de sécurité -->
+						<jsp:text>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</jsp:text>
+					</div>
+				</c:if>
+		
+				<p class="message">Accès refusé !</p>
+				<div>
+					<a href="${pageContext.request.contextPath}/login"><jsp:text>Retourner
+				à la page d'authentification</jsp:text></a>
+				</div>
 			</div>
-		</c:if>
-
-		<p class="message">Accès refusé !</p>
-		<div>
-			<a href="${pageContext.request.contextPath}/login"><jsp:text>Retourner
-		à la page d'authentification</jsp:text></a>
-		</div>
-	</div>
-	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-</body>
+			<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+		</body>
 	</html>
 </jsp:root>

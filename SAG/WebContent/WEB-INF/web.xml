@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 
 	<!-- Point d'entrée du site -->
-	<display-name>Projet_Annuaire</display-name>
+	<display-name>SAG</display-name>
 
 	<!-- Classe chargée de la délégation des requêtes -->
 	<servlet>
@@ -14,7 +14,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-				/WEB-INF/springapp-servlet.xml
+				/WEB-INF/sag-servlet.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -60,7 +60,7 @@
 	<!-- Indique les fichiers de configuration de spring MVC et spring security -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/springapp-servlet.xml	/WEB-INF/application-security.xml</param-value>
+		<param-value>/WEB-INF/sag-servlet.xml	/WEB-INF/sag-security.xml</param-value>
 	</context-param>
 
 	<!-- Classe qui charge le contexte de spring -->
