@@ -1,4 +1,4 @@
-package com.sag.model;
+package com.sag.business.model;
 
 import java.util.Date;
 

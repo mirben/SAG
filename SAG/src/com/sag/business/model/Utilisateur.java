@@ -1,4 +1,4 @@
-package com.sag.model;
+package com.sag.business.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
