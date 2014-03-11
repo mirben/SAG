@@ -1,8 +1,10 @@
 package com.sag.business.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +21,9 @@ public class Etudiant {
 	private String adresse;
 	private String siteWeb;
 	private String formation;
+	
+	@ManyToMany
+	private Set<Domaine> domaines; 
 	
 	public String getLogENT() {
 		return logENT;
