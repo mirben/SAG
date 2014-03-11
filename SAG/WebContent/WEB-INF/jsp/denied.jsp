@@ -15,27 +15,28 @@
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>404 - Ressource inexistante</title>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-resources/css/style.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-<script
-	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
-<script type="text/javascript">
-	//Redirige vers la liste de l'annuaire après 5 secondes
-	window.setTimeout("location=('${pageContext.request.contextPath}/home');",
-			5000);
-</script>
+<title>Accès refusé</title>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
-	<!-- Message visible avant la redirection -->
 	<div class="row">
-		<p>La ressource demandée est inexistante, vous allez être
-			redirigé.</p>
+		<h3 id="banner">Accès non authorisé</h3>
+
+		<c:if test="${not empty error}">
+			<div>
+				<p><jsp:text>Echec de l'authentification</jsp:text></p>
+				<!-- Affiche l'erreur de sécurité -->
+				<jsp:text>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</jsp:text>
+			</div>
+		</c:if>
+
+		<p class="message">Accès refusé !</p>
+		<div>
+			<a href="${pageContext.request.contextPath}/login"><jsp:text>Retourner
+		à la page d'authentification</jsp:text></a>
+		</div>
 	</div>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
