@@ -24,7 +24,7 @@
   <body>
 	<div class="row">
 		<div class="large-8 columns">
-			<h1><b>SAG</b> - Site d'Achat GroupÃ©</h1>
+			<h1><b>SAG</b> - Site d'Achat Groupé</h1>
 			<div class="row">
 			  <div class="large-12 columns">
 				<h3>Inscription - <b>SAG</b></h3>
@@ -46,8 +46,8 @@
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
-								  <label>PrÃ©nom
-									<input id="prenome" type="text" placeholder="PrÃ©nom" />
+								  <label>Prénom
+									<input id="prenome" type="text" placeholder="Prénom" />
 								  </label>
 								</div>
 							  </div>
@@ -68,7 +68,7 @@
 							  <div class="row">
 								<div class="large-8 columns">
 								  <label>Adresse Postale
-									<textarea id="adressee" placeholder="Adresse postale complÃ¨te"></textarea>
+									<textarea id="adressee" placeholder="Adresse postale complète"></textarea>
 								  </label>
 								</div>
 							  </div>
@@ -111,7 +111,7 @@
 							  </div>
 							  <div class="row">
 								<div class="large-6 columns">
-								  <label>SÃ©lectionnez les domaines suivis :</label>
+								  <label>Sélectionnez les domaines suivis :</label>
 								  <input id="checkbox1" type="checkbox"><label for="checkbox1">Musique</label>
 								  <input id="checkbox2" type="checkbox"><label for="checkbox2">Literie</label>
 								  <input id="checkbox3" type="checkbox"><label for="checkbox3">Jardin</label>
@@ -129,9 +129,9 @@
 		</div>
 	</div>
     <div id="myModal" class="reveal-modal" data-reveal>
-		<h2>Demande d'inscription envoyÃ©e.</h2>
-		<p class="lead">Votre inscription a bien Ã©tÃ© prise en compte.</p>
-		<p>Un email vous sera envoyÃ© Ã  l'adresse renseignÃ©e dÃ¨s que votre inscription aura Ã©tÃ© validÃ©e.</p>
+		<h2>Demande d'inscription envoyée.</h2>
+		<p class="lead">Votre inscription a bien été prise en compte.</p>
+		<p>Un email vous sera envoyé à  l'adresse renseignée dès que votre inscription aura été validée.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
 	<script src="js/vendor/jquery.js"></script>
@@ -140,6 +140,7 @@
 	<script>
 	  $(document).foundation();
 	</script>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
   </body>
 </html>
 </jsp:root>

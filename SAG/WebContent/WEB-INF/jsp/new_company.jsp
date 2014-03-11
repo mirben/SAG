@@ -181,6 +181,7 @@
 			window.sessionStorage.clear();
 		}
 	</script>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
   </body>
 </html>
 </jsp:root>
