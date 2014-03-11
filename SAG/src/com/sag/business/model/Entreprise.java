@@ -6,7 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
-public class Entreprise {
+public class Entreprise extends Utilisateur{
 	
 	private String nom;
 	private String siret;
