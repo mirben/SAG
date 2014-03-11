@@ -36,17 +36,16 @@ public interface EtudiantDao {
 	
 	/**
 	 * Récupérer des étudiants par statut
-	 * @param domaine
+	 * @param statut
 	 * @return Collection<Etudiant>
 	 */
 	Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
 	
 	/**
 	 * Récupérer tous les étudiants
-	 * @param domaine
 	 * @return Collection<Etudiant>
 	 */
-	Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
+
 	Collection<Etudiant> chercherTous();
 	Collection<Etudiant> chercherTous(int offset , int limite);
 	
