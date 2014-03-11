@@ -2,17 +2,22 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="Projet_Annuaire" transaction-type="JTA">
+	<persistence-unit name="SAG_PU" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>AnnuaireDS</jta-data-source>
-		<class>springapp.model.Person</class>
-		<class>springapp.model.Role</class>
+		<jta-data-source>SAG_DS</jta-data-source>
+		<class>com.sag.business.model.Utilisateur</class>
+		<class>com.sag.business.model.Etudiant</class>
+		<class>com.sag.business.model.Entreprise</class>
+		<class>com.sag.business.model.Offre</class>
+		<class>com.sag.business.model.Domaine</class>
+		<class>com.sag.business.model.Image</class>
+		<class>com.sag.business.model.Role</class>
 
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 		</properties>
 	</persistence-unit>
 </persistence>

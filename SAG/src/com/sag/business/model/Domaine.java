@@ -1,5 +1,6 @@
 package com.sag.business.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,8 @@ public class Domaine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(unique = true)
 	private String nom;
 	public int getId() {
 		return id;
