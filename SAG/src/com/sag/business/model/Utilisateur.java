@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -17,7 +19,12 @@ public class Utilisateur {
 	
 	@Column(nullable = false, unique = true)
 	private String email;
-	private String statut;
+	
+	private Statut statut;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_ROLE")
+	private Role role;
 	
 	public int getId() {
 		return id;
