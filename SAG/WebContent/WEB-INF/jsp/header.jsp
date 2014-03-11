@@ -40,14 +40,14 @@
 						<li class="has-dropdown"><a href="#">Domaines</a>
 							<ul class="dropdown">
 								<li><a href="domain_Musique.html">Musique</a></li>
-								<li><a href="domain_Decoration.html">DÃ©coration</a></li>
+								<li><a href="domain_Decoration.html">Décoration</a></li>
 								<li><a href="domain_Literie.html">Litterie</a></li>
 								<li><a href="domain_Jardin.html">Jardin</a></li>
 							</ul></li>
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#">JoÃ«l
+						<li class="has-dropdown"><a id="username" href="#">Joël
 								Karcher</a>
 							<ul class="dropdown">
 								<li id="infos"><a href="detail_user1.html">Modifier mes
@@ -57,8 +57,11 @@
 								<li id="offers"><a href="list_propose1.html">Consulter
 										ses offres</a></li>
 								<li><a href="login.html" onClick="clear_session()">Se
-										dÃ©connecter</a></li>
-							</ul></li>
+										déconnecter</a></li>
+							</ul>
+						</li>
+						<li class="divider"></li>
+						<li><a href="admin.html">Administrer</a></li>
 					</ul>
 				</section>
 			</section>
