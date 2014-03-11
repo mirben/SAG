@@ -3,7 +3,8 @@ package com.sag.business.service;
 
 import java.util.Collection;
 
-import com.sag.model.Etudiant;
+import com.sag.business.model.Etudiant;
+import com.sag.business.model.Statut;
 
 public interface EtudiantDAO {
 	Etudiant chercherParID(int id);
