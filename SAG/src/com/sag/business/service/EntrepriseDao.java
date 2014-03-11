@@ -2,7 +2,7 @@ package com.sag.business.service;
 
 import java.util.Collection;
 
-import com.sag.model.Entreprise;
+import com.sag.business.model.Entreprise;
 
 public interface EntrepriseDao {
 	Entreprise chercherParID(int id);

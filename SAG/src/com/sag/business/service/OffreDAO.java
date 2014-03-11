@@ -1,8 +1,12 @@
 package com.sag.business.service;
 
+import java.util.Collection;
+
+import com.sag.business.model.Offre;
+
 public interface OffreDAO {
 	
-		Offre chercherParID(Id int);
+		Offre chercherParID(int id);
 		Collection<Offre> chercherTous();
 		Collection<Offre> chercherTous(int offset , int limite);
 		Offre sauvagarder(Offre domaine);
