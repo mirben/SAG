@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
-public class Etudiant {
+public class Etudiant extends Utilisateur{
 	private String logENT;
 	private String nom; 
 	private String prenom;
