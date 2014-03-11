@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<Resource id="SAG_DS" type="javax.sql.DataSource">
+    jdbcDriver = com.mysql.jdbc.Driver
+    jdbcUrl = jdbc:mysql://dbs-perso.luminy.univmed.fr/k1104696
+    jtaManaged = true
+    password = d7H:8-
+    userName = k1104696
+</Resource>
+</resources>

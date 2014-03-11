@@ -21,11 +21,12 @@
 	</bean>
 	
 	<!-- DataSource indiquant comment se connecter à la base de données -->
-	<bean name="SAG_DS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!--<bean name="SAG_DS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
 	    <property name="url" value="jdbc:mysql://dbs-perso.luminy.univmed.fr/k1104696" />
 	    <property name="username" value="k1104696" />
 	    <property name="password" value="d7H:8-" />
 	</bean>
+	-->
 
 </beans>
