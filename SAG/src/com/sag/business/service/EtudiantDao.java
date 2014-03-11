@@ -47,6 +47,11 @@ public interface EtudiantDao {
 	 */
 
 	Collection<Etudiant> chercherTous();
+	
+	/**
+	 * Récupérer tous les étudiants par block de offset à limite
+	 * @return Collection<Etudiant>
+	 */
 	Collection<Etudiant> chercherTous(int offset , int limite);
 	
 	/**

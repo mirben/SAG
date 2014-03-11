@@ -26,7 +26,6 @@ public interface EntrepriseDao {
 	
 	/**
 	 * Récupérer toutes entreprises
-	 * @param email
 	 * @return Collection<Entreprise>
 	 */
 	public Collection<Entreprise> chercherTous();
@@ -45,7 +44,7 @@ public interface EntrepriseDao {
 	Entreprise sauvagarder(Entreprise entreprise);
 	
 	/**
-	  * Supprimer un entreprise.
+	  * Supprimer une entreprise.
 	  * @param entreprise
 	  * @return Boolean
 	  */
