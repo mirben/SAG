@@ -2,7 +2,6 @@ package com.sag.business.test;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sag.business.model.Domaine;
@@ -23,7 +22,7 @@ public class DomaineDaoImplTest {
 	public void testChercherTous() {
 		System.out.println(domaineDao.chercherTous());
 
-		assertNotEquals(1, domaineDao.chercherTous().size());
+		assertFalse(1 == domaineDao.chercherTous().size());
 	}
 
 	@Test
