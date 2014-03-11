@@ -71,36 +71,6 @@
     <script>
       $(document).foundation();
     </script>
-	<script>
-		$('#form_login')
-		  .on('valid', function () {
-			var user = document.getElementById("login").value;
-			window.sessionStorage.setItem('user', user);
-			switch(user){
-				case 'k1104696' : 
-					window.sessionStorage.setItem('role', 'Etudiant');
-					window.sessionStorage.setItem('nomE', 'Karcher');
-					window.sessionStorage.setItem('prenomE', 'Joël');
-					valid(); 
-					break;
-				case 'fnac' : 
-					window.sessionStorage.setItem('role', 'Entreprise');
-					window.sessionStorage.setItem('nomE', 'Fnac');
-					window.sessionStorage.setItem('prenomE', 'Entreprise');
-					valid(); 
-					break;
-				case 'admin' : 
-					window.sessionStorage.setItem('role', 'Administrateur');
-					window.sessionStorage.setItem('nomE', 'Administrateur');
-					window.sessionStorage.setItem('prenomE', 'Divin');
-					valid(); 
-					break;
-				default: 
-					console.log("valid : Login inconnu"); 
-					break;
-			}
-		});
-	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
   </body>
 </html>

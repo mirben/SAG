@@ -347,37 +347,17 @@
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if (chaine.match("^.*(OREILLET|MÃMOIRE|FORME|LITERIE|MEMOIRE).*$")) {
+			if (chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")) {
 				$(location).attr('href', "detail_offre1.html");
 			}
 			if (chaine
 					.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")) {
 				$(location).attr('href', "detail_offre2.html");
 			}
-			if (chaine.match("^.*(NOEL|SAPIN|NATUREL|NOÃL).*$")) {
+			if (chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")) {
 				$(location).attr('href', "detail_offre3.html");
 			}
 		}
-		if (window.sessionStorage.getItem('role') != 'Administrateur') {
-			$('#myModal').foundation('reveal', 'open');
-			$(document).on('closed', '[data-reveal]', function() {
-				window.location.href = "home.html";
-			});
-		}
-		function refresh_account() {
-			if (window.sessionStorage.getItem('role') != 'Etudiant') {
-				$("#infos").remove();
-			}
-			if (window.sessionStorage.getItem('role') != 'Entreprise') {
-				$("#infosc").remove();
-			}
-			if (window.sessionStorage.getItem('role') == 'Administrateur') {
-				("#rightmenu").append('<li class="divider"></li><li><a href="admin.html">Administrer</a></li>');
-			}
-			if(window.sessionStorage.getItem('nomE')!=null && window.sessionStorage.getItem('prenomE')!=null){
-			    $("#username").text(window.sessionStorage.getItem('prenomE')+" "+window.sessionStorage.getItem('nomE'));
-		    }
-	    }
 		function clear_session(){
 			window.sessionStorage.clear();
 		}
