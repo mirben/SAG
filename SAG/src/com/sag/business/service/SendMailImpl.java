@@ -26,6 +26,7 @@ public class SendMailImpl {
 		// TODO Auto-generated constructor stub
 	}
 	
+	//fonction de base pour envoyer un @mail
 	public void sendMessage(String subject, String text, Address[] destinataire, String copyDest) { 
 	    
 		//Création de la session 
@@ -61,12 +62,13 @@ public class SendMailImpl {
 	        e.printStackTrace(); 
 	    } 
 
-	    //Envoi du message 
+	    //Envoi du message
+	    Transport transport =null;
 	    try { 
-	        Transport transport = session.getTransport("smtp"); 
+	        transport = session.getTransport("smtp"); 
 	        transport.connect(LOGIN_SMTP1, PASSWORD_SMTP1); 
-	        transport.sendMessage(message, new Address[] { new InternetAddress(destinataire), 
-	                                                        new InternetAddress(copyDest) }); 
+	        transport.sendMessage(message, destinataire); 
+	   
 	    } catch (MessagingException e) { 
 	        e.printStackTrace(); 
 	    } finally { 
