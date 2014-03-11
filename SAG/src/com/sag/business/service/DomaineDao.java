@@ -5,14 +5,47 @@ import java.util.Collection;
 import com.sag.business.model.Domaine;
 
 /**
+ * @version 1
  * @author tuan
- *
+ * Interface d'objet d'accès aux données Domaine.
  */
+ 
 public interface DomaineDao {
+	
+	/**
+	 * Récupérer un domaine par son id
+	 * @param id
+	 * @return Domaine
+	 */
 	Domaine chercherParID(int id);
+	
+	/**
+	 * Récupérer toutes domaines
+	 * @return Collection<Domaine> 
+	 */
+	 
 	Collection<Domaine> chercherTous();
+	
+	/**
+	 * Récupérer des domaines par bloc de offset à limite
+	 * @param offset, limite
+	 * @return Collection<Domaine>
+	 */
+	
 	Collection<Domaine> chercherTous(int offset , int limite);
+	
+	/**
+	  * Sauvagarder un domaine.
+	  * @param domaine
+	  * @return Domaine
+	  */
 	Domaine sauvagarder(Domaine domaine);
+	
+	/**
+	 * Supprimer une domaine
+	 * @param id
+	 * @return Boolean
+	 */
 	Boolean supprimer(int id);
 	
 }

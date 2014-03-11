@@ -5,8 +5,8 @@ import java.util.Collection;
 import com.sag.business.model.Entreprise;
 
 /**
+ * @version 1
  * @author tuan
- * 
  * Interface d'objet d'accès aux données Entreprise.
  */
 public interface EntrepriseDao {
@@ -15,26 +15,26 @@ public interface EntrepriseDao {
 	 * @param id
 	 * @return Entreprise
 	 */
-	Entreprise chercherParID(int id);
+	public Entreprise chercherParID(int id);
 	
 	/**
 	 * Récupérer un entreprise par son email
 	 * @param email
 	 * @return Entreprise
 	 */
-	Entreprise chercherParEmail(String email);
+	public Entreprise chercherParEmail(String email);
 	
 	/**
-	 * Récupérer toutes entreprise
+	 * Récupérer toutes entreprises
 	 * @param email
-	 * @return Entreprise
+	 * @return Collection<Entreprise>
 	 */
-	Collection<Entreprise> chercherTous();
+	public Collection<Entreprise> chercherTous();
 	
 	/**
-	 * Récupérer des entreprises 
-	 * @param email
-	 * @return Entreprise
+	 * Récupérer des entreprises par bloc de offset à limite
+	 * @param offset, limite
+	 * @return Collection<Entreprise>
 	 */
 	Collection<Entreprise> chercherTous(int offset , int limite);
 	 /**
@@ -43,6 +43,12 @@ public interface EntrepriseDao {
 	  * @return Entreprise
 	  */
 	Entreprise sauvagarder(Entreprise entreprise);
+	
+	/**
+	  * Supprimer un entreprise.
+	  * @param entreprise
+	  * @return Boolean
+	  */
 	Boolean supprimer(int id);
 	
 }
