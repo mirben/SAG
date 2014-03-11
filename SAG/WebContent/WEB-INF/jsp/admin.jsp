@@ -70,35 +70,34 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>admin</td>
-												<td>Administrateur</td>
-												<td>null</td>
-												<td>null</td>
-												<td><a href="" class="tiny button split">Actions<span
-														data-dropdown="drop"></span></a><br>
-												<ul id="drop" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier rôle</a></li>
-														<li><a href="#">Modifier informations</a></li>
-														<li><a href="#">Désactiver</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-											<tr>
-												<td>k1104696</td>
-												<td>Etudiant</td>
-												<td>Karcher</td>
-												<td>JoÃ«l</td>
-												<td><a href="" class="tiny button split">Actions<span
-														data-dropdown="drop2"></span></a><br>
-												<ul id="drop2" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier rôle</a></li>
-														<li><a href="#">Modifier informations</a></li>
-														<li><a href="#">Désactiver</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-										</tbody>
+										<c:choose>
+											<!-- Si la liste des utilisateurs est vide -->
+											<c:when test="${empty users_actifs}">
+												<tr>
+													<td colspan="3">Aucun utilisateur.</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<!-- On parcours toutes les personnes de l'annuaire -->
+												<c:forEach items="${users_actifs}" var="user">
+													<tr>
+														<td>${user.ent}</td>
+														<td>${user.role.nom}</td>
+														<td>${user.nom}</td>
+														<td>${user.prenom}</td>
+														<td><a href="" class="tiny button split">Actions<span
+																data-dropdown="drop"></span></a><br>
+														<ul id="drop" class="f-dropdown" data-dropdown-content>
+																<li><a href="#">Modifier rôle</a></li>
+																<li><a href="#">Modifier informations</a></li>
+																<li><a href="#">Désactiver</a></li>
+																<li><a href="#">Supprimer</a></li>
+															</ul></td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
+									</tbody>
 									</table>
 								</div>
 								<div class="content" id="panel2a">
@@ -112,20 +111,33 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>m900707</td>
-												<td>Etudiant</td>
-												<td>Miretti</td>
-												<td>Benjamin</td>
-												<td><a href="" class="tiny button split">Actions<span
-														data-dropdown="drop0"></span></a><br>
-												<ul id="drop0" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier rôle</a></li>
-														<li><a href="#">Modifier informations</a></li>
-														<li><a href="#">Activer</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
+											<c:choose>
+											<!-- Si la liste des utilisateurs est vide -->
+											<c:when test="${empty users_wait}">
+												<tr>
+													<td colspan="3">Aucun utilisateur.</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<!-- On parcours toutes les personnes de l'annuaire -->
+												<c:forEach items="${users_wait}" var="userw">
+													<tr>
+														<td>${userw.ent}</td>
+														<td>${userw.role.nom}</td>
+														<td>${userw.nom}</td>
+														<td>${userw.prenom}</td>
+														<td><a href="" class="tiny button split">Actions<span
+																data-dropdown="drop"></span></a><br>
+														<ul id="drop" class="f-dropdown" data-dropdown-content>
+																<li><a href="#">Modifier rôle</a></li>
+																<li><a href="#">Modifier informations</a></li>
+																<li><a href="#">Désactiver</a></li>
+																<li><a href="#">Supprimer</a></li>
+															</ul></td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 										</tbody>
 									</table>
 								</div>
