@@ -20,7 +20,7 @@ public class Utilisateur {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	private Statut statut;
+	private StatutUtilisateur statut;
 	
 	@ManyToOne
 	@JoinColumn(name="ID_ROLE")
@@ -38,11 +38,17 @@ public class Utilisateur {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Statut getStatut() {
+	public StatutUtilisateur getStatut() {
 		return statut;
 	}
-	public void setStatut(Statut statut) {
+	public void setStatut(StatutUtilisateur statut) {
 		this.statut = statut;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 	

@@ -4,7 +4,7 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import com.sag.business.model.Etudiant;
-import com.sag.business.model.Statut;
+import com.sag.business.model.StatutUtilisateur;
 
 /**
  * @version 1
@@ -39,20 +39,15 @@ public interface EtudiantDao {
 	 * @param domaine
 	 * @return Collection<Etudiant>
 	 */
-	Collection<Etudiant> chercherParStatut(Statut statut);
+	Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
 	
 	/**
 	 * Récupérer tous les étudiants
 	 * @param domaine
 	 * @return Collection<Etudiant>
 	 */
+	Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
 	Collection<Etudiant> chercherTous();
-	
-	/**
-	 * Récupérer des étudiants par bloc de offset à limite
-	 * @param domaine
-	 * @return Collection<Etudiant>
-	 */
 	Collection<Etudiant> chercherTous(int offset , int limite);
 	
 	/**
@@ -65,7 +60,7 @@ public interface EtudiantDao {
 	/**
 	 * Supprimer un étudiant, 
 	 * @param id
-	 * @return Booleanvvdvvvf
+	 * @return Boolean
 	 */
 	Boolean supprimer(int id);
 	
