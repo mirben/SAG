@@ -29,13 +29,13 @@
 						<legend>ENT - Authentifiez vous</legend>
 						<div class="name-field">
 							<label>Identifiant *
-							  <input type="text" id="login" name='j_username' placeholder="Identifiant" required pattern="^(k1104696|admin|fnac)$" />
+							  <input type="text" id="login" name='username' placeholder="Identifiant" required pattern="^(k1104696|admin|fnac)$" />
 							</label>
 							<small class="error">Identifiant incorrect</small>
 						</div>
 						<div class="password-field">
 							<label>Mot de passe *
-							  <input type="password" name='j_password' placeholder="Mot de passe" required pattern="^(k1104696|admin|fnac)$" />
+							  <input type="password" name='password' placeholder="Mot de passe" required pattern="^(k1104696|admin|fnac)$" />
 							</label>
 							<small class="error">Mot de passe incorrect</small>
 						</div>
