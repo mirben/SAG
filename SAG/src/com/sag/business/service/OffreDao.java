@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.sag.business.model.Offre;
 
-public interface OffreDAO {
+public interface OffreDao {
 	
 		Offre chercherParID(int id);
 		Collection<Offre> chercherTous();

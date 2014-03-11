@@ -4,6 +4,10 @@ import java.util.Collection;
 
 import com.sag.business.model.Domaine;
 
+/**
+ * @author tuan
+ *
+ */
 public interface DomaineDao {
 	Domaine chercherParID(int id);
 	Collection<Domaine> chercherTous();
