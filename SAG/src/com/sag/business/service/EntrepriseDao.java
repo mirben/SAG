@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.sag.model.Entreprise;
 
-public interface EntrepriseDAO {
+public interface EntrepriseDao {
 	Entreprise chercherParID(int id);
 	Entreprise chercherParEmail(String email);
 	Collection<Entreprise> chercherTous();
