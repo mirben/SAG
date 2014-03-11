@@ -11,13 +11,31 @@ import com.sag.business.model.Entreprise;
  */
 public interface EntrepriseDao {
 	/**
-	 * 
+	 * Récupérer un entreprise par son id
 	 * @param id
 	 * @return Entreprise
 	 */
 	Entreprise chercherParID(int id);
+	
+	/**
+	 * Récupérer un entreprise par son email
+	 * @param email
+	 * @return Entreprise
+	 */
 	Entreprise chercherParEmail(String email);
+	
+	/**
+	 * Récupérer toutes entreprise
+	 * @param email
+	 * @return Entreprise
+	 */
 	Collection<Entreprise> chercherTous();
+	
+	/**
+	 * Récupérer des entreprises 
+	 * @param email
+	 * @return Entreprise
+	 */
 	Collection<Entreprise> chercherTous(int offset , int limite);
 	Entreprise sauvagarder(Entreprise entreprise);
 	Boolean supprimer(int id);
