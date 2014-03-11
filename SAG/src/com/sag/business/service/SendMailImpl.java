@@ -26,7 +26,7 @@ public class SendMailImpl {
 		// TODO Auto-generated constructor stub
 	}
 	
-	//fonction de base pour envoyer un @mail
+	//fonction de base pour creer et envoyer un @mail, ne gére pas les images embarqués.
 	public void sendMessage(String subject, String text, Address[] destinataire, String copyDest) { 
 	    
 		//Création de la session 
@@ -35,6 +35,7 @@ public class SendMailImpl {
 	    properties.setProperty("mail.smtp.host", SMTP_HOST1); 
 	   	properties.setProperty("mail.smtp.user", LOGIN_SMTP1); 
 	    properties.setProperty("mail.from", IMAP_ACCOUNT1); 
+	    properties.setProperty("mail.smtp.starttls.enable", "true");
 	    Session session = Session.getInstance(properties); 
 	 
 	    //Création du contenu du message
@@ -82,5 +83,7 @@ public class SendMailImpl {
 	    } 
 	    
 	}
+	
+	
 
 }
