@@ -13,6 +13,16 @@ public class Image {
 	private int id;
 	
 	private String url;
+	
+	public Image(){
+		super();
+	}
+
+	public Image(int id, String url) {
+		super();
+		this.id = id;
+		this.url = url;
+	}
 
 	public int getId() {
 		return id;

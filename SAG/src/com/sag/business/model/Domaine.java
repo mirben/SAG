@@ -15,6 +15,17 @@ public class Domaine {
 	
 	@Column(unique = true)
 	private String nom;
+	
+	public Domaine(){
+		super();
+	}
+	
+	public Domaine(int id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
+	
 	public int getId() {
 		return id;
 	}

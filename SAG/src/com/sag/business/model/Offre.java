@@ -58,6 +58,35 @@ public class Offre {
 	@OneToMany
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "PHOTO_ID"))
 	private Set<Image> images;
+	
+	public Offre(){
+		super();
+	}
+
+	public Offre(int id, String titre, String description, Type type,
+			int participantsMin, int participantsMax, double prix,
+			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
+			String siteWeb, Utilisateur emetteur, Entreprise fournisseur,
+			Set<Etudiant> participants, Set<Domaine> domaines, Set<Image> images) {
+		super();
+		this.id = id;
+		this.titre = titre;
+		this.description = description;
+		this.type = type;
+		this.participantsMin = participantsMin;
+		this.participantsMax = participantsMax;
+		this.prix = prix;
+		this.statut = statut;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.dateAjout = dateAjout;
+		this.siteWeb = siteWeb;
+		this.emetteur = emetteur;
+		this.fournisseur = fournisseur;
+		this.participants = participants;
+		this.domaines = domaines;
+		this.images = images;
+	}
 
 	public int getId() {
 		return id;

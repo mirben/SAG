@@ -3,6 +3,7 @@ package com.sag.business.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -12,6 +13,8 @@ import javax.persistence.TemporalType;
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
 public class Etudiant extends Utilisateur{
+	
+	@Column(nullable = false, unique = true)
 	private String logENT;
 	private String nom; 
 	private String prenom;
@@ -24,6 +27,24 @@ public class Etudiant extends Utilisateur{
 	
 	@ManyToMany
 	private Set<Domaine> domaines; 
+	
+	public Etudiant(){
+		super();
+	}
+	
+	public Etudiant(String logENT, String nom, String prenom, Date dateNaiss,
+			String adresse, String siteWeb, String formation,
+			Set<Domaine> domaines) {
+		super();
+		this.logENT = logENT;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaiss = dateNaiss;
+		this.adresse = adresse;
+		this.siteWeb = siteWeb;
+		this.formation = formation;
+		this.domaines = domaines;
+	}
 	
 	public String getLogENT() {
 		return logENT;

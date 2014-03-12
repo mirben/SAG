@@ -47,7 +47,7 @@ public interface DomaineDao {
 	Collection<Domaine> chercherTous(int offset, int limite);
 
 	/**
-	 * Sauvagarder un domaine.
+	 * Ajoute un domaine si il est nouveau ou le sauvegarde si il a été modifié
 	 * 
 	 * @param domaine
 	 * @return Domaine

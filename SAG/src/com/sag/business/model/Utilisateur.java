@@ -26,6 +26,17 @@ public class Utilisateur {
 	@JoinColumn(name="ID_ROLE")
 	private Role role;
 	
+	public Utilisateur(){
+		super();
+	}
+	
+	public Utilisateur(int id, String email, StatutUtilisateur statut, Role role) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.statut = statut;
+		this.role = role;
+	}
 	public int getId() {
 		return id;
 	}

@@ -12,6 +12,16 @@ public class Role {
 	private int id;
 	
 	private String nom;
+	
+	public Role(){
+		super();
+	}
+
+	public Role(int id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+	}
 
 	public int getId() {
 		return id;

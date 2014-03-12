@@ -15,6 +15,20 @@ public class Entreprise extends Utilisateur{
 	
 	@Column(nullable = false)
 	private String password;
+	
+	public Entreprise(){
+		super();
+	}
+
+	public Entreprise(String nom, String siret, String adresse, String siteWeb,
+			String password) {
+		super();
+		this.nom = nom;
+		this.siret = siret;
+		this.adresse = adresse;
+		this.siteWeb = siteWeb;
+		this.password = password;
+	}
 
 	public String getNom() {
 		return nom;
