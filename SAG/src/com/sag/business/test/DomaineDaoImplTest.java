@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.sag.business.model.Domaine;
-import com.sag.business.service.DomaineDaoImpl;
+import com.sag.business.service.DomaineDao;
 
 public class DomaineDaoImplTest {
-	DomaineDaoImpl domaineDao;
+	DomaineDao domaineDao;
 	
 
 	@Test

@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sag.business.model.Domaine;
-
+/**
+ * @version1
+ * @author NGUYEN Tuan
+ *
+ */
 @Repository("domaineDao")
 @Transactional(readOnly = true)
 public class DomaineDaoImpl implements DomaineDao {
@@ -33,7 +37,7 @@ public class DomaineDaoImpl implements DomaineDao {
 				.setParameter("nom", nom).getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public Collection<Domaine> chercherTous() {
 		return em.createQuery("FROM Domaine", Domaine.class).getResultList();

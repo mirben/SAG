@@ -6,7 +6,8 @@ import com.sag.business.model.Domaine;
 
 /**
  * @version 1
- * @author tuan Interface d'objet d'accès aux données Domaine.
+ * @author tuan 
+ * Interface d'objet d'accès aux données Domaine.
  */
 
 public interface DomaineDao {

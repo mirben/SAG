@@ -4,7 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.sag.business.service.EntrepriseDao;
+
 public class EntrepriseDaoImplTest {
+	EntrepriseDao entrepriseDao;
 
 	@Test
 	public void testChercherParID() {
