@@ -37,9 +37,10 @@ public class DomaineDaoImplTest {
 
 	@Test
 	public void testSauvagarder() {
-		Domaine domaine = new Domaine();
-		domaine.setNom("Informatique");
+		Domaine domaine = new Domaine("Informatique");
 		domaineDao.sauvagarder(domaine);
+		System.out.println(domaine.);
+
 	}
 	
 	@Test
