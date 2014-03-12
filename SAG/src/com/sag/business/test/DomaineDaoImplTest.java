@@ -1,22 +1,30 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.inject.Qualifier;
 import javax.naming.NamingException;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sag.business.model.Domaine;
 import com.sag.business.service.DomaineDao;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:**/sag-servlet.xml"})
 public class DomaineDaoImplTest {
 	
-	final Context initial;
-	final DomaineDao domaineDao;
+
+	@Autowired
+	private DomaineDao domaineDao;
 	
 	@BeforeClass
 	public static void init(){
@@ -27,13 +35,6 @@ public class DomaineDaoImplTest {
      * 
      * @throws NamingException
      */
-    public DomaineDaoImplTest() throws NamingException {
-        initial = new InitialContext();
-        Object o = initial
-                .lookup("java:global/classpath.ear/SAG/dao!com.sag.business.model.DomaineDao");
-        Assert.assertTrue(o instanceof DomaineDao);
-        domaineDao = (DomaineDao) o;
-    }
 
 	@Test
 	public void testSauvagarder() {

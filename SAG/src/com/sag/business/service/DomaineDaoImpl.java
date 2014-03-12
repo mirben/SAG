@@ -14,7 +14,7 @@ import com.sag.business.model.Domaine;
  * @author NGUYEN Tuan
  *
  */
-@Repository("domaineDao")
+@Repository
 @Transactional(readOnly = true)
 public class DomaineDaoImpl implements DomaineDao {
 	private EntityManager em;
