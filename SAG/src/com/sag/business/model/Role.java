@@ -17,9 +17,8 @@ public class Role {
 		super();
 	}
 
-	public Role(int id, String nom) {
+	public Role(String nom) {
 		super();
-		this.id = id;
 		this.nom = nom;
 	}
 

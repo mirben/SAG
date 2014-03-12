@@ -63,13 +63,12 @@ public class Offre {
 		super();
 	}
 
-	public Offre(int id, String titre, String description, Type type,
+	public Offre(String titre, String description, Type type,
 			int participantsMin, int participantsMax, double prix,
 			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
 			String siteWeb, Utilisateur emetteur, Entreprise fournisseur,
 			Set<Etudiant> participants, Set<Domaine> domaines, Set<Image> images) {
 		super();
-		this.id = id;
 		this.titre = titre;
 		this.description = description;
 		this.type = type;

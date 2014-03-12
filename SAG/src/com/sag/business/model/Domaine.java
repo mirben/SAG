@@ -20,9 +20,8 @@ public class Domaine {
 		super();
 	}
 	
-	public Domaine(int id, String nom) {
+	public Domaine(String nom) {
 		super();
-		this.id = id;
 		this.nom = nom;
 	}
 	

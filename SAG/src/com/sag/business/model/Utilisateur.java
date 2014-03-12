@@ -30,9 +30,8 @@ public class Utilisateur {
 		super();
 	}
 	
-	public Utilisateur(int id, String email, StatutUtilisateur statut, Role role) {
+	public Utilisateur(String email, StatutUtilisateur statut, Role role) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.statut = statut;
 		this.role = role;
