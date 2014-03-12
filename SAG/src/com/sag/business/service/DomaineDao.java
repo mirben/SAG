@@ -6,7 +6,8 @@ import com.sag.business.model.Domaine;
 
 /**
  * @version 1
- * @author tuan Interface d'objet d'accès aux données Domaine.
+ * @author tuan 
+ * Interface d'objet d'accès aux données Domaine.
  */
 
 public interface DomaineDao {
@@ -46,7 +47,7 @@ public interface DomaineDao {
 	Collection<Domaine> chercherTous(int offset, int limite);
 
 	/**
-	 * Sauvagarder un domaine.
+	 * Ajoute un domaine si il est nouveau ou le sauvegarde si il a été modifié
 	 * 
 	 * @param domaine
 	 * @return Domaine

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sag.business.model.Domaine;
-
-@Repository("domaineDao")
+/**
+ * @version1
+ * @author NGUYEN Tuan
+ *
+ */
+@Repository
 @Transactional(readOnly = true)
 public class DomaineDaoImpl implements DomaineDao {
 	private EntityManager em;
@@ -33,7 +37,7 @@ public class DomaineDaoImpl implements DomaineDao {
 				.setParameter("nom", nom).getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public Collection<Domaine> chercherTous() {
 		return em.createQuery("FROM Domaine", Domaine.class).getResultList();
@@ -47,11 +51,13 @@ public class DomaineDaoImpl implements DomaineDao {
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Domaine sauvagarder(Domaine domaine) {
 		return em.merge(domaine);
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return (chercherParID(id) == null);

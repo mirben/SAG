@@ -3,46 +3,61 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import com.sag.business.model.Offre;
+
 /**
+ * Interface d'objet d'accès aux données Etudiant.
+ * 
  * @version 1
  * @author tuan
- * Interface d'objet d'accès aux données Etudiant.
+ * 
  */
 public interface OffreDao {
 
 	/**
 	 * Récupérer une offre par son id
+	 * 
 	 * @param id
 	 * @return Etudiant
 	 */
-	Offre chercherParID(int id);
+	public Offre chercherParID(int id);
+
+	/**
+	 * Récupérer tous les offres lié à mot clé
+	 * 
+	 * @return Collection<Offre>
+	 */
 	
+	public Collection<Offre> chercherParMotCle(String mot);
 
 	/**
 	 * Récupérer tous les offres
+	 * 
 	 * @return Collection<Offre>
 	 */
 
-	Collection<Offre> chercherTous();
+	public Collection<Offre> chercherTous();
 
 	/**
 	 * Récupérer tous les étudiants par block de offset à limite
+	 * 
 	 * @return Collection<Offre>
 	 */
-	Collection<Offre> chercherTous(int offset, int limite);
+	public Collection<Offre> chercherTous(int offset, int limite);
 
 	/**
 	 * Sauvagarder une offre
+	 * 
 	 * @param offre
 	 * @return
 	 */
-	Offre sauvagarder(Offre offre);
+	public Offre sauvagarder(Offre offre);
 
 	/**
 	 * Supprimer une offre
+	 * 
 	 * @param id
 	 * @return Boolean
 	 */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 
 }

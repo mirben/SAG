@@ -58,6 +58,34 @@ public class Offre {
 	@OneToMany
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "PHOTO_ID"))
 	private Set<Image> images;
+	
+	public Offre(){
+		super();
+	}
+
+	public Offre(String titre, String description, Type type,
+			int participantsMin, int participantsMax, double prix,
+			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
+			String siteWeb, Utilisateur emetteur, Entreprise fournisseur,
+			Set<Etudiant> participants, Set<Domaine> domaines, Set<Image> images) {
+		super();
+		this.titre = titre;
+		this.description = description;
+		this.type = type;
+		this.participantsMin = participantsMin;
+		this.participantsMax = participantsMax;
+		this.prix = prix;
+		this.statut = statut;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.dateAjout = dateAjout;
+		this.siteWeb = siteWeb;
+		this.emetteur = emetteur;
+		this.fournisseur = fournisseur;
+		this.participants = participants;
+		this.domaines = domaines;
+		this.images = images;
+	}
 
 	public int getId() {
 		return id;
@@ -194,5 +222,132 @@ public class Offre {
 	public void setImages(Set<Image> images) {
 		this.images = images;
 	}
+
+	@Override
+	public String toString() {
+		return "Offre [id=" + id + ", titre=" + titre + ", description="
+				+ description + ", type=" + type + ", participantsMin="
+				+ participantsMin + ", participantsMax=" + participantsMax
+				+ ", prix=" + prix + ", statut=" + statut + ", dateDebut="
+				+ dateDebut + ", dateFin=" + dateFin + ", dateAjout="
+				+ dateAjout + ", siteWeb=" + siteWeb + ", emetteur=" + emetteur
+				+ ", fournisseur=" + fournisseur + ", participants="
+				+ participants + ", domaines=" + domaines + ", images="
+				+ images + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dateAjout == null) ? 0 : dateAjout.hashCode());
+		result = prime * result
+				+ ((dateDebut == null) ? 0 : dateDebut.hashCode());
+		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result
+				+ ((domaines == null) ? 0 : domaines.hashCode());
+		result = prime * result
+				+ ((emetteur == null) ? 0 : emetteur.hashCode());
+		result = prime * result
+				+ ((fournisseur == null) ? 0 : fournisseur.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((images == null) ? 0 : images.hashCode());
+		result = prime * result
+				+ ((participants == null) ? 0 : participants.hashCode());
+		result = prime * result + participantsMax;
+		result = prime * result + participantsMin;
+		long temp;
+		temp = Double.doubleToLongBits(prix);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((siteWeb == null) ? 0 : siteWeb.hashCode());
+		result = prime * result + ((statut == null) ? 0 : statut.hashCode());
+		result = prime * result + ((titre == null) ? 0 : titre.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Offre other = (Offre) obj;
+		if (dateAjout == null) {
+			if (other.dateAjout != null)
+				return false;
+		} else if (!dateAjout.equals(other.dateAjout))
+			return false;
+		if (dateDebut == null) {
+			if (other.dateDebut != null)
+				return false;
+		} else if (!dateDebut.equals(other.dateDebut))
+			return false;
+		if (dateFin == null) {
+			if (other.dateFin != null)
+				return false;
+		} else if (!dateFin.equals(other.dateFin))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (domaines == null) {
+			if (other.domaines != null)
+				return false;
+		} else if (!domaines.equals(other.domaines))
+			return false;
+		if (emetteur == null) {
+			if (other.emetteur != null)
+				return false;
+		} else if (!emetteur.equals(other.emetteur))
+			return false;
+		if (fournisseur == null) {
+			if (other.fournisseur != null)
+				return false;
+		} else if (!fournisseur.equals(other.fournisseur))
+			return false;
+		if (id != other.id)
+			return false;
+		if (images == null) {
+			if (other.images != null)
+				return false;
+		} else if (!images.equals(other.images))
+			return false;
+		if (participants == null) {
+			if (other.participants != null)
+				return false;
+		} else if (!participants.equals(other.participants))
+			return false;
+		if (participantsMax != other.participantsMax)
+			return false;
+		if (participantsMin != other.participantsMin)
+			return false;
+		if (Double.doubleToLongBits(prix) != Double
+				.doubleToLongBits(other.prix))
+			return false;
+		if (siteWeb == null) {
+			if (other.siteWeb != null)
+				return false;
+		} else if (!siteWeb.equals(other.siteWeb))
+			return false;
+		if (statut != other.statut)
+			return false;
+		if (titre == null) {
+			if (other.titre != null)
+				return false;
+		} else if (!titre.equals(other.titre))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
+	}
+	
 	
 }
