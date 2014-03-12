@@ -19,7 +19,7 @@ public class DomaineDaoImplTest {
 	final DomaineDao domaineDao;
 	
 	@BeforeClass
-	public void init(){
+	public static void init(){
 		
 	}
 	
@@ -37,9 +37,18 @@ public class DomaineDaoImplTest {
 
 	@Test
 	public void testSauvagarder() {
+		//Test ajout
 		Domaine domaine = new Domaine("Informatique");
 		domaineDao.sauvagarder(domaine);
-		System.out.println(domaine.);
+		System.out.println(domaine);
+		Domaine savedDomaine = domaineDao.chercherParID(domaine.getId());
+		assertEquals(domaine, savedDomaine);
+		
+		//test modification
+		savedDomaine.setNom("Cinéma");
+		domaineDao.sauvagarder(savedDomaine);
+		Domaine modifiedDomaine = domaineDao.chercherParID(savedDomaine.getId());
+		assertEquals(savedDomaine, modifiedDomaine);
 
 	}
 	
