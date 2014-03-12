@@ -23,6 +23,13 @@ import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 
+/**
+ * Classe de test des méthode de EtudiantDao
+ * 
+ * @version 1
+ * @author tuan
+ * 
+ */
 public class EtudiantDaoTest {
 	static EtudiantDao etudiantDao;
 	Context initial;
@@ -53,10 +60,12 @@ public class EtudiantDaoTest {
 		etudiant.setRole(role);
 		etudiant.setSiteWeb("www.elyse.com");
 		etudiant.setStatut(StatutUtilisateur.ACTIF);
+		Domaine domaine = new Domaine("Cinéma");
+
+		etudiant.getDomaines().add(domaine);
 
 		etudiantDao.sauvagarder(etudiant);
 
-		 Domaine domain = new Domaine();
 	}
 
 	public EtudiantDaoTest() throws NamingException {
@@ -66,6 +75,7 @@ public class EtudiantDaoTest {
 		Assert.assertTrue(o instanceof EntrepriseDao);
 		etudiantDao = (EtudiantDao) o;
 	}
+
 	@Test
 	public void testChercherParEnt() {
 		assertTrue(etudiant == etudiantDao.chercherParEnt("x12546"));
@@ -73,32 +83,36 @@ public class EtudiantDaoTest {
 
 	@Test
 	public void testChercherParDomaine() {
-		fail("Not yet implemented");
+		assertTrue(etudiantDao.chercherParDomaine("Cinémat").contains(etudiant));
 	}
 
 	@Test
 	public void testChercherParStatut() {
-		fail("Not yet implemented");
+		assertTrue(etudiantDao.chercherParStatut(StatutUtilisateur.ACTIF)
+				.contains(etudiant));
 	}
 
 	@Test
 	public void testChercherTous() {
-		fail("Not yet implemented");
+		assertTrue(etudiantDao.chercherTous().contains(etudiant));
 	}
 
 	@Test
 	public void testChercherTousIntInt() {
-		fail("Not yet implemented");
+		assertTrue(etudiantDao.chercherTous(1, 5).size() > 4);
 	}
 
 	@Test
 	public void testSauvagarder() {
-		fail("Not yet implemented");
+		etudiant.setNom("SARKOZY");
+		Etudiant actual = etudiantDao.sauvagarder(etudiant);
+		assertEquals("SARKOZY", actual.getNom());
 	}
 
 	@Test
 	public void testSupprimer() {
-		fail("Not yet implemented");
+		etudiantDao.supprimer(etudiant.getId());
+		assertNull(etudiantDao.chercherParEnt(etudiant.getLogENT()));
 	}
 
 }

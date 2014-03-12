@@ -16,13 +16,20 @@ import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.service.EntrepriseDao;
 
+/**
+ * Classe de test des méthode de EntrepriseDao
+ * 
+ * @version 1
+ * @author tuan
+ * 
+ */
+
 public class EntrepriseDaoTest {
 	static EntrepriseDao entrepriseDao;
 	Context initial;
 
 	Entreprise e = new Entreprise();
 
-	
 	@BeforeClass
 	public void init() {
 		Role role = new Role();
@@ -48,7 +55,7 @@ public class EntrepriseDaoTest {
 		Assert.assertTrue(o instanceof EntrepriseDao);
 		entrepriseDao = (EntrepriseDao) o;
 	}
-	
+
 	@Test
 	public void testChercherParID() {
 		System.out.println(entrepriseDao.chercherParID(e.getId()));

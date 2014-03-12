@@ -14,7 +14,8 @@ import com.sag.business.model.StatutUtilisateur;
 
 /**
  * @version 1
- * @author tuan Interface d'objet d'accès aux données Etudiant.
+ * @author tuan 
+ * Interface d'objet d'accès aux données Etudiant.
  */
 
 @Repository("entrepriseDao")
