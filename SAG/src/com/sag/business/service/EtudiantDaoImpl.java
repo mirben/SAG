@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sag.business.model.Entreprise;
@@ -29,7 +30,7 @@ public class EtudiantDaoImpl implements EtudiantDao {
 	}
 
 	@Override
-	public Etudiant chercherParEnt(int logENT) {
+	public Etudiant chercherParEnt(String logENT) {
 		return (Etudiant) em
 				.createQuery("select e from Etudiant e where e.logENT = logENT")
 				.setParameter("logENT", logENT).getSingleResult();
@@ -64,11 +65,14 @@ public class EtudiantDaoImpl implements EtudiantDao {
 	}
 
 	@Override
+    @Transactional(readOnly = false)
+
 	public Etudiant sauvagarder(Etudiant etudiant) {
 				return em.merge(etudiant);
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return null;

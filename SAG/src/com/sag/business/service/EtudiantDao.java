@@ -20,7 +20,7 @@ public interface EtudiantDao {
 	 * @param idEnt
 	 * @return Etudiant
 	 */
-	Etudiant chercherParEnt(int logENT);
+	Etudiant chercherParEnt(String string);
 	
 	/**
 	 * Récupérer des étudiants par domaine
