@@ -51,11 +51,13 @@ public class DomaineDaoImpl implements DomaineDao {
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Domaine sauvagarder(Domaine domaine) {
 		return em.merge(domaine);
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return (chercherParID(id) == null);
