@@ -67,6 +67,7 @@ public class EtudiantDaoTest {
 		etudiantDao.sauvagarder(etudiant);
 
 	}
+	
 
 	public EtudiantDaoTest() throws NamingException {
 		initial = new InitialContext();
@@ -76,6 +77,13 @@ public class EtudiantDaoTest {
 		etudiantDao = (EtudiantDao) o;
 	}
 
+
+	@Test
+	public void testChercherParID() {
+		System.out.println(etudiantDao.chercherParID(etudiant.getId()));
+		assertTrue(etudiant == etudiantDao.chercherParID(etudiant.getId()));
+	}
+	
 	@Test
 	public void testChercherParEnt() {
 		assertTrue(etudiant == etudiantDao.chercherParEnt("x12546"));

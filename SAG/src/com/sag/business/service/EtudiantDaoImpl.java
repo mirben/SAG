@@ -29,6 +29,12 @@ public class EtudiantDaoImpl implements EtudiantDao {
 		this.em = em;
 	}
 
+
+	@Override
+	public Etudiant chercherParID(int id) {
+		return em.find(Etudiant.class, id);
+	}
+	
 	@Override
 	public Etudiant chercherParEnt(String logENT) {
 		return (Etudiant) em
@@ -74,5 +80,6 @@ public class EtudiantDaoImpl implements EtudiantDao {
 		em.remove(id);
 		return null;
 	}
+
 
 }

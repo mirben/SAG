@@ -19,7 +19,15 @@ public interface OffreDao {
 	 * @param id
 	 * @return Etudiant
 	 */
-	Offre chercherParID(int id);
+	public Offre chercherParID(int id);
+
+	/**
+	 * Récupérer tous les offres lié à mot clé
+	 * 
+	 * @return Collection<Offre>
+	 */
+	
+	public Collection<Offre> chercherParMotCle(String mot);
 
 	/**
 	 * Récupérer tous les offres
@@ -27,14 +35,14 @@ public interface OffreDao {
 	 * @return Collection<Offre>
 	 */
 
-	Collection<Offre> chercherTous();
+	public Collection<Offre> chercherTous();
 
 	/**
 	 * Récupérer tous les étudiants par block de offset à limite
 	 * 
 	 * @return Collection<Offre>
 	 */
-	Collection<Offre> chercherTous(int offset, int limite);
+	public Collection<Offre> chercherTous(int offset, int limite);
 
 	/**
 	 * Sauvagarder une offre
@@ -42,7 +50,7 @@ public interface OffreDao {
 	 * @param offre
 	 * @return
 	 */
-	Offre sauvagarder(Offre offre);
+	public Offre sauvagarder(Offre offre);
 
 	/**
 	 * Supprimer une offre
@@ -50,6 +58,6 @@ public interface OffreDao {
 	 * @param id
 	 * @return Boolean
 	 */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 
 }
