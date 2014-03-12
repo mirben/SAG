@@ -52,7 +52,6 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 
 	@Override
 	public Entreprise sauvagarder(Entreprise entreprise) {
-		// TODO Auto-generated method stub
 		return em.merge(entreprise);
 	}
 

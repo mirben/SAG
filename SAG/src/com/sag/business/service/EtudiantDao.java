@@ -14,18 +14,13 @@ import com.sag.business.model.StatutUtilisateur;
  
 public interface EtudiantDao {
 	
-	/**
-	 * Récupérer un etudiant par son id
-	 * @param id
-	 * @return Etudiant
-	 */
-	Etudiant chercherParID(int idEnt);
+	
 	/**
 	 * Récupérer un etudiant par son idEnt
 	 * @param idEnt
 	 * @return Etudiant
 	 */
-	Etudiant chercherParEnt(int idEnt);
+	Etudiant chercherParEnt(int logENT);
 	
 	/**
 	 * Récupérer des étudiants par domaine
