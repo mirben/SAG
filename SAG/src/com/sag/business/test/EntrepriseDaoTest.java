@@ -1,6 +1,12 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,15 +16,19 @@ import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.service.EntrepriseDao;
 
-public class EntrepriseDaoImplTest {
+public class EntrepriseDaoTest {
 	static EntrepriseDao entrepriseDao;
+	Context initial;
+
 	Entreprise e = new Entreprise();
+
+	
 	@BeforeClass
-	public void setUp() {
+	public void init() {
 		Role role = new Role();
 		role.setId(1);
 		role.setNom("moderateur");
-		
+
 		e.setAdresse("10 rue Antoine, 13001 Marseille");
 		e.setEmail("fnac@gmail.com");
 		e.setNom("fnac");
@@ -31,6 +41,14 @@ public class EntrepriseDaoImplTest {
 
 	}
 
+	public EntrepriseDaoTest() throws NamingException {
+		initial = new InitialContext();
+		Object o = initial
+				.lookup("java:global/classpath.ear/SAG/dao!com.sag.business.model.EntrepriseDao");
+		Assert.assertTrue(o instanceof EntrepriseDao);
+		entrepriseDao = (EntrepriseDao) o;
+	}
+	
 	@Test
 	public void testChercherParID() {
 		System.out.println(entrepriseDao.chercherParID(e.getId()));
@@ -50,7 +68,7 @@ public class EntrepriseDaoImplTest {
 
 	@Test
 	public void testChercherTousIntInt() {
-		assertTrue(entrepriseDao.chercherTous(1,5).size() > 0);
+		assertTrue(entrepriseDao.chercherTous(1, 5).size() > 0);
 
 	}
 
@@ -59,7 +77,7 @@ public class EntrepriseDaoImplTest {
 		Role role = new Role();
 		role.setId(2);
 		role.setNom("utilisateur");
-		
+
 		e.setAdresse("10 rue Falque, 13006 Marseille");
 		e.setEmail("amazone@gmail.com");
 		e.setNom("amazone");

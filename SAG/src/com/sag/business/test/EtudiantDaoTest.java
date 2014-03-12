@@ -7,6 +7,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,15 +20,17 @@ import com.sag.business.model.Domaine;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
+import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 
 public class EtudiantDaoTest {
 	static EtudiantDao etudiantDao;
+	Context initial;
 
 	Etudiant etudiant = new Etudiant();
 
 	@BeforeClass
-	public void setUp() {
+	public void init() {
 		Role role = new Role();
 		role.setId(2);
 		role.setNom("utilisateur");
@@ -49,9 +57,15 @@ public class EtudiantDaoTest {
 		etudiantDao.sauvagarder(etudiant);
 
 		 Domaine domain = new Domaine();
-		 domain.
 	}
 
+	public EtudiantDaoTest() throws NamingException {
+		initial = new InitialContext();
+		Object o = initial
+				.lookup("java:global/classpath.ear/SAG/dao!com.sag.business.model.EtudiantDao");
+		Assert.assertTrue(o instanceof EntrepriseDao);
+		etudiantDao = (EtudiantDao) o;
+	}
 	@Test
 	public void testChercherParEnt() {
 		assertTrue(etudiant == etudiantDao.chercherParEnt("x12546"));

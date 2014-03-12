@@ -51,11 +51,13 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Entreprise sauvagarder(Entreprise entreprise) {
 		return em.merge(entreprise);
 	}
 
 	@Override
+    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return (chercherParID(id) == null);
