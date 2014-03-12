@@ -25,7 +25,7 @@
 <script
 	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
 </head>
-<body onload="refresh_account()">
+<body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<div class="row">
 		<div class="large-12 columns">
@@ -61,119 +61,138 @@
 							<div class="tabs-content vertical">
 								<div class="content active" id="panel1a">
 									<table>
-										<thead>
-											<tr>
-												<th>Utilisateur</th>
-												<th>Rôle</th>
-												<th>Nom</th>
-												<th>Prénom</th>
-											</tr>
-										</thead>
-										<tbody>
 										<c:choose>
 											<!-- Si la liste des utilisateurs est vide -->
-											<c:when test="${empty users_actifs}">
+											<c:when test="${empty users_enabled}">
 												<tr>
 													<td colspan="3">Aucun utilisateur.</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
-												<!-- On parcours toutes les personnes de l'annuaire -->
-												<c:forEach items="${users_actifs}" var="user">
+												<thead>
+													<tr>
+														<th>Utilisateur</th>
+														<th>Rôle</th>
+														<th>Nom</th>
+														<th>Prénom</th>
+													</tr>
+												</thead>
+												<tbody>
+												<!-- On parcours tous les utilisateurs actifs -->
+												<c:forEach items="${users_ebabled}" var="user">
 													<tr>
 														<td>${user.ent}</td>
 														<td>${user.role.nom}</td>
 														<td>${user.nom}</td>
 														<td>${user.prenom}</td>
-														<td><a href="" class="tiny button split">Actions<span
+														<td><a href="/detail_user?id=${user.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 																data-dropdown="drop"></span></a><br>
 														<ul id="drop" class="f-dropdown" data-dropdown-content>
-																<li><a href="#">Modifier rôle</a></li>
-																<li><a href="#">Modifier informations</a></li>
-																<li><a href="#">Désactiver</a></li>
-																<li><a href="#">Supprimer</a></li>
+																<li><a href="/switch_role_user?id=${user.id}">Modifier rôle</a></li>
+																<li><a href="/edit_user?id=${user.id}">Modifier informations</a></li>
+																<li><a href="/disable_user?id=${user.id}">Désactiver</a></li>
+																<li><a href="/delete_user?id=${user.id}">Supprimer</a></li>
 															</ul></td>
 													</tr>
 												</c:forEach>
+												</tbody>
 											</c:otherwise>
 										</c:choose>
-									</tbody>
 									</table>
 								</div>
 								<div class="content" id="panel2a">
 									<table>
-										<thead>
-											<tr>
-												<th>Utilisateur</th>
-												<th>Rôle</th>
-												<th>Nom</th>
-												<th>Prénom</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:choose>
+										<c:choose>
 											<!-- Si la liste des utilisateurs est vide -->
-											<c:when test="${empty users_wait}">
+											<c:when test="${empty users_waiting}">
 												<tr>
 													<td colspan="3">Aucun utilisateur.</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
-												<!-- On parcours toutes les personnes de l'annuaire -->
-												<c:forEach items="${users_wait}" var="userw">
+												<thead>
+													<tr>
+														<th>Utilisateur</th>
+														<th>Rôle</th>
+														<th>Nom</th>
+														<th>Prénom</th>
+													</tr>
+												</thead>
+												<tbody>
+												<!-- On parcours tous les utilisateurs en attente -->
+												<c:forEach items="${users_waiting}" var="userw">
 													<tr>
 														<td>${userw.ent}</td>
 														<td>${userw.role.nom}</td>
 														<td>${userw.nom}</td>
 														<td>${userw.prenom}</td>
-														<td><a href="" class="tiny button split">Actions<span
+														<td><a href="/detail_user?id=${userw.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 																data-dropdown="drop"></span></a><br>
 														<ul id="drop" class="f-dropdown" data-dropdown-content>
-																<li><a href="#">Modifier rôle</a></li>
-																<li><a href="#">Modifier informations</a></li>
-																<li><a href="#">Désactiver</a></li>
-																<li><a href="#">Supprimer</a></li>
+																<li><a href="/switch_role_user?id=${userw.id}">Modifier rôle</a></li>
+																<li><a href="/edit_user?id=${userw.id}">Modifier informations</a></li>
+																<li><a href="/enable_user?id=${userw.id}">Activer</a></li>
+																<li><a href="/delete_user?id=${userw.id}">Supprimer</a></li>
 															</ul></td>
 													</tr>
 												</c:forEach>
+												</tbody>
 											</c:otherwise>
 										</c:choose>
-										</tbody>
 									</table>
 								</div>
 							</div>
 							<div class="left">
-								<a href="newuser.html" class="button">Ajouter un nouvel
-									utilisateur</a>
+								<a href="/add_user" class="button">Ajouter un nouvel utilisateur</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-2">
 							<table>
-								<thead>
-									<tr>
-										<th>Entreprise</th>
-										<th>SIRET</th>
-										<th>Site internet</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Fnac</td>
-										<td>775-661-390 00739</td>
-										<td>http://www.fnac.com</td>
-										<td><a href="" class="tiny button split">Actions<span
-												data-dropdown="drop3"></span></a><br>
-											<ul id="drop3" class="f-dropdown" data-dropdown-content>
-												<li><a href="#">Modifier</a></li>
-												<li><a href="#">Désactiver</a></li>
-												<li><a href="#">Supprimer</a></li>
-											</ul></td>
-									</tr>
-								</tbody>
+								<c:choose>
+									<!-- Si la liste des entreprises est vide -->
+									<c:when test="${empty companys}">
+										<tr>
+											<td colspan="3">Aucune entreprise.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<thead>
+											<tr>
+												<th>Entreprise</th>
+												<th>SIRET</th>
+												<th>Site internet</th>
+											</tr>
+										</thead>
+										<tbody>
+										<!-- On parcours toutes les entreprises -->
+										<c:forEach items="${companys}" var="comp">
+											<tr>
+												<td>${comp.nom}</td>
+												<td>${comp.siret}</td>
+												<td>${comp.site}</td>
+												<td><a href="detail_company?id=${comp.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
+													data-dropdown="drop3"></span></a><br>
+													<ul id="drop3" class="f-dropdown" data-dropdown-content>
+														<li><a href="edit_company?id=${comp.id}">Modifier</a></li>
+														<c:choose>
+															<!-- Si la liste des utilisateurs est vide -->
+															<c:when test="${company.actif==1}">
+																<li><a href="disable_company?id=${comp.id}">Désactiver</a></li>
+															</c:when>
+															<c:otherwise>
+																<li><a href="enable_company?id=${comp.id}">Activer</a></li>
+															</c:otherwise>
+														</c:choose>
+														<li><a href="delete_company?id=${comp.id}">Supprimer</a></li>
+													</ul></td>
+											</tr>
+										</c:forEach>
+										</tbody>
+									</c:otherwise>
+								</c:choose>
 							</table>
 							<div class="left">
-								<a href="newcompany.html" class="button">Ajouter une
-									nouvelle entreprise</a>
+								<a href="/add_company" class="button">Ajouter une nouvelle entreprise</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-3">
@@ -188,159 +207,125 @@
 							<div class="tabs-content vertical">
 								<div class="content active" id="panel3a">
 									<table>
-										<thead>
-											<tr>
-												<th>Offre</th>
-												<th>Domaine</th>
-												<th>Prix</th>
-												<th>Date d'expiration</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Oreillets mémoire de forme</td>
-												<td>Literie</td>
-												<td>59€¬</td>
-												<td>02/03/14</td>
-												<td><a href="detail_offre1.html"
-													class="tiny button split">Actions<span
-														data-dropdown="drop4"></span></a><br>
-													<ul id="drop4" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier</a></li>
-														<li><a href="#">Désactiver</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-											<tr>
-												<td>Daft Punk : RAM - Album</td>
-												<td>Musique</td>
-												<td>9,99€¬</td>
-												<td>12/03/14</td>
-												<td><a href="detail_offre2.html"
-													class="tiny button split">Actions<span
-														data-dropdown="drop5"></span></a><br>
-													<ul id="drop5" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier</a></li>
-														<li><a href="#">Désactiver</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-											<tr>
-												<td>Sapin de noÃ«l</td>
-												<td>Jardin</td>
-												<td>20€¬</td>
-												<td>25/12/14</td>
-												<td><a href="detail_offre3.html"
-													class="tiny button split">Actions<span
-														data-dropdown="drop6"></span></a><br>
-													<ul id="drop6" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier</a></li>
-														<li><a href="#">Désactiver</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-										</tbody>
+										<c:choose>
+											<!-- Si la liste des offres validées est vide -->
+											<c:when test="${empty offers_validated}">
+												<tr>
+													<td colspan="3">Aucune offre validée.</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<thead>
+													<tr>
+														<th>Offre</th>
+														<th>Prix</th>
+														<th>Date d'expiration</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${offers_validated}" var="offv">
+														<tr>
+															<td>${offv.titre}</td>
+															<td>${offv.prix}</td>
+															<td>${offv.dateFin}</td>
+															<td><a href="detail_offer?id=${offv.id}"
+																class="tiny button split" onclick="this.target='_blank'">Détail<span
+																	data-dropdown="drop4"></span></a><br>
+																<ul id="drop4" class="f-dropdown" data-dropdown-content>
+																	<li><a href="/edit_offer?id=${offv.id}">Modifier</a></li>
+																	<li><a href="/disable_offer?id=${offv.id}">Désactiver</a></li>
+																	<li><a href="/delete_offer?id=${offv.id}">Supprimer</a></li>
+																</ul></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</c:otherwise>
+										</c:choose>
 									</table>
 								</div>
 								<div class="content" id="panel4a">
 									<table>
-										<thead>
-											<tr>
-												<th>Offre</th>
-												<th>Domaine</th>
-												<th>Prix</th>
-												<th>Date d'expiration</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Tuyau d'arosage</td>
-												<td>Jardin</td>
-												<td>20€¬</td>
-												<td>20/03/14</td>
-												<td><a href="#" class="tiny button split">Actions<span
-														data-dropdown="dropa"></span></a><br>
-													<ul id="dropa" class="f-dropdown" data-dropdown-content>
-														<li><a href="#">Modifier</a></li>
-														<li><a href="#">Valider</a></li>
-														<li><a href="#">Supprimer</a></li>
-													</ul></td>
-											</tr>
-										</tbody>
+										<c:choose>
+											<!-- Si la liste des offres en attente est vide -->
+											<c:when test="${empty offers_waiting}">
+												<tr>
+													<td colspan="3">Aucune offre en attente.</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<thead>
+													<tr>
+														<th>Offre</th>
+														<th>Prix</th>
+														<th>Date d'expiration</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${offers_waiting}" var="offw">
+														<tr>
+															<td>${offw.titre}</td>
+															<td>${offw.prix}</td>
+															<td>${offw.dateFin}</td>
+															<td><a href="detail_offer?id=${offw.id}"
+																class="tiny button split" onclick="this.target='_blank'">Détail<span
+																	data-dropdown="drop4"></span></a><br>
+																<ul id="drop4" class="f-dropdown" data-dropdown-content>
+																	<li><a href="/edit_offer?id=${offw.id}">Modifier</a></li>
+																	<li><a href="/valid_offer?id=${offw.id}">Valider</a></li>
+																	<li><a href="/delete_offer?id=${offw.id}">Supprimer</a></li>
+																</ul></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</c:otherwise>
+										</c:choose>
 									</table>
 								</div>
 							</div>
 							<div class="left">
-								<a href="newoffer.html" class="button">Ajouter une nouvelle
-									offre</a>
+								<a href="/add_offer" class="button">Ajouter une nouvelle offre</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-4">
 							<table>
-								<thead>
-									<tr>
-										<th>Domaine</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Musique</td>
-										<td><a href="domain_Musique.html"
-											class="tiny button split">Actions<span
-												data-dropdown="drop7"></span></a><br>
-											<ul id="drop7" class="f-dropdown" data-dropdown-content>
-												<li><a href="#">Modifier</a></li>
-												<li><a href="#">Supprimer</a></li>
-											</ul></td>
-									</tr>
-									<tr>
-										<td>Décoration</td>
-										<td><a href="domain_Decoration.html"
-											class="tiny button split">Actions<span
-												data-dropdown="drop8"></span></a><br>
-											<ul id="drop8" class="f-dropdown" data-dropdown-content>
-												<li><a href="#">Modifier</a></li>
-												<li><a href="#">Supprimer</a></li>
-											</ul></td>
-									</tr>
-									<tr>
-										<td>Litterie</td>
-										<td><a href="domain_Literie.html"
-											class="tiny button split">Actions<span
-												data-dropdown="drop9"></span></a><br>
-											<ul id="drop9" class="f-dropdown" data-dropdown-content>
-												<li><a href="#">Modifier</a></li>
-												<li><a href="#">Supprimer</a></li>
-											</ul></td>
-									</tr>
-									<tr>
-										<td>Jardin</td>
-										<td><a href="domain_Jardin.html"
-											class="tiny button split">Actions<span
-												data-dropdown="drop10"></span></a><br>
-											<ul id="drop10" class="f-dropdown" data-dropdown-content>
-												<li><a href="#">Modifier</a></li>
-												<li><a href="#">Supprimer</a></li>
-											</ul></td>
-									</tr>
-								</tbody>
+								<c:choose>
+									<!-- Si la liste des offres en attente est vide -->
+									<c:when test="${empty domains}">
+										<tr>
+											<td colspan="3">Aucun domaine.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<thead>
+											<tr>
+												<th>Domaine</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${domains}" var="dom">
+												<tr>
+													<td>${dom.nom}</td>
+													<td><a href="/domain_list?id=${dom.id}"
+														class="tiny button split" onclick="this.target='_blank'">Offres<span
+															data-dropdown="drop7"></span></a><br>
+														<ul id="drop7" class="f-dropdown" data-dropdown-content>
+															<li><a href="/edit_domain?id=${dom.id}">Modifier</a></li>
+															<li><a href="/delete_domain?id=${dom.id}">Supprimer</a></li>
+														</ul></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</c:otherwise>
+								</c:choose>
 							</table>
 							<div class="left">
-								<a href="newdomain.html" class="button">Ajouter un nouveau
-									domaine</a>
+								<a href="/add_domain" class="button">Ajouter un nouveau domaine</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="myModal" class="reveal-modal xlarge" data-reveal>
-		<h2>AccÃ¨s non authorisé.</h2>
-		<p class="lead">Vous tentez d'accéder Ã  une page dont l'accÃ¨s
-			vous est interdit.</p>
-		<p>Vous allez Ãªtre redirigé vers l'accueil.</p>
-		<a class="close-reveal-modal" href="home.html">&#215;</a>
 	</div>
 	<script src="${pageContext.request.contextPath}/public-resources/js/vendor/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/public-resources/js/foundation.min.js"></script>

@@ -15,9 +15,14 @@
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
 <head>
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-resources/styles/style.css" />
-<title>Déconnection du SAG</title>
+	<link type="text/css" rel="stylesheet"
+		href="${pageContext.request.contextPath}/public-resources/styles/style.css" />
+	<title>Déconnection du SAG</title>
+    <script type="text/javascript">
+		//Redirige vers la liste de l'annuaire après 5 secondes
+		window.setTimeout("location=('${pageContext.request.contextPath}/login');",
+				5000);
+	</script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />

@@ -18,7 +18,7 @@
 <title>Authentification au SAG</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-resources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-resources/js/vendor/modernizr.js"></script>
-  </head>
+</head>
   <body>
 	<div class="row">
 		<div class="large-8 columns">
