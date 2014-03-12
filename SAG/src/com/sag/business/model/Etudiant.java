@@ -89,6 +89,14 @@ public class Etudiant extends Utilisateur{
 		this.formation = formation;
 	}
 
+	public Set<Domaine> getDomaines() {
+		return domaines;
+	}
+
+	public void setDomaines(Set<Domaine> domaines) {
+		this.domaines = domaines;
+	}
+
 	@Override
 	public String toString() {
 		return "Etudiant [logENT=" + logENT + ", nom=" + nom + ", prenom="
