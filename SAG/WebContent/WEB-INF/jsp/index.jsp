@@ -13,17 +13,15 @@
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
 	<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-resources/css/style.css" />
-<title>Accueil, redirection vers le SAG</title>
-<!-- Rédirige vers l'accueil -->
-<meta http-equiv="refresh" content="5; URL="${pageContext.request.contextPath}/home">
-</head>
-
-<body>
-	<div id='main'></div>
-</body>
-
+		<head>
+			<link type="text/css" rel="stylesheet"
+				href="${pageContext.request.contextPath}/public-resources/css/style.css" />
+			<title>Accueil, redirection vers le SAG</title>
+			<!-- Rédirige vers l'accueil -->
+			<meta http-equiv="refresh" content="5; URL="${pageContext.request.contextPath}/home">
+		</head>
+		<body>
+			<div id='main'></div>
+		</body>
 	</html>
 </jsp:root>

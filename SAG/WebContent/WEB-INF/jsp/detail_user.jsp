@@ -17,71 +17,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Accueil</title>
+    <title>SAG - Profil <c:out value=${user.nom}</c:out></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
-  <body onload="setUser()">
-    <div class="row">
-      <div class="large-12 columns">
-        <h1><b>SAG</b> - Site d'Achat GroupÃ©</h1>
-	   </div>
-		<div class="right">
-		 <div class="row collapse">
-			<div class="large-8 small-9 columns">
-			  <input type="text" id="search_in" placeholder="Rechercher une offre">
-			</div>
-			<div class="large-4 small-3 columns">
-			  <a href="#" onClick="search_key()" class="button expand postfix" >Rechercher</a>
-			</div>
-		  </div>
-         </div>
-    </div>
-	<div class="contain-to-grid sticky">
-		<nav class="top-bar" data-topbar>
-			<ul class="title-area">
-				<li class="name"></li>
-				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-			</ul>
-		   <section class="middle tab-bar-section">
-				<section class="top-bar-section">
-				<!-- Left Nav Section -->
-				<ul class="left">
-				  <li><a href="home.html">Accueil</a></li>
-				  <li class="divider"></li>
-				  <li><a href="list.html">Toutes les offres</a></li>
-				  <li class="divider"></li>
-				  <li class="has-dropdown">
-					<a href="#">Domaines</a>
-					<ul class="dropdown">
-					  <li><a href="domain_Musique.html">Musique</a></li>
-					  <li><a href="domain_Decoration.html">DÃ©coration</a></li>
-					  <li><a href="domain_Literie.html">Litterie</a></li>
-					  <li><a href="domain_Jardin.html">Jardin</a></li>
-					</ul>
-				  </li>
-				</ul>
-				<!-- Right Nav Section -->
-				<ul id="rightmenu" class="right">
-					<li class="has-dropdown">
-						<a id="username" href="#">JoÃ«l Karcher</a>
-						<ul class="dropdown">
-						  <li id="infos"><a href="detail_user1.html">Modifier mes informations</a></li>
-						  <li id="infosc"><a href="detail_company1.html">Modifier mes informations</a></li>
-						  <li id="offers"><a href="list_propose1.html">Consulter ses offres</a></li>
-						  <li><a href="login.html" onClick="clear_session()" >Se dÃ©connecter</a></li>
-						</ul>
-					</li>
-				</ul>
-			  </section>
-		</section>
-		</nav>
-	</div>
-
+  <body>
+  	<jsp:include page="/WEB-INF/jsp/header.jsp" />
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-	    <h3>Profil JoÃ«l Karcher</h3>
+	    <h3>Profil <c:out value=${user.nom}</c:out></h3>
 	    <div class="row">
 			<dl class="tabs" data-tab>
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
@@ -89,25 +34,29 @@
 			</dl>
 			<div class="tabs-content">
 			  <div class="content active" id="panel2-1">
-				<form>
+				<form:form method="post" commandName="user" accept-charset="utf-8">
+				<form:errors path="*" cssClass="errorblock" element="div" />
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Nom
-						<input id="nome" type="text" placeholder="Nom"/>
+						<form:input path="nom" placeholder="Nom"/>
+						<form:errors path="nom" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
-					  <label>PrÃ©nom
-						<input id="prenome" type="text" placeholder="PrÃ©nom" />
+					  <label>Prénom
+						<form:input path="prenom" placeholder="Prénom"/>
+						<form:errors path="prenom" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Identifiant ENT
-						<input id="ente" type="text" placeholder="PrÃ©nom" />
+						<form:input path="ent" placeholder="Identifiant ENT"/>
+						<form:errors path="ent" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -115,75 +64,74 @@
 					<div class="large-4 columns">
 					  <label>Date de naissance
 						<input id="datee" type="Date" />
+						<form:input path="dateNaiss" placeholder="Date de naissance"/>
+						<form:errors path="dateNaiss" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-8 columns">
 					  <label>Adresse postale
-						<textarea id="adressee" placeholder="Adresse postale complÃ¨te"></textarea>
+						<form:textarea path="adresse" placeholder="Adresse postale complète"/>
+						<form:errors path="adresse" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Adresse Email
-						<input id="adresseme" type="text" placeholder="Adresse Email" />
+						<form:input path="email" placeholder="Adresse Email"/>
+						<form:errors path="email" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Site internet
-						<input id="sitee" type="text" placeholder="Url du site internet" />
+						<form:input path="siteWeb" placeholder="Url du site internet"/>
+						<form:errors path="siteWeb" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Formation
-						<select id="forme">
-						  <option value="l1">Licence 1</option>
-						  <option value="l2">Licence 2</option>
-						  <option value="l3">Licence 3</option>
-						  <option value="m1">Master 1</option>
-						  <option value="m2">Master 2</option>
-						</select>
+						<form:select path="formation">
+						    <form:option value="Licence 1"/>
+						    <form:option value="Licence 2"/>
+						    <form:option value="Licence 3"/>
+						    <form:option value="Master 1"/>
+						    <form:option value="Master 2"/>
+						</form:select>
 					  </label>
 					</div>
 				  </div>
-				</form>
+				</form:form>
 			  </div>
 			  <div class="content" id="panel2-2">
-				 <div class="row">
-					<div class="large-6 columns">
-					  <label>Vous abonner aux newsletters :</label>
-					  <input type="radio" name="newsletters" value="yes" id="ynews"><label for="ynews">Oui</label>
-					  <input type="radio" name="newsletters" value="no" id="nnews"><label for="nnews">Non</label>
-					</div>
-				  </div>
 				  <div class="row">
 					<div class="large-6 columns">
-					  <label>SÃ©lectionnez les domaines suivis :</label>
-					  <input id="checkbox1" type="checkbox"><label for="checkbox1">Musique</label>
-					  <input id="checkbox2" type="checkbox"><label for="checkbox2">Literie</label>
-					  <input id="checkbox3" type="checkbox"><label for="checkbox3">Jardin</label>
+					  <label>Sélectionnez les domaines suivis :</label>
+					  <form:select path="user.domaine">
+			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
+			              <form:options items="${user.domaine}" itemLabel="nom"/>
+			          </form:select>
 					</div>
 				  </div>
 			  </div>
 			</div>
 		</div>
 		<div class="row">
-		    <a class="button" onclick="saveUser()" href="home.html" data-reveal-id="myModal" data-reveal>Enregistrer</a>
-		    <a class="button" href="home.html">Annuler</a>
+		    <a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Enregistrer</a>
+		    <a class="button" onclick="window.history.back();" href="#">Annuler</a>
 		</div>
 	   </div>
       </div>
     </div>
     <div id="myModal" class="reveal-modal" data-reveal>
-		<h2>Profil sauvegardÃ©.</h2>
-		<p class="lead">Les modifications ont bien Ã©tÃ© prises en compte.</p>
-		<p>Vous pouvez fermer cette fenÃªtre l'esprit tranquille.</p>
+		<h2>Profil sauvegardé.</h2>
+		<p class="lead">Les modifications ont bien été prises en compte.</p>
+		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
 	<script src="js/vendor/jquery.js"></script>
@@ -203,91 +151,15 @@
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MÃMOIRE|FORME|LITERIE|MEMOIRE).*$")){
+			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
 				$(location).attr('href',"detail_offre1.html");
 			}
 			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
 				$(location).attr('href',"detail_offre2.html");
 			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOÃL).*$")){
+			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOEL).*$")){
 				$(location).attr('href',"detail_offre3.html");
 			}
-		}
-	    function saveUser(){
-			if(window.sessionStorage){
-				//Formulaire
-				var nom = document.getElementById("nome").value;
-				var prenom = document.getElementById("prenome").value;
-				window.sessionStorage.setItem('nomE', nom);
-				window.sessionStorage.setItem('prenomE', prenom);
-				window.sessionStorage.setItem('entE', document.getElementById("ente").value);
-				window.sessionStorage.setItem('dateE', document.getElementById("datee").value);
-				window.sessionStorage.setItem('adresseE', document.getElementById("adressee").value);
-				window.sessionStorage.setItem('adresseME', document.getElementById("adresseme").value);
-				window.sessionStorage.setItem('siteE', document.getElementById("sitee").value);
-				window.sessionStorage.setItem('formEV', document.getElementById("forme").value);
-				//Newsletter
-				if(document.getElementById('ynews').checked){ window.sessionStorage.setItem('newsE', 'yes'); }
-				else if(document.getElementById('nnews').checked){ window.sessionStorage.setItem('newsE', 'no'); }
-				//Domaines
-				window.sessionStorage.setItem('dom1', document.getElementById('checkbox1').checked);
-				window.sessionStorage.setItem('dom2', document.getElementById('checkbox2').checked);
-				window.sessionStorage.setItem('dom3', document.getElementById('checkbox3').checked);
-				
-				refresh_account();
-			}
-			else{
-				alert('sessionStorage non gÃ©rÃ©');
-			}
-	    }
-	    
-	    function setUser(){
-			refresh_account();
-			if(window.sessionStorage){
-				if(window.sessionStorage.length > 0){
-					//Formulaire
-					var nom = window.sessionStorage.getItem('nomE');
-					var prenom = window.sessionStorage.getItem('prenomE');
-					document.getElementById("nome").value = nom;
-					document.getElementById("prenome").value  = prenom;
-					document.getElementById("ente").value = window.sessionStorage.getItem('entE');
-					document.getElementById("datee").value = window.sessionStorage.getItem('dateE');
-					document.getElementById("adressee").value  = window.sessionStorage.getItem('adresseE');
-					document.getElementById("adresseme").value  = window.sessionStorage.getItem('adresseME');
-					document.getElementById("sitee").value = window.sessionStorage.getItem('siteE');
-					if(window.sessionStorage.getItem('formEV')!=null) {
-						document.getElementById("forme").value = window.sessionStorage.getItem('formEV');
-					}
-					//Newsletter
-					if(window.sessionStorage.getItem('newsE')=='yes'){ document.getElementById('ynews').checked = true; }
-					else if(window.sessionStorage.getItem('newsE')=='no'){ document.getElementById('nnews').checked = true; }
-					//Domaines
-					if(window.sessionStorage.getItem('dom1')=='true') {document.getElementById("checkbox1").checked = true;}
-					if(window.sessionStorage.getItem('dom2')=='true') {document.getElementById("checkbox2").checked = true;}
-					if(window.sessionStorage.getItem('dom3')=='true') {document.getElementById("checkbox3").checked = true;}
-				}
-			}
-			else{
-				alert('sessionStorage non gÃ©rÃ©');
-			}
-	    }
-	    
-	    function refresh_account(){
-			if(window.sessionStorage.getItem('role')!='Etudiant'){
-				$("#infos").remove();
-			}
-			if(window.sessionStorage.getItem('role')!='Entreprise'){
-				$("#infosc").remove();
-			}
-			if(window.sessionStorage.getItem('role')=='Administrateur'){
-				$("#rightmenu").append('<li class="divider"></li><li><a href="admin.html">Administrer</a></li>');
-			}
-		    if(window.sessionStorage.getItem('nomE')!=null && window.sessionStorage.getItem('prenomE')!=null){
-			    $("#username").text(window.sessionStorage.getItem('prenomE')+" "+window.sessionStorage.getItem('nomE'));
-		    }
-	    }
-		function clear_session(){
-			window.sessionStorage.clear();
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />

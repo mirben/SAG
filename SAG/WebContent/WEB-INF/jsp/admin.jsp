@@ -85,13 +85,13 @@
 														<td>${user.role.nom}</td>
 														<td>${user.nom}</td>
 														<td>${user.prenom}</td>
-														<td><a href="/detail_user?id=${user.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
+														<td><a href="${pageContext.request.contextPath}/detail_user?id=${user.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 																data-dropdown="drop"></span></a><br>
 														<ul id="drop" class="f-dropdown" data-dropdown-content>
-																<li><a href="/switch_role_user?id=${user.id}">Modifier rôle</a></li>
-																<li><a href="/edit_user?id=${user.id}">Modifier informations</a></li>
-																<li><a href="/disable_user?id=${user.id}">Désactiver</a></li>
-																<li><a href="/delete_user?id=${user.id}">Supprimer</a></li>
+																<li><a href="${pageContext.request.contextPath}/switch_role_user?id=${user.id}">Modifier rôle</a></li>
+																<li><a href="${pageContext.request.contextPath}/edit_user?id=${user.id}">Modifier informations</a></li>
+																<li><a href="${pageContext.request.contextPath}/disable_user?id=${user.id}">Désactiver</a></li>
+																<li><a href="${pageContext.request.contextPath}/delete_user?id=${user.id}">Supprimer</a></li>
 															</ul></td>
 													</tr>
 												</c:forEach>
@@ -126,13 +126,13 @@
 														<td>${userw.role.nom}</td>
 														<td>${userw.nom}</td>
 														<td>${userw.prenom}</td>
-														<td><a href="/detail_user?id=${userw.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
+														<td><a href="${pageContext.request.contextPath}/detail_user?id=${userw.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 																data-dropdown="drop"></span></a><br>
 														<ul id="drop" class="f-dropdown" data-dropdown-content>
-																<li><a href="/switch_role_user?id=${userw.id}">Modifier rôle</a></li>
-																<li><a href="/edit_user?id=${userw.id}">Modifier informations</a></li>
-																<li><a href="/enable_user?id=${userw.id}">Activer</a></li>
-																<li><a href="/delete_user?id=${userw.id}">Supprimer</a></li>
+																<li><a href="${pageContext.request.contextPath}/switch_role_user?id=${userw.id}">Modifier rôle</a></li>
+																<li><a href="${pageContext.request.contextPath}/edit_user?id=${userw.id}">Modifier informations</a></li>
+																<li><a href="${pageContext.request.contextPath}/enable_user?id=${userw.id}">Activer</a></li>
+																<li><a href="${pageContext.request.contextPath}/delete_user?id=${userw.id}">Supprimer</a></li>
 															</ul></td>
 													</tr>
 												</c:forEach>
@@ -143,7 +143,7 @@
 								</div>
 							</div>
 							<div class="left">
-								<a href="/add_user" class="button">Ajouter un nouvel utilisateur</a>
+								<a href="${pageContext.request.contextPath}/add_user" class="button">Ajouter un nouvel utilisateur</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-2">
@@ -170,20 +170,20 @@
 												<td>${comp.nom}</td>
 												<td>${comp.siret}</td>
 												<td>${comp.site}</td>
-												<td><a href="detail_company?id=${comp.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
+												<td><a href="${pageContext.request.contextPath}/detail_company?id=${comp.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 													data-dropdown="drop3"></span></a><br>
 													<ul id="drop3" class="f-dropdown" data-dropdown-content>
-														<li><a href="edit_company?id=${comp.id}">Modifier</a></li>
+														<li><a href="${pageContext.request.contextPath}/edit_company?id=${comp.id}">Modifier</a></li>
 														<c:choose>
 															<!-- Si la liste des utilisateurs est vide -->
 															<c:when test="${company.actif==1}">
-																<li><a href="disable_company?id=${comp.id}">Désactiver</a></li>
+																<li><a href="${pageContext.request.contextPath}/disable_company?id=${comp.id}">Désactiver</a></li>
 															</c:when>
 															<c:otherwise>
-																<li><a href="enable_company?id=${comp.id}">Activer</a></li>
+																<li><a href="${pageContext.request.contextPath}/enable_company?id=${comp.id}">Activer</a></li>
 															</c:otherwise>
 														</c:choose>
-														<li><a href="delete_company?id=${comp.id}">Supprimer</a></li>
+														<li><a href="${pageContext.request.contextPath}/delete_company?id=${comp.id}">Supprimer</a></li>
 													</ul></td>
 											</tr>
 										</c:forEach>
@@ -192,7 +192,7 @@
 								</c:choose>
 							</table>
 							<div class="left">
-								<a href="/add_company" class="button">Ajouter une nouvelle entreprise</a>
+								<a href="${pageContext.request.contextPath}/add_company" class="button">Ajouter une nouvelle entreprise</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-3">
@@ -228,13 +228,13 @@
 															<td>${offv.titre}</td>
 															<td>${offv.prix}</td>
 															<td>${offv.dateFin}</td>
-															<td><a href="detail_offer?id=${offv.id}"
+															<td><a href="${pageContext.request.contextPath}/detail_offer?id=${offv.id}"
 																class="tiny button split" onclick="this.target='_blank'">Détail<span
 																	data-dropdown="drop4"></span></a><br>
 																<ul id="drop4" class="f-dropdown" data-dropdown-content>
-																	<li><a href="/edit_offer?id=${offv.id}">Modifier</a></li>
-																	<li><a href="/disable_offer?id=${offv.id}">Désactiver</a></li>
-																	<li><a href="/delete_offer?id=${offv.id}">Supprimer</a></li>
+																	<li><a href="${pageContext.request.contextPath}/edit_offer?id=${offv.id}">Modifier</a></li>
+																	<li><a href="${pageContext.request.contextPath}/disable_offer?id=${offv.id}">Désactiver</a></li>
+																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offv.id}">Supprimer</a></li>
 																</ul></td>
 														</tr>
 													</c:forEach>
@@ -266,13 +266,13 @@
 															<td>${offw.titre}</td>
 															<td>${offw.prix}</td>
 															<td>${offw.dateFin}</td>
-															<td><a href="detail_offer?id=${offw.id}"
+															<td><a href="${pageContext.request.contextPath}/detail_offer?id=${offw.id}"
 																class="tiny button split" onclick="this.target='_blank'">Détail<span
 																	data-dropdown="drop4"></span></a><br>
 																<ul id="drop4" class="f-dropdown" data-dropdown-content>
-																	<li><a href="/edit_offer?id=${offw.id}">Modifier</a></li>
-																	<li><a href="/valid_offer?id=${offw.id}">Valider</a></li>
-																	<li><a href="/delete_offer?id=${offw.id}">Supprimer</a></li>
+																	<li><a href="${pageContext.request.contextPath}/edit_offer?id=${offw.id}">Modifier</a></li>
+																	<li><a href="${pageContext.request.contextPath}/valid_offer?id=${offw.id}">Valider</a></li>
+																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offw.id}">Supprimer</a></li>
 																</ul></td>
 														</tr>
 													</c:forEach>
@@ -283,7 +283,7 @@
 								</div>
 							</div>
 							<div class="left">
-								<a href="/add_offer" class="button">Ajouter une nouvelle offre</a>
+								<a href="${pageContext.request.contextPath}/add_offer" class="button">Ajouter une nouvelle offre</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-4">
@@ -305,12 +305,12 @@
 											<c:forEach items="${domains}" var="dom">
 												<tr>
 													<td>${dom.nom}</td>
-													<td><a href="/domain_list?id=${dom.id}"
+													<td><a href="${pageContext.request.contextPath}/domain_list?id=${dom.id}"
 														class="tiny button split" onclick="this.target='_blank'">Offres<span
 															data-dropdown="drop7"></span></a><br>
 														<ul id="drop7" class="f-dropdown" data-dropdown-content>
-															<li><a href="/edit_domain?id=${dom.id}">Modifier</a></li>
-															<li><a href="/delete_domain?id=${dom.id}">Supprimer</a></li>
+															<li><a href="${pageContext.request.contextPath}/edit_domain?id=${dom.id}">Modifier</a></li>
+															<li><a href="${pageContext.request.contextPath}/delete_domain?id=${dom.id}">Supprimer</a></li>
 														</ul></td>
 												</tr>
 											</c:forEach>
@@ -319,7 +319,7 @@
 								</c:choose>
 							</table>
 							<div class="left">
-								<a href="/add_domain" class="button">Ajouter un nouveau domaine</a>
+								<a href="${pageContext.request.contextPath}/add_domain" class="button">Ajouter un nouveau domaine</a>
 							</div>
 						</div>
 					</div>

@@ -4,11 +4,11 @@
 	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8" session="false" />
-	<!-- Génère les liens pour accéder à l'annuaire, se connecter ou se déconnecter et à une page d'administration -->
+	<!-- Génère les liens pour accéder aux différentes page du site, se connecter ou se déconnecter et à une page d'administration .. -->
 	<div class="row">
 		<div class="large-12 columns">
 			<h1>
-				<b>SAG</b> - Site d'Achat GroupÃ©
+				<b>SAG</b> - Site d'Achat Groupé
 			</h1>
 		</div>
 		<div class="right">
@@ -33,35 +33,40 @@
 				<section class="top-bar-section">
 					<!-- Left Nav Section -->
 					<ul class="left">
-						<li><a href="home.html">Accueil</a></li>
+						<li><a href="${pageContext.request.contextPath}/home">Accueil</a></li>
 						<li class="divider"></li>
-						<li><a href="list.html">Toutes les offres</a></li>
-						<li class="divider"></li>
-						<li class="has-dropdown"><a href="#">Domaines</a>
-							<ul class="dropdown">
-								<li><a href="domain_Musique.html">Musique</a></li>
-								<li><a href="domain_Decoration.html">Décoration</a></li>
-								<li><a href="domain_Literie.html">Litterie</a></li>
-								<li><a href="domain_Jardin.html">Jardin</a></li>
-							</ul></li>
+						<li><a href="${pageContext.request.contextPath}/list_offer">Toutes les offres</a></li>
+						<c:if test="${not empty domains}">
+							<li class="divider"></li>
+							<li class="has-dropdown"><a href="#" id="dom_menu">Domaines</a>
+								<ul class="dropdown">
+									<c:forEach items="${domains}" var="dom">
+										<li><a href="${pageContext.request.contextPath}domain_list?idd=${dom.id}">${dom.nom}</a></li>
+									</c:forEach>
+								</ul>
+							</li>
+						</c:if>
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#">Joël
-								Karcher</a>
+						<li class="has-dropdown"><a id="username" href="#"><c:out value=${user_co}</c:out></a>
 							<ul class="dropdown">
-								<li id="infos"><a href="detail_user1.html">Modifier mes
-										informations</a></li>
-								<li id="infosc"><a href="detail_company1.html">Modifier
-										mes informations</a></li>
-								<li id="offers"><a href="list_propose1.html">Consulter
-										ses offres</a></li>
-								<li><a href="login.html" onClick="clear_session()">Se
-										déconnecter</a></li>
+								<c:choose>
+									<c:when test=${ entreprise!=null }>
+										<li id="infos"><a href="${pageContext.request.contextPath}/edit_user?id=${user_co.id}">Modifier mes informations</a></li>
+									</c:when>
+									<c:otherwise>
+										<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
+									</c:otherwise>
+								</c:choose>
+								<li id="offers"><a href="${pageContext.request.contextPath}/list_proposition?id=${user_co.id}">Consulter ses offres</a></li>
+								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
 							</ul>
 						</li>
-						<li class="divider"></li>
-						<li><a href="admin.html">Administrer</a></li>
+						<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<li class="divider"></li>
+							<li><a href="${pageContext.request.contextPath}/admin">Administrer</a></li>
+						</sec:authorize>
 					</ul>
 				</section>
 			</section>

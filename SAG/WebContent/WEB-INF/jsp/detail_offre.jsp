@@ -41,7 +41,7 @@
 				  <c:if test="${offer.fournisseur!=null}">
 				  	<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
 				  </c:if>
-				  <li class="cta-button"><a class="button" href="/join_offer?ido=${offer.id}&idu=${user.id}" data-reveal-id="myModal" data-reveal>Participer</a></li>
+				  <li class="cta-button"><a class="button" href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}&idu=${user.id}" data-reveal-id="myModal" data-reveal>Participer</a></li>
 				</ul>
 			</div>
       	</div>

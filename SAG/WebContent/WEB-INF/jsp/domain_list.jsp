@@ -17,88 +17,47 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Liste des offres - Literie</title>
+    <title>SAG - Liste des offres <c:out value=${domaine_courant}</c:out></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
-  <body onload="refresh_account()">
-    
-    <div class="row">
-      <div class="large-12 columns">
-        <h1><b>SAG</b> - Site d'Achat GroupÃ©</h1>
-	   </div>
-		<div class="right">
-		 <div class="row collapse">
-			<div class="large-8 small-9 columns">
-			  <input type="text" id="search_in" placeholder="Rechercher une offre">
-			</div>
-			<div class="large-4 small-3 columns">
-			  <a href="#" onClick="search_key()" class="button expand postfix" >Rechercher</a>
-			</div>
-		  </div>
-         </div>
-    </div>
-	<div class="contain-to-grid sticky">
-		<nav class="top-bar" data-topbar>
-			<ul class="title-area">
-				<li class="name"></li>
-				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-			</ul>
-		   <section class="middle tab-bar-section">
-				<section class="top-bar-section">
-				<!-- Left Nav Section -->
-				<ul class="left">
-				  <li><a href="home.html">Accueil</a></li>
-				  <li class="divider"></li>
-				  <li><a href="list.html">Toutes les offres</a></li>
-				  <li class="divider"></li>
-				  <li class="has-dropdown">
-					<a href="#">Domaines</a>
-					<ul class="dropdown">
-					  <li><a href="domain_Musique.html">Musique</a></li>
-					  <li class="active"><a href="domain_Decoration.html">DÃ©coration</a></li>
-					  <li><a href="domain_Literie.html">Litterie</a></li>
-					  <li><a href="domain_Jardin.html">Jardin</a></li>
-					</ul>
-				  </li>
-				</ul>
-				<!-- Right Nav Section -->
-				<ul id="rightmenu" class="right">
-				  <li class="has-dropdown">
-					<a id="username" href="#">JoÃ«l Karcher</a>
-					<ul class="dropdown">
-						  <li id="infos"><a href="detail_user1.html">Modifier mes informations</a></li>
-						  <li id="infosc"><a href="detail_company1.html">Modifier mes informations</a></li>
-						  <li id="offers"><a href="list_propose1.html">Consulter ses offres</a></li>
-						  <li><a href="login.html" onClick="clear_session()" >Se dÃ©connecter</a></li>
-						</ul>
-				  </li>
-				</ul>
-			  </section>
-		</section>
-		</nav>
-	</div>
-	
+  <body>
+    <jsp:include page="/WEB-INF/jsp/header.jsp" />
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-        <h3>Liste des offres - DÃ©coration</h3>
+        <h3>Liste des offres - <c:out value=${domaine_courant}</c:out></h3>
 		<div class="row">
-				 <table>
-				  <thead>
-					<tr>
-					  <th width="300">Offre</th>
-					  <th width="150">Domaine</th>
-					  <th width="150">Prix</th>
-					  <th width="150">Date de clÃ´ture</th>
-					</tr>
-				  </thead>
-				  <tbody>
-					<tr>
-					  <td>Aucune offre.</td>
-					</tr>
-				  </tbody>
-				</table>
+			 <table>
+			 	<c:choose>
+					<!-- Si la liste des offres est vide -->
+					<c:when test="${empty offer_domaine}">
+						<tr>
+							<td colspan="3">Aucune offre dans le domaine <c:out value=${domaine_courant}</c:out>.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<thead>
+							<tr>
+							  <th width="300">Offre</th>
+							  <th width="150">Prix</th>
+							  <th width="150">Date de clôture</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- On parcours toutes les offres  -->
+							<c:forEach items="${offer_domaine}" var="offerd">
+								<tr>
+									<td>${offerd.titre}</td>
+									<td>${offerd.prix}</td>
+									<td>${offerd.dateFin}</td>
+									<td><a href="${pageContext.request.contextPath}/detail_offer?id=${offerd.id}" class="tiny button" onclick="this.target='_blank'">Accéder à la fiche</a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</c:otherwise>
+				</c:choose>
+			</table>
 		  </div>
 		</div>
 	   </div>
@@ -121,32 +80,15 @@
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MÃMOIRE|FORME|LITERIE|MEMOIRE).*$")){
+			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
 				$(location).attr('href',"detail_offre1.html");
 			}
 			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
 				$(location).attr('href',"detail_offre2.html");
 			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOÃL).*$")){
+			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOEL).*$")){
 				$(location).attr('href',"detail_offre3.html");
 			}
-		}
-		function refresh_account(){
-			if(window.sessionStorage.getItem('role')!='Etudiant'){
-				$("#infos").remove();
-			}
-			if(window.sessionStorage.getItem('role')!='Entreprise'){
-				$("#infosc").remove();
-			}
-			if(window.sessionStorage.getItem('role')=='Administrateur'){
-				$("#rightmenu").append('<li class="divider"></li><li><a href="admin.html">Administrer</a></li>');
-			}
-		    if(window.sessionStorage.getItem('nomE')!=null && window.sessionStorage.getItem('prenomE')!=null){
-			    $("#username").text(window.sessionStorage.getItem('prenomE')+" "+window.sessionStorage.getItem('nomE'));
-		    }
-	    }
-		function clear_session(){
-			window.sessionStorage.clear();
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
