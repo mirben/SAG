@@ -52,7 +52,7 @@ public interface DomaineDao {
 	 * @param domaine
 	 * @return Domaine
 	 */
-	Domaine sauvagarder(Domaine domaine);
+	Domaine sauvegarder(Domaine domaine);
 
 	/**
 	 * Supprimer une domaine

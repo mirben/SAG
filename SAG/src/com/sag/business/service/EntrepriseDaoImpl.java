@@ -2,6 +2,10 @@ package com.sag.business.service;
 
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,16 +18,21 @@ import com.sag.business.model.Entreprise;
 /**
  * @version1
  * @author NGUYEN Tuan
+ * @author MIRETTI Benjamin
  *
  */
-@Repository("entrepriseDao")
-@Transactional(readOnly = true)
+@Remote(value = EntrepriseDao.class)
+@Stateless(name = "entrepriseDao", description = "Dao pour entreprise")
+@Startup
 public class EntrepriseDaoImpl implements EntrepriseDao{
+	
+	@PersistenceContext(unitName = "SAG_PU")
 	private EntityManager em;
 
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	@PostConstruct
+	public void init() {
+		System.out.println("Dao init : " + this);
+		System.out.println("em = " + em);
 	}
 	
 	@Override
@@ -51,13 +60,11 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 	}
 
 	@Override
-    @Transactional(readOnly = false)
-	public Entreprise sauvagarder(Entreprise entreprise) {
+	public Entreprise sauvegarder(Entreprise entreprise) {
 		return em.merge(entreprise);
 	}
 
 	@Override
-    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return (chercherParID(id) == null);
