@@ -2,6 +2,10 @@ package com.sag.business.service;
 
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -14,21 +18,24 @@ import com.sag.business.model.StatutUtilisateur;
 
 /**
  * @version 1
- * @author tuan 
+ * @author NGUYEN tuan 
+ * @author MIRETTI Benjamin
  * Interface d'objet d'accès aux données Etudiant.
  */
 
-@Repository("entrepriseDao")
-@Transactional(readOnly = true)
+@Remote(value = EtudiantDao.class)
+@Stateless(name = "etudiantDao", description = "Dao pour étudiant")
+@Startup
 public class EtudiantDaoImpl implements EtudiantDao {
 
+	@PersistenceContext(unitName = "SAG_PU")
 	private EntityManager em;
 
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	@PostConstruct
+	public void init() {
+		System.out.println("Dao init : " + this);
+		System.out.println("em = " + em);
 	}
-
 
 	@Override
 	public Etudiant chercherParID(int id) {
@@ -71,7 +78,7 @@ public class EtudiantDaoImpl implements EtudiantDao {
 	}
 
 	@Override
-	public Etudiant sauvagarder(Etudiant etudiant) {
+	public Etudiant sauvegarder(Etudiant etudiant) {
 				return em.merge(etudiant);
 	}
 

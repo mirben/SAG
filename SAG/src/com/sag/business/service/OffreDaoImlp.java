@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,19 +20,22 @@ import com.sag.business.model.Offre;
  * classe implémentation de OfferDao
  * 
  * @version 1
- * @author tuan
- * 
+ * @author NGUYENtuan
+ * @author MIRETTI Benjamin
  */
 
-@Repository("OffreDao")
-@Transactional(readOnly = true)
+@Remote(value = OffreDao.class)
+@Stateless(name = "offreDao", description = "Dao pour offre")
+@Startup
 public class OffreDaoImlp implements OffreDao {
 
+	@PersistenceContext(unitName = "SAG_PU")
 	private EntityManager em;
 
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	@PostConstruct
+	public void init() {
+		System.out.println("Dao init : " + this);
+		System.out.println("em = " + em);
 	}
 
 	@Override
@@ -51,8 +58,7 @@ public class OffreDaoImlp implements OffreDao {
 	}
 
 	@Override
-	@Transactional(readOnly = false)
-	public Offre sauvagarder(Offre offre) {
+	public Offre sauvegarder(Offre offre) {
 		return em.merge(offre);
 	}
 

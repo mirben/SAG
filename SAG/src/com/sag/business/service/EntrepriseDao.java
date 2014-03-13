@@ -41,7 +41,7 @@ public interface EntrepriseDao {
 	  * @param entreprise
 	  * @return Entreprise
 	  */
-	Entreprise sauvagarder(Entreprise entreprise);
+	Entreprise sauvegarder(Entreprise entreprise);
 	
 	/**
 	  * Supprimer une entreprise.

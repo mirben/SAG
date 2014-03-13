@@ -2,28 +2,36 @@ package com.sag.business.service;
 
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sag.business.model.Domaine;
 /**
  * @version1
  * @author NGUYEN Tuan
+ * @author MIRETTI Benjamin
  *
  */
-@Repository
-@Transactional(readOnly = true)
+@Remote(value = DomaineDao.class)
+@Stateless(name = "domaineDao", description = "Dao pour domaines")
+@Startup
 public class DomaineDaoImpl implements DomaineDao {
+	
+	@PersistenceContext(unitName = "SAG_PU")
 	private EntityManager em;
 
-	@PersistenceContext
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	@PostConstruct
+	public void init() {
+		System.out.println("Dao init : " + this);
+		System.out.println("em = " + em);
 	}
-
+	
 	@Override
 	public Domaine chercherParID(int id) {
 		return em.find(Domaine.class, id);
@@ -51,13 +59,11 @@ public class DomaineDaoImpl implements DomaineDao {
 	}
 
 	@Override
-    @Transactional(readOnly = false)
-	public Domaine sauvagarder(Domaine domaine) {
+	public Domaine sauvegarder(Domaine domaine) {
 		return em.merge(domaine);
 	}
 
 	@Override
-    @Transactional(readOnly = false)
 	public Boolean supprimer(int id) {
 		em.remove(id);
 		return (chercherParID(id) == null);

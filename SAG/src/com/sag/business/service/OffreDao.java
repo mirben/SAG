@@ -50,7 +50,7 @@ public interface OffreDao {
 	 * @param offre
 	 * @return
 	 */
-	public Offre sauvagarder(Offre offre);
+	public Offre sauvegarder(Offre offre);
 
 	/**
 	 * Supprimer une offre

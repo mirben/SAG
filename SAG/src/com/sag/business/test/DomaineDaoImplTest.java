@@ -1,17 +1,13 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import javax.inject.Qualifier;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,17 +15,29 @@ import com.sag.business.model.Domaine;
 import com.sag.business.service.DomaineDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:**/sag-servlet.xml"})
+@ContextConfiguration(locations={"classpath:sag-servlet.xml"})
 public class DomaineDaoImplTest {
 	
 
-	@Autowired
-	private DomaineDao domaineDao;
-	
-	@BeforeClass
-	public static void init(){
-		
-	}
+	final Context initial;
+	final DomaineDao domaineDao;
+
+    /**
+     * 
+     * @throws NamingException
+     */
+    public DomaineDaoImplTest() throws NamingException {
+        initial = new InitialContext();
+        Object o = initial
+                .lookup("java:global/classpath.ear/SAG/domaineDao!com.sag.business.service.DomaineDao");
+        assertTrue(o instanceof DomaineDao);
+        domaineDao = (DomaineDao) o;
+    }
+    
+//	@BeforeClass
+//	public static void init(){
+//		
+//	}
 	
 	/**
      * 
@@ -40,15 +48,18 @@ public class DomaineDaoImplTest {
 	public void testSauvagarder() {
 		//Test ajout
 		Domaine domaine = new Domaine("Informatique");
-		domaineDao.sauvagarder(domaine);
-		System.out.println(domaine);
+		domaine = domaineDao.sauvagarder(domaine);
+		System.out.println("domaine ajouté : " + domaine);
 		Domaine savedDomaine = domaineDao.chercherParID(domaine.getId());
+		System.out.println("domaine récupéré : " + savedDomaine);
 		assertEquals(domaine, savedDomaine);
 		
 		//test modification
 		savedDomaine.setNom("Cinéma");
+		System.out.println("domaine modifié : " + savedDomaine);
 		domaineDao.sauvagarder(savedDomaine);
 		Domaine modifiedDomaine = domaineDao.chercherParID(savedDomaine.getId());
+		System.out.println("domaine récupéré : " + modifiedDomaine);
 		assertEquals(savedDomaine, modifiedDomaine);
 
 	}

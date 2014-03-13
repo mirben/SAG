@@ -60,7 +60,7 @@ public interface EtudiantDao {
 	 * @param etudiant
 	 * @return Collection<Etudiant>
 	 */
-	Etudiant sauvagarder(Etudiant etudiant);
+	Etudiant sauvegarder(Etudiant etudiant);
 	
 	/**
 	 * Supprimer un étudiant, 
