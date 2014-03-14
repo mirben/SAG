@@ -66,64 +66,68 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Participants minimum
-						<input id="partmin" type="number" min="0" placeholder="Nombre de participants minimum"/>
 						<form:input path="participantsMin" placeholder="Nombre de participants minimum"/>
-						<form:errors path="fournisseur" cssClass="error" />
+						<form:errors path="participantsMin" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Participants maximum
-						<input id="partmax" type="number" min="0" placeholder="Nombre de participants maximum"/>
+						<form:input path="participantsMax" placeholder="Nombre de participants maximum"/>
+						<form:errors path="participantsMax" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Prix (€)
-						<input id="prixo" type="number" min="0" placeholder="Prix de l'offre"/>
+						<form:input path="prix" placeholder="Prix de l'offre"/>
+						<form:errors path="prix" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Statut
-						<select id="statuto">
-						  <option value="theo">Brouillon</option>
-						  <option value="conc">Envoyée</option>
-						  <option value="theo">Active</option>
-						  <option value="conc">Terminée</option>
-						</select>
+						<form:select path="statut">
+						    <form:option value="Brouillon"/>
+						    <form:option value="Envoyée"/>
+						    <form:option value="Active"/>
+						    <form:option value="Terminée"/>
+						</form:select>
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Date de début
-						<input id="datedo" type="date" />
+						<form:input path="dateDebut"/>
+						<form:errors path="dateDebut" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Date de fin
-						<input id="datefo" type="date" />
+						<form:input path="dateFin"/>
+						<form:errors path="dateFin" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Site internet
-						<input id="siteo" type="text" placeholder="Url du site internet" />
+						<form:input path="siteWeb" placeholder="Url du site internet" />
+						<form:errors path="siteWeb" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" href="admin.html" data-reveal-id="myModal" data-reveal>Ajouter</a>
-				<a class="button" href="admin.html">Annuler</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
+				<a class="button" onclick="window.history.back();" href="#">Annuler</a>
 			  </div>
 			</div>
 		</div>

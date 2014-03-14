@@ -17,9 +17,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Accueil</title>
-    <link rel="stylesheet" href="css/foundation.css" />
-    <script src="js/vendor/modernizr.js"></script>
+    <title>SAG - Formulaire d'inscription</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
+    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"></script>
   </head>
   <body>
 	<div class="row">
@@ -30,6 +30,8 @@
 				<h3>Inscription - <b>SAG</b></h3>
 				<div class="panel">
 					<div class="row">
+						<form:form method="post" commandName="user" accept-charset="utf-8">
+						<form:errors path="*" cssClass="errorblock" element="div" />
 						<dl class="tabs" data-tab>
 						  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 						  <dd><a href="#panel2-2">Domaines</a></dd>
@@ -40,89 +42,90 @@
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Nom
-									<input id="nome" type="text" placeholder="Nom"/>
+									<form:input path="nom" placeholder="Nom"/>
+									<form:errors path="nom" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Prénom
-									<input id="prenome" type="text" placeholder="Prénom" />
+									<form:input path="prenom" placeholder="Prénom"/>
+									<form:errors path="prenom" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Identifiant ENT
-									<input id="ente" type="text" placeholder="Identifiant ENT" />
+									<form:input path="ent" placeholder="Identifiant ENT"/>
+									<form:errors path="ent" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Date de naissance
-									<input id="datee" type="Date" />
+									<form:input path="dateNaiss" placeholder="Date de naissance"/>
+									<form:errors path="dateNaiss" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-8 columns">
 								  <label>Adresse Postale
-									<textarea id="adressee" placeholder="Adresse postale complète"></textarea>
+									<form:textarea path="adresse" placeholder="Adresse postale complète"/>
+									<form:errors path="adresse" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Adresse Email
-									<input id="adresseme" type="text" placeholder="Adresse Email"/>
+									<form:input path="email" placeholder="Adresse Email"/>
+									<form:errors path="email" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Site internet
-									<input id="sitee" type="text" placeholder="Url du site internet" />
+									<form:input path="siteWeb" placeholder="Url du site internet"/>
+									<form:errors path="siteWeb" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Formation
-									<select id="forme">
-									  <option value="l1">Licence 1</option>
-									  <option value="l2">Licence 2</option>
-									  <option value="l3">Licence 3</option>
-									  <option value="m1">Master 1</option>
-									  <option value="m2">Master 2</option>
-									</select>
+									<form:select path="statut">
+									    <form:option value="Licence 1"/>
+									    <form:option value="Licence 2"/>
+									    <form:option value="Licence 3"/>
+									    <form:option value="Master 1"/>
+									    <form:option value="Master 2"/>
+									</form:select>
 								  </label>
 								</div>
 							  </div>
-							</form>
 						  </div>
 						  <div class="content" id="panel2-2">
-							 <div class="row">
-								<div class="large-6 columns">
-								  <label>Vous abonner aux newsletters :</label>
-								  <input type="radio" name="newsletters" value="yes" id="ynews"><label for="ynews">Oui</label>
-								  <input type="radio" name="newsletters" value="no" id="nnews"><label for="nnews">Non</label>
-								</div>
-							  </div>
 							  <div class="row">
 								<div class="large-6 columns">
 								  <label>Sélectionnez les domaines suivis :</label>
-								  <input id="checkbox1" type="checkbox"><label for="checkbox1">Musique</label>
-								  <input id="checkbox2" type="checkbox"><label for="checkbox2">Literie</label>
-								  <input id="checkbox3" type="checkbox"><label for="checkbox3">Jardin</label>
+								  <form:select path="user.domaine">
+			              			<form:option value="-" label="-- Sélectionnez les domaines --"/>
+						            <form:options items="${user.domaine}" itemLabel="nom"/>
+						          </form:select>
 								</div>
 							  </div>
 						  </div>
 						</div>
+						</form:form>
 					</div>
 					<div class="row">
-						<a class="button" href="login.html" data-reveal-id="myModal" data-reveal>Envoyer</a>
-						<a class="button" href="login.html">Annuler</a>
+						<a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal>Envoyer</a>
+		    			<a class="button" onclick="window.history.back();" href="#">Annuler</a>
 					</div>
 				 </div>
 			</div>
@@ -134,9 +137,9 @@
 		<p>Un email vous sera envoyé à  l'adresse renseignée dès que votre inscription aura été validée.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"></script>
 	<script>
 	  $(document).foundation();
 	</script>

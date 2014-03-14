@@ -28,14 +28,14 @@
       	<div class="panel">
 	    <h3>Profil <c:out value=${user.nom}</c:out></h3>
 	    <div class="row">
+	    	<form:form method="post" commandName="user" accept-charset="utf-8">
+			<form:errors path="*" cssClass="errorblock" element="div" />
 			<dl class="tabs" data-tab>
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 			  <dd><a href="#panel2-2">Domaines</a></dd>
 			</dl>
 			<div class="tabs-content">
 			  <div class="content active" id="panel2-1">
-				<form:form method="post" commandName="user" accept-charset="utf-8">
-				<form:errors path="*" cssClass="errorblock" element="div" />
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Nom
@@ -106,7 +106,6 @@
 					  </label>
 					</div>
 				  </div>
-				</form:form>
 			  </div>
 			  <div class="content" id="panel2-2">
 				  <div class="row">
@@ -120,6 +119,7 @@
 				  </div>
 			  </div>
 			</div>
+			</form:form>
 		</div>
 		<div class="row">
 		    <a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Enregistrer</a>
