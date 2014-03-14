@@ -10,8 +10,6 @@ import javax.naming.NamingException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.quartz.impl.calendar.AnnualCalendar;
 
 import com.sag.business.model.Entreprise;
 import com.sag.business.model.Role;
@@ -52,9 +50,7 @@ public class EntrepriseDaoTest {
 		assertTrue(o instanceof EntrepriseDao);
 		entrepriseDao = (EntrepriseDao) o;
 
-		// Ajout de deux domaines pour les tests
-		// Utilise Sauvegarder donc si le test ne passe pas, cette partie ne
-		// fonctionne pas
+		
 		entreprisesTest = new Vector<Entreprise>();
 		Entreprise testEtpr1, testEtpr2;
 
