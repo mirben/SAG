@@ -29,13 +29,13 @@
 						<legend>ENT - Authentifiez vous</legend>
 						<div class="name-field">
 							<label>Identifiant *
-							  <input type="text" id="login" name='username' placeholder="Identifiant" required pattern="^(k1104696|admin|fnac)$" />
+							  <input type="text" id="login" name='username' placeholder="Identifiant" required />
 							</label>
 							<small class="error">Identifiant incorrect</small>
 						</div>
 						<div class="password-field">
 							<label>Mot de passe *
-							  <input type="password" name='password' placeholder="Mot de passe" required pattern="^(k1104696|admin|fnac)$" />
+							  <input type="password" name='password' placeholder="Mot de passe" required />
 							</label>
 							<small class="error">Mot de passe incorrect</small>
 						</div>
@@ -47,10 +47,9 @@
 					<div class="right">
 							<span data-tooltip data-options="disable_for_touch:true" class="has-tip" 
 								title="<dl>
-											<dt>Rôle : Identifiant // Mot de passe</dt>
-											<dd>- Etudiant : k1104696 // k1104696</dd>
-											<dd>- Administrateur : admin // admin</dd>
-											<dd>- Entreprise : fnac // fnac</dd>
+											<dt>Etudiants et entreprises</dt>
+											<dd>- Entreprise : cochez la case correspondante,</dd>
+											<dd>- Etudiant : renseignez vos identifiants ENT.</dd>
 										</dl>">
 								<input id="submit_button" type="submit" class="small button" value="Se connecter" />
 							</span>
@@ -58,16 +57,16 @@
 				</form>
 			</div>
 			<div class="row">
-				<p>Vous n'êtes pas encore inscrit ? <a id="register_button" href="register.html">S'inscrire</a>.</p>
+				<p>Vous n'êtes pas encore inscrit ? <a id="register_button" href="${pageContext.request.contextPath}/register">S'inscrire</a>.</p>
 				
 			</div>
 		</div>
     </div>
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.js"></script>
-	<script src="js/foundation/foundation.abide.js"></script>
-	<script src="js/foundation/foundation.tooltip.js"></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.abide.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js"></script>
     <script>
       $(document).foundation();
     </script>

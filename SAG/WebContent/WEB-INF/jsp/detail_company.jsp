@@ -50,7 +50,7 @@
 					<div class="large-8 columns">
 					  <label>Adresse Postale
 					  	<form:textarea path="adresse" placeholder="Adresse postale du siège social"/>
-						<form:errors path="nom" cssClass="error" />
+						<form:errors path="adresse" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -86,9 +86,9 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
 	<script>
 	  $(document).foundation();
 	</script>

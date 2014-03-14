@@ -19,7 +19,7 @@
 		href="${pageContext.request.contextPath}/public-resources/styles/style.css" />
 	<title>Déconnection du SAG</title>
     <script type="text/javascript">
-		//Redirige vers la liste de l'annuaire après 5 secondes
+		//Redirige vers la page d'authentification après 5 secondes
 		window.setTimeout("location=('${pageContext.request.contextPath}/login');",
 				5000);
 	</script>

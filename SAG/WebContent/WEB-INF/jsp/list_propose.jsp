@@ -20,8 +20,8 @@
 			<c:out value="${user.prenom} "</c:out></c:if>
 			<c:out value=${user_co.nom}</c:out>
 			</title>
-			<link rel="stylesheet" href="css/foundation.css" />
-			<script src="js/vendor/modernizr.js"></script>
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+			<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
 		</head>
   		<body>
 			<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -72,9 +72,9 @@
 				</div>
 			   </div>
 			</div>
-		    <script src="js/vendor/jquery.js"></script>
-		    <script src="js/foundation.min.js"></script>
-			<script src="js/foundation/foundation.topbar.js"></script>
+		    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+		    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+			<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
 		    <script>
 		      $(document).foundation();
 		    </script>

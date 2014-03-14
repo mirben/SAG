@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Détail <c:out value=${offer.titre}</c:out></title>
     <link rel="stylesheet" href="css/foundation.css" />
-    <script src="js/vendor/modernizr.js"></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
   </head>
   <body>
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -53,10 +53,10 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.topbar.js"></script>
-	<script src="js/foundation/foundation.clearing.js"></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.clearing.js"></script>
     <script>
       $(document).foundation();
     </script>

@@ -12,106 +12,54 @@
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Accueil</title>
-    <link rel="stylesheet" href="css/foundation.css" />
-    <script src="js/vendor/modernizr.js"></script>
-  </head>
-  <body onload="refresh_account()">
-    <div class="row">
-      <div class="large-12 columns">
-        <h1><b>SAG</b> - Site d'Achat GroupÃ©</h1>
-	   </div>
-		<div class="right">
-		 <div class="row collapse">
-			<div class="large-8 small-9 columns">
-			  <input type="text" id="search_in" placeholder="Rechercher une offre">
-			</div>
-			<div class="large-4 small-3 columns">
-			  <a href="#" onClick="search_key()" class="button expand postfix" >Rechercher</a>
-			</div>
-		  </div>
-         </div>
-    </div>
-	<div class="contain-to-grid sticky">
-		<nav class="top-bar" data-topbar>
-			<ul class="title-area">
-				<li class="name"></li>
-				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
-			</ul>
-		   <section class="middle tab-bar-section">
-				<section class="top-bar-section">
-				<!-- Left Nav Section -->
-				<ul class="left">
-				  <li><a href="home.html">Accueil</a></li>
-				  <li class="divider"></li>
-				  <li><a href="list.html">Toutes les offres</a></li>
-				  <li class="divider"></li>
-				  <li class="has-dropdown">
-					<a href="#">Domaines</a>
-					<ul class="dropdown">
-					  <li><a href="domain_Musique.html">Musique</a></li>
-					  <li><a href="domain_Decoration.html">DÃ©coration</a></li>
-					  <li><a href="domain_Literie.html">Litterie</a></li>
-					  <li><a href="domain_Jardin.html">Jardin</a></li>
-					</ul>
-				  </li>
-				</ul>
-				<!-- Right Nav Section -->
-				<ul id="rightmenu" class="right">
-					<li class="has-dropdown">
-						<a id="username" href="#">JoÃ«l Karcher</a>
-						<ul class="dropdown">
-						  <li id="infos"><a href="detail_user1.html">Modifier mes informations</a></li>
-						  <li id="infosc"><a href="detail_company1.html">Modifier mes informations</a></li>
-						  <li id="offers"><a href="list_propose1.html">Consulter ses offres</a></li>
-						  <li><a href="login.html" onClick="clear_session()" >Se dÃ©connecter</a></li>
-						</ul>
-					</li>
-				</ul>
-			  </section>
-		</section>
-		</nav>
-	</div>
-
+	<head>
+	    <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>SAG - Nouvelle offre</title>
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
+	    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"></script>
+		</head>
+  <body>
+  	<jsp:include page="/WEB-INF/jsp/header.jsp" />
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
 			<h3>Nouvelle offre</h3>
 			<div class="row">
-				<form>
+				<form:form method="post" commandName="offre" accept-charset="utf-8">
+				<form:errors path="*" cssClass="errorblock" element="div" />
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Titre
-						<input id="titreo" type="text" placeholder="Titre de l'offre"/>
+						<form:input path="titre" placeholder="Titre de l'offre"/>
+						<form:errors path="titre" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-8 columns">
 					  <label>Description
-						<textarea id="desco" placeholder="Description de l'offre"></textarea>
+						<form:textarea path="description" placeholder="Description de l'offre"/>
+						<form:errors path="description" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Type
-						<select id="typeo">
-						  <option value="theo">ThÃ©orique</option>
-						  <option value="conc">ConcrÃ¨te</option>
-						</select>
+						<form:select path="type">
+						    <form:option value="Théorique"/>
+						    <form:option value="Concrète"/>
+						</form:select>
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Fournisseur
-						<input id="fournio" type="text" placeholder="Entreprise fournisseur de l'offre"/>
+						<form:input path="fournisseur" placeholder="Entreprise fournisseur de l'offre"/>
+						<form:errors path="fournisseur" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -119,6 +67,8 @@
 					<div class="large-4 columns">
 					  <label>Participants minimum
 						<input id="partmin" type="number" min="0" placeholder="Nombre de participants minimum"/>
+						<form:input path="participantsMin" placeholder="Nombre de participants minimum"/>
+						<form:errors path="fournisseur" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -131,7 +81,7 @@
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
-					  <label>Prix (â¬)
+					  <label>Prix (€)
 						<input id="prixo" type="number" min="0" placeholder="Prix de l'offre"/>
 					  </label>
 					</div>
@@ -141,16 +91,16 @@
 					  <label>Statut
 						<select id="statuto">
 						  <option value="theo">Brouillon</option>
-						  <option value="conc">EnvoyÃ©e</option>
+						  <option value="conc">Envoyée</option>
 						  <option value="theo">Active</option>
-						  <option value="conc">TerminÃ©e</option>
+						  <option value="conc">Terminée</option>
 						</select>
 					  </label>
 					</div>
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
-					  <label>Date de dÃ©but
+					  <label>Date de début
 						<input id="datedo" type="date" />
 					  </label>
 					</div>
@@ -169,7 +119,7 @@
 					  </label>
 					</div>
 				  </div>
-				</form>
+				</form:form>
 			  </div>
 			  <div class="row">
 				<a class="button" href="admin.html" data-reveal-id="myModal" data-reveal>Ajouter</a>
@@ -180,14 +130,14 @@
 	  </div>
 	</div>
     <div id="myModal" class="reveal-modal" data-reveal>
-		<h2>Nouvelle offre sauvegardÃ©e.</h2>
-		<p class="lead">L'ajout a bien Ã©tÃ© pris en compte.</p>
-		<p>Vous pouvez fermer cette fenÃªtre l'esprit tranquille.</p>
+		<h2>Nouvelle offre sauvegardée.</h2>
+		<p class="lead">L'ajout a bien été pris en compte.</p>
+		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/foundation.min.js"></script>
-	<script src="js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}js/foundation/foundation.topbar.js"></script>
 	<script>
 	  $(document).foundation();
 	</script>
@@ -202,33 +152,15 @@
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MÃMOIRE|FORME|LITERIE|MEMOIRE).*$")){
+			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
 				$(location).attr('href',"detail_offre1.html");
 			}
 			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
 				$(location).attr('href',"detail_offre2.html");
 			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOÃL).*$")){
+			if(chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")){
 				$(location).attr('href',"detail_offre3.html");
 			}
-		}
-	    
-	    function refresh_account(){
-			if(window.sessionStorage.getItem('role')!='Etudiant'){
-				$("#infos").remove();
-			}
-			if(window.sessionStorage.getItem('role')!='Entreprise'){
-				$("#infosc").remove();
-			}
-			if(window.sessionStorage.getItem('role')=='Administrateur'){
-				$("#rightmenu").append('<li class="divider"></li><li><a href="admin.html">Administrer</a></li>');
-			}
-		    if(window.sessionStorage.getItem('nomE')!=null && window.sessionStorage.getItem('prenomE')!=null){
-			    $("#username").text(window.sessionStorage.getItem('prenomE')+" "+window.sessionStorage.getItem('nomE'));
-		    }
-	    }
-		function clear_session(){
-			window.sessionStorage.clear();
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
