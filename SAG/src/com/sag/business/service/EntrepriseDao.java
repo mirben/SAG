@@ -3,6 +3,7 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import com.sag.business.model.Entreprise;
+import com.sag.business.model.Role;
 
 /**
  * @version 1
@@ -49,5 +50,7 @@ public interface EntrepriseDao {
 	  * @return Boolean
 	  */
 	Boolean supprimer(int id);
+	
+	Role chercherRoleParID(int id);
 	
 }

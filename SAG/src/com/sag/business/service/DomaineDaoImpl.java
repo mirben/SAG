@@ -3,7 +3,6 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
@@ -44,8 +43,8 @@ public class DomaineDaoImpl implements DomaineDao {
 		TypedQuery<Domaine> q= em.createQuery("select d from Domaine d where d.nom = :nom", Domaine.class);
 		q.setParameter("nom", nom);
 		try{
-			Domaine d = q.getSingleResult();
-			return d;
+			return q.getSingleResult();
+			
 		}catch(NoResultException e){
 			return null;
 		}
@@ -74,7 +73,7 @@ public class DomaineDaoImpl implements DomaineDao {
 		Domaine d = chercherParID(id);
 		if(d != null)
 		{
-			em.remove(chercherParID(id));
+			em.remove(d);
 			return (chercherParID(id) == null);
 		}
 		return false;
