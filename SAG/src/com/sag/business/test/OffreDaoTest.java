@@ -27,21 +27,26 @@ import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Type;
-import com.sag.business.service.DomaineDao;
+import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
+import com.sag.business.service.UtilisateurDao;
 
 public class OffreDaoTest {
 	private static Context initial;
-	private static EtudiantDao etudiantDao;
 	private static OffreDao offreDao;
-	private static Vector<Offre> domainesTest;
+	private static UtilisateurDao utilisateurDao;
+	private static EtudiantDao etudiantDao;
+	private static EntrepriseDao entrepriseDao;
+	private static Vector<Offre> offresTest;
 	
 	@AfterClass
 	public static void clean(){
 		for (Offre curDom : domainesTest) {
 			offreDao.supprimer(curDom.getId());
 		}
+		//On nettoie aussi les jeux de test des autres lcasses de test utilisées dans l'ordre inverse d'initialisation
+		DomaineDaoImplTest.clean();
 	}
     /**
      * 
@@ -56,7 +61,10 @@ public class OffreDaoTest {
         assertTrue(o instanceof OffreDao);
         offreDao = (OffreDao) o;
         
-		//Ajout de deux domaines pour les tests
+        //On utilise le jeu de tests des autres classes de test
+        DomaineDaoImplTest.init();
+        
+		//Ajout de deux offres pour les tests
 		//Utilise Sauvegarder donc si le test ne passe pas, cette partie ne fonctionne pas
 		OffresTest = new Vector<Offre>();
 		Offre testDom1, testDom2;

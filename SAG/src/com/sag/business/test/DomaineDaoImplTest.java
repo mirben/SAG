@@ -21,7 +21,7 @@ public class DomaineDaoImplTest {
 
 	private static Context initial;
 	private static DomaineDao domaineDao;
-	private static Vector<Domaine> domainesTest;
+	public static Vector<Domaine> domainesTest;
 	
 	@AfterClass
 	public static void clean(){
