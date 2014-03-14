@@ -26,48 +26,50 @@ public interface EtudiantDao {
 	 * @param idEnt
 	 * @return Etudiant
 	 */
-	Etudiant chercherParEnt(String string);
+	public Etudiant chercherParEnt(String string);
 	
 	/**
 	 * Récupérer des étudiants par domaine
 	 * @param domaine
 	 * @return Collection<Etudiant>
 	 */
-	Collection<Etudiant> chercherParDomaine(String domaine);
+	public Collection<Etudiant> chercherParDomaine(String domaine);
 	
 	/**
 	 * Récupérer des étudiants par statut
 	 * @param statut
 	 * @return Collection<Etudiant>
 	 */
-	Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
+	public Collection<Etudiant> chercherParStatut(StatutUtilisateur statut);
 	
 	/**
 	 * Récupérer tous les étudiants
 	 * @return Collection<Etudiant>
 	 */
 
-	Collection<Etudiant> chercherTous();
+	public Collection<Etudiant> chercherTous();
 	
 	/**
 	 * Récupérer tous les étudiants par block de offset à limite
 	 * @return Collection<Etudiant>
+	 * @param int offset : Index de début pour le résultat (commence à 0)
+	 * @param int limite : Nombre max de résultats à retourner
 	 */
-	Collection<Etudiant> chercherTous(int offset , int limite);
+	public Collection<Etudiant> chercherTous(int offset , int limite);
 	
 	/**
 	 * Sauvagarder un étudiant, 
 	 * @param etudiant
 	 * @return Collection<Etudiant>
 	 */
-	Etudiant sauvegarder(Etudiant etudiant);
+	public Etudiant sauvegarder(Etudiant etudiant);
 	
 	/**
 	 * Supprimer un étudiant, 
 	 * @param id
 	 * @return Boolean
 	 */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 	
 }
 

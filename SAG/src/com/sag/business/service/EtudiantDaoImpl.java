@@ -8,11 +8,8 @@ import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.StatutUtilisateur;
 
@@ -44,26 +41,28 @@ public class EtudiantDaoImpl implements EtudiantDao {
 	
 	@Override
 	public Etudiant chercherParEnt(String logENT) {
-		return (Etudiant) em
-				.createQuery("select e from Etudiant e where e.logENT = logENT")
-				.setParameter("logENT", logENT).getSingleResult();
+		TypedQuery<Etudiant> q = em
+				.createQuery("select e from Etudiant e where e.logENT = logENT",
+						Etudiant.class)
+				.setParameter("logENT", logENT);
+		return q.getSingleResult();
 	}
 
 	@Override
 	public Collection<Etudiant> chercherParDomaine(String nom_domaine) {
-		// TODO Auto-generated method stub
-		return (Collection<Etudiant>) em.createQuery(
-				"SELECT e FROM Etudiant e,Etudiant_Domaine ed, Domaine d WHERE ed.Etudiant_ID_U = e.id and ed.domaine_id = d.id and d.nom = :nom_d",
-				Etudiant.class).setParameter("nom_d", nom_domaine)
-				.getResultList();
+		TypedQuery<Etudiant> q = em
+				.createQuery("SELECT e FROM Etudiant e,Etudiant_Domaine ed, Domaine d WHERE ed.Etudiant_ID_U = e.id and ed.domaine_id = d.id and d.nom = :nom_d",
+						Etudiant.class)
+				.setParameter("nom_d", nom_domaine);
+		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Etudiant> chercherParStatut(StatutUtilisateur statut) {
-		return (Collection<Etudiant>) em
-				.createQuery("select e from Etudiant e where e.statut = statut")
-				.setParameter("statut", statut).getResultList();
+		TypedQuery<Etudiant> q = em
+				.createQuery("select e from Etudiant e where e.statut = :statut", Etudiant.class)
+				.setParameter("statut", statut);
+		return q.getResultList();			
 	}
 
 	@Override
@@ -84,9 +83,13 @@ public class EtudiantDaoImpl implements EtudiantDao {
 
 	@Override
 	public Boolean supprimer(int id) {
-		em.remove(id);
-		return null;
+		Etudiant e = chercherParID(id);
+		if(e != null)
+		{
+			em.remove(e);
+			return (chercherParID(id) == null);
+		}
+		return false;
 	}
-
 
 }

@@ -7,13 +7,12 @@ import javax.ejb.Remote;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.TypedQuery;
 
 import com.sag.business.model.Entreprise;
+import com.sag.business.model.Role;
 
 /**
  * @version1
@@ -42,9 +41,14 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 
 	@Override
 	public Entreprise chercherParEmail(String email) {
-		 return (Entreprise) em
-			.createQuery("select e from Entreprise e where e.email = email")
-			.setParameter("email", email).getSingleResult();
+		 TypedQuery<Entreprise> q = em
+					.createQuery("select e from Entreprise e where e.email = :email", Entreprise.class)
+		 			.setParameter("email", email);
+		 try{
+			 return q.getSingleResult();			
+		 }catch(NoResultException e){
+			 return null;
+		 }
 	}
 
 	@Override
@@ -66,8 +70,12 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 
 	@Override
 	public Boolean supprimer(int id) {
-		em.remove(id);
-		return (chercherParID(id) == null);
+		Entreprise e = chercherParID(id);
+		if(e != null)
+		{
+			em.remove(e);
+			return (chercherParID(id) == null);
+		}
+		return false;
 	}
-
 }

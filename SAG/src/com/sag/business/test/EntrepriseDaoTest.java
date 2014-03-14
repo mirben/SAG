@@ -1,15 +1,17 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import junit.framework.Assert;
-
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.quartz.impl.calendar.AnnualCalendar;
 
 import com.sag.business.model.Entreprise;
 import com.sag.business.model.Role;
@@ -25,81 +27,172 @@ import com.sag.business.service.EntrepriseDao;
  */
 
 public class EntrepriseDaoTest {
-	static EntrepriseDao entrepriseDao;
-	Context initial;
 
-	Entreprise e = new Entreprise();
+	private static Context initial;
+	private static EntrepriseDao entrepriseDao;
+	private static Vector<Entreprise> entreprisesTest;
+
+	@AfterClass
+	public static void clean() {
+		for (Entreprise curEtpr : entreprisesTest) {
+			entrepriseDao.supprimer(curEtpr.getId());
+		}
+	}
+
+	/**
+	 * 
+	 * @throws NamingException
+	 */
 
 	@BeforeClass
-	public void init() {
-		Role role = new Role();
-		role.setId(1);
-		role.setNom("moderateur");
-
-		e.setAdresse("10 rue Antoine, 13001 Marseille");
-		e.setEmail("fnac@gmail.com");
-		e.setNom("fnac");
-		e.setPassword("000000");
-		e.setRole(role);
-		e.setSiret("an125");
-		e.setSiteWeb("www.fnac.com");
-		e.setStatut(StatutUtilisateur.ACTIF);
-		entrepriseDao.sauvegarder(e);
-
-	}
-
-	public EntrepriseDaoTest() throws NamingException {
+	public static void init() throws NamingException {
 		initial = new InitialContext();
 		Object o = initial
-				.lookup("java:global/classpath.ear/SAG/dao!com.sag.business.model.EntrepriseDao");
-		Assert.assertTrue(o instanceof EntrepriseDao);
+				.lookup("java:global/classpath.ear/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao");
+		assertTrue(o instanceof EntrepriseDao);
 		entrepriseDao = (EntrepriseDao) o;
-	}
 
-	@Test
-	public void testChercherParID() {
-		System.out.println(entrepriseDao.chercherParID(e.getId()));
-		assertTrue(e == entrepriseDao.chercherParID(e.getId()));
-	}
+		// Ajout de deux domaines pour les tests
+		// Utilise Sauvegarder donc si le test ne passe pas, cette partie ne
+		// fonctionne pas
+		entreprisesTest = new Vector<Entreprise>();
+		Entreprise testEtpr1, testEtpr2;
 
-	@Test
-	public void testChercherParEmail() {
-		System.out.println(entrepriseDao.chercherParEmail("fnac@gmail.com"));
-		assertTrue(e == entrepriseDao.chercherParEmail("fnac@gmail.com"));
-	}
+		Role role1 = entrepriseDao.chercherRoleParID(1);
+		Role role2 = entrepriseDao.chercherRoleParID(2);
 
-	@Test
-	public void testChercherTous() {
-		assertTrue(entrepriseDao.chercherTous().size() > 0);
-	}
-
-	@Test
-	public void testChercherTousIntInt() {
-		assertTrue(entrepriseDao.chercherTous(1, 5).size() > 0);
+		testEtpr1 = new Entreprise("email1@gmail.com", StatutUtilisateur.ACTIF,
+				role1, "fnac", "f123", "11 rue BABPU 13006 Marseille",
+				"http://www.fnac.com", "012345");
+		testEtpr2 = new Entreprise("email2@gmail.com", StatutUtilisateur.ACTIF,
+				role2, "amazon", "a345", "11 rue Colorado 13011 Cololoco",
+				"http://www.amazon.com", "124566");
+		entreprisesTest.add(entrepriseDao.sauvegarder(testEtpr1));
+		entreprisesTest.add(entrepriseDao.sauvegarder(testEtpr2));
 
 	}
 
 	@Test
 	public void testSauvagarder() {
-		Role role = new Role();
-		role.setId(2);
-		role.setNom("utilisateur");
+		System.out.println("**** Test de la méthode sauvagarder ****");
 
-		e.setAdresse("10 rue Falque, 13006 Marseille");
-		e.setEmail("amazone@gmail.com");
-		e.setNom("amazone");
-		e.setPassword("000000");
-		e.setRole(role);
-		e.setSiret("cbr600");
-		e.setSiteWeb("www.fnac.com");
-		e.setStatut(StatutUtilisateur.INACTIF);
-		assertTrue(e == entrepriseDao.sauvegarder(e));
+		// Test ajout
+		Role role = entrepriseDao.chercherRoleParID(1);
+
+		Entreprise expected = new Entreprise("lol@lolmail.com",
+				StatutUtilisateur.ACTIF, role, "entrepriseNom", "en12458",
+				"11 rue Paradis 45785 Hell", "http://www.entrepriseNom.com",
+				"012345");
+		expected = entrepriseDao.sauvegarder(expected);
+		Entreprise actual = entrepriseDao.chercherParID(expected.getId());
+		System.out.print("expected ************************** : " + expected);
+		System.out.print("actual ************************** : " + actual);
+		assertEquals(expected, actual);
+
+		// test modification
+		expected.setNom("facModif");
+		actual = entrepriseDao.sauvegarder(expected);
+		System.out.println(actual);
+		assertEquals(actual.getNom(), "facModif");
+
+		entrepriseDao.supprimer(expected.getId());
+
+	}
+
+	@Test
+	public void testChercherParID() {
+		System.out.println("**** Test de la méthode chercherParID ****");
+
+		Entreprise actual = entreprisesTest.firstElement();
+		Entreprise expected = entrepriseDao.chercherParID(actual.getId());
+
+		System.out.println("expected : " + expected);
+		System.out.println("actual : " + actual);
+
+		// test trouvé
+		assertEquals(expected, actual);
+
+		// test non trouvé
+		assertNull(entrepriseDao.chercherParID(0));
+
+	}
+
+	@Test
+	public void testChercherParEmail() {
+		System.out.println("**** Test de la méthode chercherParEmail ****");
+
+		Entreprise actual = entreprisesTest.firstElement();
+		Entreprise expected = entrepriseDao.chercherParEmail(actual.getEmail());
+
+		System.out.println("expected : " + expected);
+		System.out.println("actual : " + actual);
+
+		// test trouvé
+		assertEquals(expected, actual);
+
+		// test non trouvé
+		assertNull(entrepriseDao.chercherParEmail("nop@nop.com"));
+	}
+
+	@Test
+	public void testChercherTous() {
+		System.out.println("**** Test de la méthode chercherTous ****");
+
+		assertTrue(entrepriseDao.chercherTous().size() >= entreprisesTest
+				.size());
+	}
+
+	@Test
+	public void testChercherTousIntInt() {
+		System.out.println("**** Test de la méthode chercherTous [a, b] ****");
+		int expected = entrepriseDao.chercherTous().size();
+
+		int actual = entrepriseDao.chercherTous(0, expected).size();
+		System.err.println("expected : " + expected);
+		System.err.println("actual : " + actual);
+		assertEquals(expected, actual);
+
 	}
 
 	@Test
 	public void testSupprimer() {
-		entrepriseDao.supprimer(e.getId());
-		assertTrue(entrepriseDao.chercherParID(e.getId()) == null);
+		System.out.println("**** Test de la méthode Supprimer  ****");
+
+		Entreprise entreprise = new Entreprise("nikki@gmail.com",
+				StatutUtilisateur.ACTIF, entrepriseDao.chercherRoleParID(1),
+				"nikki", "nikki125478", "11 rue Colorado 13011 Cololoco",
+				"http://www.nikki.com", "4587465");
+		Entreprise expected = entrepriseDao.sauvegarder(entreprise);
+		assertNotNull(entrepriseDao.chercherParID(expected.getId()));
+		System.out.println("expected avant supprimer: " + expected);
+
+		entrepriseDao.supprimer(expected.getId());
+		System.out.println("expected après supprimer: " + expected);
+
+		assertNull(entrepriseDao.chercherParID(expected.getId()));
+
+		assertFalse(entrepriseDao.supprimer(0));
+	}
+
+	public void testChercherRoleParID() {
+		
+		System.out.println("**** Test de la méthode ChercherRoleParID ****");
+
+		String actual = "ROLE_ADMIN";
+		String expected = entrepriseDao.chercherRoleParID(1).getNom();
+		//test trouvé
+		assertEquals(expected, actual);
+		actual = "ROLE_USER";
+		expected = entrepriseDao.chercherRoleParID(2).getNom();
+		//test trouvé
+
+		assertEquals(expected, actual);
+		
+		Role object = entrepriseDao.chercherRoleParID(0);
+		//test non trouvé
+
+		assertNull(object);
+
 	}
 
 }

@@ -7,6 +7,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
 public class Entreprise extends Utilisateur{
+
+	private static final long serialVersionUID = 1L;
 	
 	private String nom;
 	private String siret;
@@ -20,9 +22,9 @@ public class Entreprise extends Utilisateur{
 		super();
 	}
 
-	public Entreprise(String nom, String siret, String adresse, String siteWeb,
+	public Entreprise(String email, StatutUtilisateur statut, Role role, String nom, String siret, String adresse, String siteWeb,
 			String password) {
-		super();
+		super(email, statut, role);
 		this.nom = nom;
 		this.siret = siret;
 		this.adresse = adresse;

@@ -1,7 +1,8 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,6 +18,7 @@ import javax.naming.NamingException;
 
 import junit.framework.Assert;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,13 +27,45 @@ import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Type;
+import com.sag.business.service.DomaineDao;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
 
 public class OffreDaoTest {
-	static EtudiantDao etudiantDao;
-	static OffreDao offreDao;
-	Context initial;
+	private static Context initial;
+	private static EtudiantDao etudiantDao;
+	private static OffreDao offreDao;
+	private static Vector<Offre> domainesTest;
+	
+	@AfterClass
+	public static void clean(){
+		for (Offre curDom : domainesTest) {
+			offreDao.supprimer(curDom.getId());
+		}
+	}
+    /**
+     * 
+     * @throws NamingException
+     */
+
+    @BeforeClass
+	public static void init() throws NamingException{
+        initial = new InitialContext();
+        Object o = initial
+                .lookup("java:global/classpath.ear/SAG/offreDao!com.sag.business.service.OffreDao");
+        assertTrue(o instanceof OffreDao);
+        offreDao = (OffreDao) o;
+        
+		//Ajout de deux domaines pour les tests
+		//Utilise Sauvegarder donc si le test ne passe pas, cette partie ne fonctionne pas
+		OffresTest = new Vector<Offre>();
+		Offre testDom1, testDom2;
+		testDom1 = new Offre();
+		testDom2 = new Offre();
+		domainesTest.add(domaineDao.sauvegarder(testDom1));
+		domainesTest.add(domaineDao.sauvegarder(testDom2));
+	}
+	
 
 	Offre offre = new Offre();
 	@BeforeClass
@@ -57,7 +92,7 @@ public class OffreDaoTest {
 		
 		@SuppressWarnings("unchecked")
 		Set<Domaine> domaines =  (Set<Domaine>) new ArrayList<Domaine>();
-		domaines.add(new Domaine("Cinéma"));
+		domaines.add(new Offre("Cinéma"));
 		offre.setDomaines(domaines);
 		offre.setEmetteur(etudiant);
 		offre.setParticipantsMax(100);

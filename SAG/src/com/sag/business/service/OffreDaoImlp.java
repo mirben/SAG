@@ -1,8 +1,8 @@
 package com.sag.business.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remote;
@@ -10,9 +10,7 @@ import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.TypedQuery;
 
 import com.sag.business.model.Offre;
 
@@ -40,7 +38,6 @@ public class OffreDaoImlp implements OffreDao {
 
 	@Override
 	public Offre chercherParID(int id) {
-
 		return em.find(Offre.class, id);
 
 	}
@@ -48,7 +45,6 @@ public class OffreDaoImlp implements OffreDao {
 	@Override
 	public Collection<Offre> chercherTous() {
 		return em.createQuery("FROM Offre", Offre.class).getResultList();
-
 	}
 
 	@Override
@@ -64,22 +60,42 @@ public class OffreDaoImlp implements OffreDao {
 
 	@Override
 	public Boolean supprimer(int id) {
-		em.remove(id);
-		return (chercherParID(id) == null);
+		Offre o = chercherParID(id);
+		if(o != null)
+		{
+			em.remove(o);
+			return (chercherParID(id) == null);
+		}
+		return false;
 	}
 
 	@Override
-	public Collection<Offre> chercherParMotCle(String mot) {
-		Collection<Offre> offres = chercherTous();
-		Collection<Offre> results = new ArrayList<Offre>();
-		Iterator<Offre> it = offres.iterator();
-		while (it.hasNext()) {
-			Offre offre = it.next();
-			if (offre.getTitre().contains(mot)
-					|| offre.getDescription().contains(mot))
-				results.add(offre);
+	public Collection<Offre> chercherParMotCle(String mots) {
+		List<String> listMots = Arrays.asList(mots.trim().split(" "));
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT O")
+		.append("FROM Offre O, Offre_Domaine OD, Domaine D")
+		.append("WHERE OD.Offre_id = O.id AND OD.DOMAINE_ID = D.Id")
+		.append("AND (");
+		int i = 0;
+		while(i < listMots.size())
+		{
+			if(listMots.get(i).isEmpty()){
+				listMots.remove(i);
+				continue;
+			}
+			sb.append("upper(titre) LIKE '%:mot" + i +"%' ")
+			.append("OR upper(description) LIKE '%:mot" + i +"%' ")
+			.append("OR upper(D.nom) LIKE '%:mot" + i +"%' OR ");
+			++i;
 		}
-		return results;
+		;
+		TypedQuery<Offre> q = em
+				.createQuery(sb.toString().replaceFirst("OR $", ")"), Offre.class);
+	 	for(i = 0; i < listMots.size(); ++i){
+	 		q.setParameter("mot"+i, listMots.get(i));
+	 	}
+	 	return q.getResultList();
 	}
 
 }

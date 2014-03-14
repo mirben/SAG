@@ -3,6 +3,7 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import com.sag.business.model.Entreprise;
+import com.sag.business.model.Role;
 
 /**
  * @version 1
@@ -34,20 +35,22 @@ public interface EntrepriseDao {
 	 * Récupérer des entreprises par bloc de offset à limite
 	 * @param offset, limite
 	 * @return Collection<Entreprise>
+	 * * @param int offset : Index de début pour le résultat (commence à 0)
+	 * @param int limite : Nombre max de résultats à retourner
 	 */
-	Collection<Entreprise> chercherTous(int offset , int limite);
+	public Collection<Entreprise> chercherTous(int offset , int limite);
 	 /**
 	  * Sauvagarder un entreprise.
 	  * @param entreprise
 	  * @return Entreprise
 	  */
-	Entreprise sauvegarder(Entreprise entreprise);
+	public Entreprise sauvegarder(Entreprise entreprise);
 	
 	/**
 	  * Supprimer une entreprise.
 	  * @param entreprise
 	  * @return Boolean
 	  */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 	
 }
