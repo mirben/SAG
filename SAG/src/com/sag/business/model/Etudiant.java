@@ -32,10 +32,10 @@ public class Etudiant extends Utilisateur{
 		super();
 	}
 	
-	public Etudiant(String logENT, String nom, String prenom, Date dateNaiss,
+	public Etudiant(String email, StatutUtilisateur statut, Role role, String logENT, String nom, String prenom, Date dateNaiss,
 			String adresse, String siteWeb, String formation,
 			Set<Domaine> domaines) {
-		super();
+		super(email, statut, role);
 		this.logENT = logENT;
 		this.nom = nom;
 		this.prenom = prenom;

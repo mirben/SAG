@@ -18,7 +18,7 @@ public interface DomaineDao {
 	 * @param id
 	 * @return Domaine
 	 */
-	Domaine chercherParID(int id);
+	public Domaine chercherParID(int id);
 
 	/**
 	 * Récupérer un domaine par son nom
@@ -35,7 +35,7 @@ public interface DomaineDao {
 	 * @return Collection<Domaine>
 	 */
 
-	Collection<Domaine> chercherTous();
+	public Collection<Domaine> chercherTous();
 
 	/**
 	 * Récupérer des domaines par bloc de offset à limite
@@ -45,7 +45,7 @@ public interface DomaineDao {
 	 * @return Collection<Domaine>
 	 */
 
-	Collection<Domaine> chercherTous(int offset, int limite);
+	public Collection<Domaine> chercherTous(int offset, int limite);
 
 	/**
 	 * Ajoute un domaine si il est nouveau ou le sauvegarde si il a été modifié
@@ -53,7 +53,7 @@ public interface DomaineDao {
 	 * @param domaine
 	 * @return Domaine
 	 */
-	Domaine sauvegarder(Domaine domaine);
+	public Domaine sauvegarder(Domaine domaine);
 
 	/**
 	 * Supprimer une domaine
@@ -61,6 +61,6 @@ public interface DomaineDao {
 	 * @param id
 	 * @return Boolean
 	 */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 
 }

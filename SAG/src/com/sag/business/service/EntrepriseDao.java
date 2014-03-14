@@ -36,21 +36,21 @@ public interface EntrepriseDao {
 	 * @param offset, limite
 	 * @return Collection<Entreprise>
 	 */
-	Collection<Entreprise> chercherTous(int offset , int limite);
+	public Collection<Entreprise> chercherTous(int offset , int limite);
 	 /**
 	  * Sauvagarder un entreprise.
 	  * @param entreprise
 	  * @return Entreprise
 	  */
-	Entreprise sauvegarder(Entreprise entreprise);
+	public Entreprise sauvegarder(Entreprise entreprise);
 	
 	/**
 	  * Supprimer une entreprise.
 	  * @param entreprise
 	  * @return Boolean
 	  */
-	Boolean supprimer(int id);
+	public Boolean supprimer(int id);
 	
-	Role chercherRoleParID(int id);
+	public Role chercherRoleParID(int id);
 	
 }
