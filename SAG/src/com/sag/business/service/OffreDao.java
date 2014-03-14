@@ -27,7 +27,7 @@ public interface OffreDao {
 	 * @return Collection<Offre>
 	 */
 	
-	public Collection<Offre> chercherParMotCle(String mot);
+	public Collection<Offre> chercherParMotCle(String mots);
 
 	/**
 	 * Récupérer tous les offres

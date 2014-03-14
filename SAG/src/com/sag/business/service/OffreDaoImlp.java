@@ -1,6 +1,8 @@
 package com.sag.business.service;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remote;
@@ -68,16 +70,32 @@ public class OffreDaoImlp implements OffreDao {
 	}
 
 	@Override
-	public Collection<Offre> chercherParMotCle(String mot) {
+	public Collection<Offre> chercherParMotCle(String mots) {
+		List<String> listMots = Arrays.asList(mots.trim().split(" "));
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT O")
 		.append("FROM Offre O, Offre_Domaine OD, Domaine D")
-		.append("WHERE OD.Offre_id = O.id AND OD.DOMAINE_ID = D.Id").append().toString();
-		
+		.append("WHERE OD.Offre_id = O.id AND OD.DOMAINE_ID = D.Id")
+		.append("AND (");
+		int i = 0;
+		while(i < listMots.size())
+		{
+			if(listMots.get(i).isEmpty()){
+				listMots.remove(i);
+				continue;
+			}
+			sb.append("upper(titre) LIKE '%:mot" + i +"%' ")
+			.append("OR upper(description) LIKE '%:mot" + i +"%' ")
+			.append("OR upper(D.nom) LIKE '%:mot" + i +"%' OR ");
+			++i;
+		}
+		;
 		TypedQuery<Offre> q = em
-				.createQuery("SELECT O" +
-							where e.email = :email", Entreprise.class)
-	 			.setParameter("email", "%"+email);
+				.createQuery(sb.toString().replaceFirst("OR $", ")"), Offre.class);
+	 	for(i = 0; i < listMots.size(); ++i){
+	 		q.setParameter("mot"+i, listMots.get(i));
+	 	}
+	 	return q.getResultList();
 	}
 
 }
