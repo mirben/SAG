@@ -107,7 +107,6 @@ public class DomaineDaoImplTest {
 	@Test
 	public void testChercherTous() {
 		System.out.println("**** Test de la méthode ChercherTous ****");
-		
 		System.out.println("Nombre minimal de domaines à trouver : " + domainesTest.size());
 		Collection<Domaine> fetchedDomains = domaineDao.chercherTous();
 		assertTrue(fetchedDomains.size() >= domainesTest.size() );

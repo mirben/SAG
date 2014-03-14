@@ -79,5 +79,4 @@ public class DomaineDaoImpl implements DomaineDao {
 		}
 		return false;
 	}
-
 }
