@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.sag.business.model.Etudiant;
-import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 
 /**
@@ -91,12 +90,6 @@ public class EtudiantDaoImpl implements EtudiantDao {
 			return (chercherParID(id) == null);
 		}
 		return false;
-	}
-
-	//Méthode permettant de trouver des rôles pour les ajouts d'entreprises
-	@Override
-	public Role chercherRoleParID(int id) {
-		return em.find(Role.class, id);
 	}
 
 }

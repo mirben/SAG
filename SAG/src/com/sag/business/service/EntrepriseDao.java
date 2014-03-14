@@ -53,11 +53,4 @@ public interface EntrepriseDao {
 	  */
 	public Boolean supprimer(int id);
 	
-	/**
-	 * Chercher un rôle pour créer une nouvelle entreprise, 
-	 * @param id
-	 * @return Role : le rôle correspondant à l'id
-	 */
-	public Role chercherRoleParID(int id);
-	
 }

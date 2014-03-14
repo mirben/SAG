@@ -78,10 +78,4 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 		}
 		return false;
 	}
-	
-	//Méthode permettant de trouver des rôles pour les ajouts d'entreprises
-	@Override
-	public Role chercherRoleParID(int id) {
-		return em.find(Role.class, id);
-	}
 }

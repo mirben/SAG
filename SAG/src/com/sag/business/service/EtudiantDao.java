@@ -4,7 +4,6 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import com.sag.business.model.Etudiant;
-import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 
 /**
@@ -71,13 +70,6 @@ public interface EtudiantDao {
 	 * @return Boolean
 	 */
 	public Boolean supprimer(int id);
-	
-	/**
-	 * Chercher un rôle pour créer un nouvel étudiant, 
-	 * @param id
-	 * @return Role : le rôle correspondant à l'id
-	 */
-	public Role chercherRoleParID(int id);
 	
 }
 
