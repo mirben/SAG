@@ -64,7 +64,7 @@ public class EtudiantDaoTest {
 
 		etudiant.getDomaines().add(domaine);
 
-		etudiantDao.sauvagarder(etudiant);
+		etudiantDao.sauvegarder(etudiant);
 
 	}
 	
@@ -113,7 +113,7 @@ public class EtudiantDaoTest {
 	@Test
 	public void testSauvagarder() {
 		etudiant.setNom("SARKOZY");
-		Etudiant actual = etudiantDao.sauvagarder(etudiant);
+		Etudiant actual = etudiantDao.sauvegarder(etudiant);
 		assertEquals("SARKOZY", actual.getNom());
 	}
 

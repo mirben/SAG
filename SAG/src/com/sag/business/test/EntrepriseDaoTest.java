@@ -44,7 +44,7 @@ public class EntrepriseDaoTest {
 		e.setSiret("an125");
 		e.setSiteWeb("www.fnac.com");
 		e.setStatut(StatutUtilisateur.ACTIF);
-		entrepriseDao.sauvagarder(e);
+		entrepriseDao.sauvegarder(e);
 
 	}
 
@@ -93,7 +93,7 @@ public class EntrepriseDaoTest {
 		e.setSiret("cbr600");
 		e.setSiteWeb("www.fnac.com");
 		e.setStatut(StatutUtilisateur.INACTIF);
-		assertTrue(e == entrepriseDao.sauvagarder(e));
+		assertTrue(e == entrepriseDao.sauvegarder(e));
 	}
 
 	@Test

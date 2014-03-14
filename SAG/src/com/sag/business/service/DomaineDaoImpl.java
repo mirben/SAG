@@ -3,13 +3,14 @@ package com.sag.business.service;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.TypedQuery;
 
 import com.sag.business.model.Domaine;
 /**
@@ -39,10 +40,15 @@ public class DomaineDaoImpl implements DomaineDao {
 	}
 
 	@Override
-	public Domaine chercherParNom(String nom) {
-		return (Domaine) em
-				.createQuery("select d from Domaine d where d.nom = nom")
-				.setParameter("nom", nom).getSingleResult();
+	public Domaine chercherParNom(String nom){
+		TypedQuery<Domaine> q= em.createQuery("select d from Domaine d where d.nom = :nom", Domaine.class);
+		q.setParameter("nom", nom);
+		try{
+			Domaine d = q.getSingleResult();
+			return d;
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 
 	
@@ -64,9 +70,13 @@ public class DomaineDaoImpl implements DomaineDao {
 	}
 
 	@Override
-	public Boolean supprimer(int id) {
-		em.remove(id);
-		return (chercherParID(id) == null);
+	public Boolean supprimer(int id){
+		Domaine d = chercherParID(id);
+		if(d != null)
+		{
+			em.remove(chercherParID(id));
+			return (chercherParID(id) == null);
+		}
+		return false;
 	}
-
 }

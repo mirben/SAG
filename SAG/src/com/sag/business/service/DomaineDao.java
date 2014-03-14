@@ -24,6 +24,7 @@ public interface DomaineDao {
 	 * Récupérer un domaine par son nom
 	 * 
 	 * @return Collection<Domaine>
+	 * @throws Exception 
 	 */
 
 	public Domaine chercherParNom(String nom);
