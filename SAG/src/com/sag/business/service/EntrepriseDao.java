@@ -35,6 +35,8 @@ public interface EntrepriseDao {
 	 * Récupérer des entreprises par bloc de offset à limite
 	 * @param offset, limite
 	 * @return Collection<Entreprise>
+	 * * @param int offset : Index de début pour le résultat (commence à 0)
+	 * @param int limite : Nombre max de résultats à retourner
 	 */
 	public Collection<Entreprise> chercherTous(int offset , int limite);
 	 /**
@@ -51,6 +53,11 @@ public interface EntrepriseDao {
 	  */
 	public Boolean supprimer(int id);
 	
+	/**
+	 * Chercher un rôle pour créer une nouvelle entreprise, 
+	 * @param id
+	 * @return Role : le rôle correspondant à l'id
+	 */
 	public Role chercherRoleParID(int id);
 	
 }
