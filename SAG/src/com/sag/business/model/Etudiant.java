@@ -13,6 +13,8 @@ import javax.persistence.TemporalType;
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
 public class Etudiant extends Utilisateur{
+
+	private static final long serialVersionUID = 1L;
 	
 	@Column(nullable = false, unique = true)
 	private String logENT;

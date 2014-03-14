@@ -1,5 +1,6 @@
 package com.sag.business.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,7 +17,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Offre {
+public class Offre implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

@@ -7,6 +7,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
 public class Entreprise extends Utilisateur{
+
+	private static final long serialVersionUID = 1L;
 	
 	private String nom;
 	private String siret;
