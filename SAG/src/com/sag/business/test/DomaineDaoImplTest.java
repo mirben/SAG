@@ -48,7 +48,7 @@ public class DomaineDaoImplTest {
 	public void testSauvagarder() {
 		//Test ajout
 		Domaine domaine = new Domaine("Informatique");
-		domaine = domaineDao.sauvagarder(domaine);
+		domaine = domaineDao.sauvegarder(domaine);
 		System.out.println("domaine ajouté : " + domaine);
 		Domaine savedDomaine = domaineDao.chercherParID(domaine.getId());
 		System.out.println("domaine récupéré : " + savedDomaine);
@@ -57,7 +57,7 @@ public class DomaineDaoImplTest {
 		//test modification
 		savedDomaine.setNom("Cinéma");
 		System.out.println("domaine modifié : " + savedDomaine);
-		domaineDao.sauvagarder(savedDomaine);
+		domaineDao.sauvegarder(savedDomaine);
 		Domaine modifiedDomaine = domaineDao.chercherParID(savedDomaine.getId());
 		System.out.println("domaine récupéré : " + modifiedDomaine);
 		assertEquals(savedDomaine, modifiedDomaine);
