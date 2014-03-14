@@ -68,7 +68,7 @@ public class OffreDaoTest {
 		offre.setTitre("Finding Némo");
 		offre.setType(Type.THEORIQUE);
 		
-		offreDao.sauvagarder(offre);
+		offreDao.sauvegarder(offre);
 	}
 		
 	public OffreDaoTest() throws NamingException {
@@ -100,7 +100,7 @@ public class OffreDaoTest {
 	@Test
 	public void testSauvagarder() {
 		offre.setDescription("Un produit modifié");
-		Offre actual = offreDao.sauvagarder(offre);
+		Offre actual = offreDao.sauvegarder(offre);
 		assertEquals("Un produit modifié", actual.getDescription());
 	}
 
