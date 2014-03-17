@@ -68,7 +68,7 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/domain_list", method = RequestMethod.GET)
 	public String listOffersByDomain(
-			@RequestParam(value = "id", required = true) Integer domaineNumber, Model model) {
+			@RequestParam(value = "idd", required = true) Integer domaineNumber, Model model) {
 		Domaine d = domDao.chercherParID(domaineNumber);
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersdom = new Vector<Offre>();
