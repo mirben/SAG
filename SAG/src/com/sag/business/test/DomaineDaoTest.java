@@ -89,7 +89,7 @@ public class DomaineDaoTest {
 	}
 	
 	@Test
-	public void testChercherParNom() throws Exception{
+	public void testChercherParNom(){
 		System.out.println("**** Test de la méthode ChercherParNom ****");
 		Domaine domaine = domainesTest.firstElement();
 		System.out.println("domaine à trouver : " + domaine);

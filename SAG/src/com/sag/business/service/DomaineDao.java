@@ -23,7 +23,7 @@ public interface DomaineDao {
 	/**
 	 * Récupérer un domaine par son nom
 	 * 
-	 * @return Collection<Domaine>
+	 * @return Domaine
 	 * @throws Exception 
 	 */
 

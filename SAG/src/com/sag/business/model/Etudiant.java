@@ -1,5 +1,6 @@
 package com.sag.business.model;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class Etudiant extends Utilisateur{
 	private String formation;
 	
 	@ManyToMany
-	private Set<Domaine> domaines; 
+	private Collection<Domaine> domaines; 
 	
 	public Etudiant(){
 		super();
@@ -91,11 +92,11 @@ public class Etudiant extends Utilisateur{
 		this.formation = formation;
 	}
 
-	public Set<Domaine> getDomaines() {
+	public Collection<Domaine> getDomaines() {
 		return domaines;
 	}
 
-	public void setDomaines(Set<Domaine> domaines) {
+	public void setDomaines(Collection<Domaine> domaines) {
 		this.domaines = domaines;
 	}
 
