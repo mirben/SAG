@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Liste des offres <c:out value=${domaine_courant}</c:out></title>
+    <title>SAG - Liste des offres <c:out value=${domaine_courant.nom}</c:out></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
   </head>
@@ -26,14 +26,14 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-        <h3>Liste des offres - <c:out value=${domaine_courant}</c:out></h3>
+        <h3>Liste des offres - <c:out value=${domaine_courant.nom}</c:out></h3>
 		<div class="row">
 			 <table>
 			 	<c:choose>
 					<!-- Si la liste des offres est vide -->
-					<c:when test="${empty offer_domaine}">
+					<c:when test="${empty offers_domaine}">
 						<tr>
-							<td colspan="3">Aucune offre dans le domaine <c:out value=${domaine_courant}</c:out>.</td>
+							<td colspan="3">Aucune offre dans le domaine <c:out value=${domaine_courant.nom}</c:out>.</td>
 						</tr>
 					</c:when>
 					<c:otherwise>
@@ -46,7 +46,7 @@
 						</thead>
 						<tbody>
 							<!-- On parcours toutes les offres  -->
-							<c:forEach items="${offer_domaine}" var="offerd">
+							<c:forEach items="${offers_domaine}" var="offerd">
 								<tr>
 									<td>${offerd.titre}</td>
 									<td>${offerd.prix}</td>

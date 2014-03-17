@@ -157,7 +157,9 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /detail_user et les requêtes GET affiche les détails d'un etudiant
 	 * 
 	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à afficher.
+	 *            L'identifiant de l'etudiant à afficher.     
+	 *  @param model
+	 *            L'objet Model de spring
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.GET)
@@ -274,6 +276,8 @@ public class ControlUtilisateur {
 	 * 
 	 * @param companyNumber
 	 *            L'identifiant de l'entreprise à afficher.
+	 * @param model
+	 *            L'objet Model de spring
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_company", method = RequestMethod.GET)
