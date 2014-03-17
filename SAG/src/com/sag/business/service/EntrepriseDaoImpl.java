@@ -23,7 +23,7 @@ import com.sag.business.model.Role;
 @Remote(value = EntrepriseDao.class)
 @Stateless(name = "entrepriseDao", description = "Dao pour entreprise")
 @Startup
-public class EntrepriseDaoImpl implements EntrepriseDao{
+public class EntrepriseDaoImpl implements EntrepriseDao {
 	
 	@PersistenceContext(unitName = "SAG_PU")
 	private EntityManager em;
@@ -77,5 +77,15 @@ public class EntrepriseDaoImpl implements EntrepriseDao{
 			return (chercherParID(id) == null);
 		}
 		return false;
+	}
+	
+	/**
+	 * Chercher un rôle pour créer un nouvel utilsateur, 
+	 * @param id
+	 * @return Role : le rôle correspondant à l'id
+	 */
+	@Override
+	public Role chercherRoleParID(int id) {
+		return em.find(Role.class, id);
 	}
 }

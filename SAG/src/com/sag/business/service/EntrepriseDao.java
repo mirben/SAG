@@ -10,7 +10,7 @@ import com.sag.business.model.Role;
  * @author tuan
  * Interface d'objet d'accès aux données Entreprise.
  */
-public interface EntrepriseDao {
+public interface EntrepriseDao{
 	/**
 	 * Récupérer un entreprise par son id
 	 * @param id
@@ -52,5 +52,12 @@ public interface EntrepriseDao {
 	  * @return Boolean
 	  */
 	public Boolean supprimer(int id);
+	
+	/**
+	 * Chercher un rôle pour créer un nouvel utilsateur, 
+	 * @param id
+	 * @return Role : le rôle correspondant à l'id
+	 */
+	public Role chercherRoleParID(int id);
 	
 }
