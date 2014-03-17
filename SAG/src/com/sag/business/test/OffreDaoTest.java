@@ -1,44 +1,34 @@
 package com.sag.business.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import junit.framework.Assert;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sag.business.model.Domaine;
-import com.sag.business.model.Etudiant;
+import com.sag.business.model.Offre;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Type;
-import com.sag.business.service.EntrepriseDao;
-import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
-import com.sag.business.service.UtilisateurDao;
 
 public class OffreDaoTest {
 	private static Context initial;
 	private static OffreDao offreDao;
-	private static UtilisateurDao utilisateurDao;
-	private static EtudiantDao etudiantDao;
-	private static EntrepriseDao entrepriseDao;
 	private static Vector<Offre> offresTest;
 	
 	@AfterClass
@@ -47,6 +37,7 @@ public class OffreDaoTest {
 			offreDao.supprimer(curOffre.getId());
 		}
 		//On nettoie aussi les jeux de test des autres lcasses de test utilisées dans l'ordre inverse d'initialisation
+		EntrepriseDaoTest.clean();
 		DomaineDaoTest.clean();
 	}
     /**
@@ -68,102 +59,130 @@ public class OffreDaoTest {
         
 		//Ajout de deux offres pour les tests
 		//Utilise Sauvegarder donc si le test ne passe pas, cette partie ne fonctionne pas
-		offresTest = new Vector<Offre>();
-		Offre testOffre1, testOffre2;
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2014, 03, 17);
-		
-		testOffre1 = new Offre("offreTest1", "Description offre 1 DomaineTest1", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
-								Calendar.set(), calendar.getTime(), calendar.getTime(), "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
-								EntrepriseDaoTest.entreprisesTest.firstElement(), null, new Set<Domaine>(DomaineDaoTest) );
-		testOffre2 = new Offre();
-		domainesTest.add(domaineDao.sauvegarder(testDom1));
-		domainesTest.add(domaineDao.sauvegarder(testDom2));
-	}
-	
-
-	Offre offre = new Offre();
-	@BeforeClass
-	public void init() {
-		Etudiant etudiant = etudiantDao.chercherParID(1);
-		
-		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date dateAjout = null;
-		Date dateDebut = null;
 		Date dateFin = null;
 		try {
-			dateAjout = sdf.parse("22/01/2014");
-			dateDebut = sdf.parse("30/01/2014");
-			dateFin = sdf.parse("28/4/2014");
+			dateAjout = sdf.parse("17/03/2014");
+			dateFin = sdf.parse("20/03/2014");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		offre.setDateAjout(dateAjout);
-		offre.setDateDebut(dateDebut);
-		offre.setDateFin(dateFin);
-		offre.setDescription("Un produit bidon");
-		
-		@SuppressWarnings("unchecked")
-		Set<Domaine> domaines =  (Set<Domaine>) new ArrayList<Domaine>();
-		domaines.add(new Offre("Cinéma"));
-		offre.setDomaines(domaines);
-		offre.setEmetteur(etudiant);
-		offre.setParticipantsMax(100);
-		offre.setParticipantsMin(70);
-		offre.setPrix(500);
-		offre.setSiteWeb("www.siteWeb.net");
-		offre.setStatut(StatutOffre.BROUILLON);
-		offre.setTitre("Finding Némo");
-		offre.setType(Type.THEORIQUE);
-		
-		offreDao.sauvegarder(offre);
-	}
-		
-	public OffreDaoTest() throws NamingException {
-		initial = new InitialContext();
-		Object o = initial
-				.lookup("java:global/classpath.ear/SAG/dao!com.sag.business.model.OffreDao");
-		Assert.assertTrue(o instanceof OffreDao);
-		offreDao = (OffreDao) o;
-	}
+        
+        offresTest = new Vector<Offre>();
+		Offre testOffre1, testOffre2;
 
+		
+		testOffre1 = new Offre("offreTest1", "Description offre 1 DomaineTest1", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
+								dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
+								EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );
+		testOffre2 = new Offre("offreTest2", "Description offre 2", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
+				dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
+				EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );
+		offresTest.add(offreDao.sauvegarder(testOffre1));
+		offresTest.add(offreDao.sauvegarder(testOffre2));
+	}
+    
+	@Test
+	public void testSauvagarder() {
+		System.out.println("**** Test de la méthode testSauvegarder ****");
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateAjout = null;
+		Date dateFin = null;
+		try {
+			dateAjout = sdf.parse("17/03/2014");
+			dateFin = sdf.parse("20/03/2014");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Test ajout
+		Offre offre = new Offre();/*"offreTest3", "Description offre 3", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
+				dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
+				EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );*/
+		offre = offreDao.sauvegarder(offre);
+		System.out.println("offre ajoutée : " + offre);
+		Offre savedOffre = offreDao.chercherParID(offre.getId());
+		System.out.println("offre récupérée : " + savedOffre);
+		assertEquals(offre, savedOffre);
+		
+		//test modification
+		savedOffre.setDescription("Description modifiée");
+		System.out.println("offre modifiée : " + savedOffre);
+		offreDao.sauvegarder(savedOffre);
+		Offre modifiedOffre = offreDao.chercherParID(savedOffre.getId());
+		System.out.println("offre récupérée : " + modifiedOffre);
+		assertEquals(savedOffre, modifiedOffre);
 
+		offresTest.add(modifiedOffre);
+	}
+	
 	@Test
 	public void testChercherParID() {
-		System.out.println(offreDao.chercherParID(offre.getId()));
-		assertTrue(offre == offreDao.chercherParID(offre.getId()));
+		System.out.println("**** Test de la méthode ChercherParID ****");
+		Offre offre = offresTest.firstElement();
+		System.out.println("offre à trouver : " + offre);
+		Offre fetchedOffre = offreDao.chercherParID(offre.getId());
+		System.out.println("offre trouvée : " + fetchedOffre);
+		assertEquals(offre, fetchedOffre);
+		
+		//Test avec un ID inexistant
+		assertNull(offreDao.chercherParID(-99));
 	}
 
 	@Test
 	public void testChercherTous() {
-		assertTrue(offreDao.chercherTous().contains(offre));
-
+		System.out.println("**** Test de la méthode ChercherTous ****");
+		System.out.println("Nombre minimal d'offres à trouver : " + offresTest.size());
+		Collection<Offre> fetchedOffers = offreDao.chercherTous();
+		assertTrue(fetchedOffers.size() >= offresTest.size() );
 	}
 
 	@Test
 	public void testChercherTousIntInt() {
-		assertTrue(offreDao.chercherTous(1, 5).size() > 4);
+		System.out.println("**** Test de la méthode ChercherTous avec bornes ****");
+		System.out.println("Nombre de maximum d'offres à trouver : 2");
+		Collection<Offre> fetchedOffers = offreDao.chercherTous(1,2);
+		int actual = fetchedOffers.size();
+		int expected = 2;
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testChercherParMotCle(){
-		
+		System.out.println("**** Test de la méthode ChercherParMotCle ****");
+		System.out.println("Nombre minimal d'offres à trouver : 1" );
+		Collection<Offre> fetchedOffers = offreDao.chercherParMotCle("DomaineTest1");
+		System.out.println(fetchedOffers);
+		assertTrue(fetchedOffers.size() >= 1 );
 	}
 	
 	@Test
-	public void testSauvagarder() {
-		offre.setDescription("Un produit modifié");
-		Offre actual = offreDao.sauvegarder(offre);
-		assertEquals("Un produit modifié", actual.getDescription());
+	public void testChercherParMotCleFaux(){
+		//Test avec un nom inexistant
+	assertNull(offreDao.chercherParMotCle("BlaBla"));
 	}
 
 	@Test
 	public void testSupprimer() {
-		offreDao.supprimer(offre.getId());
-		assertNull(offreDao.chercherParID(offre.getId()));
-
+		System.out.println("**** Test de la méthode Supprimer ****");
+		Offre offre = offresTest.firstElement();
+		//Test suppression valide
+		Collection<Offre> fetchedOffers = offreDao.chercherTous();
+		int expected = fetchedOffers.size();
+		System.out.println("Nombre d'offres avant suppression : " + expected--);
+		System.out.println("Id de l'offre à supprimer : " +offre.getId());
+		assertTrue(offreDao.supprimer(offre.getId()));
+		fetchedOffers = offreDao.chercherTous();
+		System.out.println("Nombre d'offres après suppression : " + fetchedOffers.size());
+		assertEquals(expected, fetchedOffers.size());
+		
+	}
+	
+	@Test
+	public void testSupprimerErreur(){
+		assertFalse(offreDao.supprimer(-99));
 	}
 
 }

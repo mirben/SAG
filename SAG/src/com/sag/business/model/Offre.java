@@ -1,6 +1,7 @@
 package com.sag.business.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -53,15 +54,15 @@ public class Offre implements Serializable{
 	
 	@ManyToMany
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "ETUDIANT_ID"))
-	private Set<Etudiant> participants;
+	private Collection<Etudiant> participants;
 	
 	@ManyToMany
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "DOMAINE_ID"))
-	private Set<Domaine> domaines;
+	private Collection<Domaine> domaines;
 	
 	@OneToMany
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "PHOTO_ID"))
-	private Set<Image> images;
+	private Collection<Image> images;
 	
 	public Offre(){
 		super();
@@ -203,27 +204,27 @@ public class Offre implements Serializable{
 		this.fournisseur = fournisseur;
 	}
 
-	public Set<Etudiant> getParticipants() {
+	public Collection<Etudiant> getParticipants() {
 		return participants;
 	}
 
-	public void setParticipants(Set<Etudiant> participants) {
+	public void setParticipants(Collection<Etudiant> participants) {
 		this.participants = participants;
 	}
 
-	public Set<Domaine> getDomaines() {
+	public Collection<Domaine> getDomaines() {
 		return domaines;
 	}
 
-	public void setDomaines(Set<Domaine> domaines) {
+	public void setDomaines(Collection<Domaine> domaines) {
 		this.domaines = domaines;
 	}
 
-	public Set<Image> getImages() {
+	public Collection<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(Set<Image> images) {
+	public void setImages(Collection<Image> images) {
 		this.images = images;
 	}
 
