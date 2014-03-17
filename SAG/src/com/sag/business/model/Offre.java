@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Offre implements Serializable{
@@ -53,19 +57,25 @@ public class Offre implements Serializable{
 	private Entreprise fournisseur;
 	
 	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "ETUDIANT_ID"))
 	private Collection<Etudiant> participants;
 	
 	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "DOMAINE_ID"))
 	private Collection<Domaine> domaines;
 	
 	@OneToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns=@JoinColumn(name= "PHOTO_ID"))
 	private Collection<Image> images;
 	
 	public Offre(){
 		super();
+		participants = new Vector<Etudiant>();
+		domaines = new Vector<Domaine>();
+		images = new Vector<Image>();
 	}
 
 	public Offre(String titre, String description, Type type,
@@ -87,9 +97,9 @@ public class Offre implements Serializable{
 		this.siteWeb = siteWeb;
 		this.emetteur = emetteur;
 		this.fournisseur = fournisseur;
-		this.participants = participants;
-		this.domaines = domaines;
-		this.images = images;
+		this.participants = (participants != null) ? participants : new Vector<Etudiant>();
+		this.domaines = (domaines != null) ? domaines : new Vector<Domaine>();
+		this.images = (images != null) ? images : new Vector<Image>();
 	}
 
 	public int getId() {

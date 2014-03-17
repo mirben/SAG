@@ -3,6 +3,7 @@ package com.sag.business.model;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
@@ -29,10 +33,12 @@ public class Etudiant extends Utilisateur{
 	private String formation;
 	
 	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Collection<Domaine> domaines; 
 	
 	public Etudiant(){
 		super();
+		domaines = new Vector<Domaine>();
 	}
 	
 	public Etudiant(String email, StatutUtilisateur statut, Role role, String logENT, String nom, String prenom, Date dateNaiss,
@@ -46,7 +52,7 @@ public class Etudiant extends Utilisateur{
 		this.adresse = adresse;
 		this.siteWeb = siteWeb;
 		this.formation = formation;
-		this.domaines = domaines;
+		this.domaines = (domaines != null) ? domaines : new Vector<Domaine>();
 	}
 	
 	public String getLogENT() {

@@ -19,13 +19,14 @@ import javax.naming.NamingException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.sag.business.model.Offre;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Type;
 import com.sag.business.service.OffreDao;
 
+@Transactional
 public class OffreDaoTest {
 	private static Context initial;
 	private static OffreDao offreDao;
@@ -98,9 +99,9 @@ public class OffreDaoTest {
 			e.printStackTrace();
 		}
 		//Test ajout
-		Offre offre = new Offre();/*"offreTest3", "Description offre 3", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
+		Offre offre = new Offre("offreTest3", "Description offre 3", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
 				dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
-				EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );*/
+				EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );
 		offre = offreDao.sauvegarder(offre);
 		System.out.println("offre ajoutée : " + offre);
 		Offre savedOffre = offreDao.chercherParID(offre.getId());
