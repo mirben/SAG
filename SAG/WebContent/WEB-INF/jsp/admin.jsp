@@ -143,7 +143,7 @@
 								</div>
 							</div>
 							<div class="left">
-								<a href="${pageContext.request.contextPath}/add_user" class="button">Ajouter un nouvel utilisateur</a>
+								<a href="${pageContext.request.contextPath}/edit_user" class="button">Ajouter un nouvel utilisateur</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-2">
@@ -192,7 +192,7 @@
 								</c:choose>
 							</table>
 							<div class="left">
-								<a href="${pageContext.request.contextPath}/add_company" class="button">Ajouter une nouvelle entreprise</a>
+								<a href="${pageContext.request.contextPath}/edit_company" class="button">Ajouter une nouvelle entreprise</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-3">
@@ -283,7 +283,7 @@
 								</div>
 							</div>
 							<div class="left">
-								<a href="${pageContext.request.contextPath}/add_offer" class="button">Ajouter une nouvelle offre</a>
+								<a href="${pageContext.request.contextPath}/edit_offer" class="button">Ajouter une nouvelle offre</a>
 							</div>
 						</div>
 						<div class="content" id="panel2-4">
