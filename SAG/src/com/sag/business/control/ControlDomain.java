@@ -18,6 +18,11 @@ import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
 import com.sag.business.service.UtilisateurDao;
 
+/**
+ * 
+ * @author Joël Karcher
+ *
+ */
 @Controller()
 @RequestMapping("/")
 public class ControlDomain {
@@ -29,6 +34,14 @@ public class ControlDomain {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 	
+	/**
+	 * Créer un domaine, à partir de la base de données si l'argument existe,
+	 * ou ex-nihilo sinon
+	 * 
+	 * @param id
+	 *            L'indentifiant du domaine
+	 * @return Le domaine récupéré depuis la base de données
+	 */
 	@ModelAttribute
 	public Domaine newDomain(
 			@RequestParam(value = "id", required = false) Integer domaineNumber) {
@@ -43,6 +56,16 @@ public class ControlDomain {
 		return d;
 	}
 	
+	/**
+	 * Méthode mappé sur /edit_domain et les requêtes GET Modifie ou crée un domaine
+	 * 
+	 * @param d
+	 *            Le domaine recupéré
+	 * @param model
+	 *            L'objet Model de spring
+	 * @return Le nom de la jsp à afficher, new_domain, ou redirection vers la
+	 *          page admin si domaine null
+	 */
 	@RequestMapping(value = "/edit_domain", method = RequestMethod.GET)
 	public String editDomain(@ModelAttribute Domaine d, Model model) {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
@@ -55,6 +78,13 @@ public class ControlDomain {
 		return "redirect:admin";
 	}
 	
+	/**
+	 * Méthode mappé sur /edit_domain et les requêtes POST Modifie ou crée un domaine
+	 * 
+	 * @param d
+	 *            Le domaine recupéré
+	 * @return Redirection vers un autre mapping, admin
+	 */
 	@RequestMapping(value = "/edit_domain", method = RequestMethod.POST)
 	public String saveDomain(@ModelAttribute Domaine d, BindingResult result,
 			Model model) {
@@ -76,6 +106,13 @@ public class ControlDomain {
 		return "redirect:admin";
 	}
 	
+	/**
+	 * Méthode mappé sur /delete et les requêtes GET Supprime un domaine
+	 * 
+	 * @param domaineNumber
+	 *            L'identifiant du domaine à supprimer
+	 * @return Redirection vers un autre mapping, admin
+	 */
 	@RequestMapping(value = "/delete_domain", method = RequestMethod.GET)
 	public String deleteDomain(
 			@RequestParam(value = "id", required = true) Integer domaineNumber) {
