@@ -107,7 +107,7 @@ public class ControlDomain {
 	}
 	
 	/**
-	 * Méthode mappé sur /delete et les requêtes GET Supprime un domaine
+	 * Méthode mappé sur /delete_domain et les requêtes GET Supprime un domaine
 	 * 
 	 * @param domaineNumber
 	 *            L'identifiant du domaine à supprimer
