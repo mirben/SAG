@@ -319,7 +319,7 @@
 								</c:choose>
 							</table>
 							<div class="left">
-								<a href="${pageContext.request.contextPath}/add_domain" class="button">Ajouter un nouveau domaine</a>
+								<a href="${pageContext.request.contextPath}/edit_domain" class="button">Ajouter un nouveau domaine</a>
 							</div>
 						</div>
 					</div>

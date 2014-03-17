@@ -83,6 +83,4 @@ public class ControlDomain {
 		logger.info("delete domain " + domaineNumber);
 		return "redirect:admin";
 	}
-	
-	
 }
