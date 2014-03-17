@@ -47,7 +47,7 @@ public class OffreDaoTest {
 			offreDao.supprimer(curOffre.getId());
 		}
 		//On nettoie aussi les jeux de test des autres lcasses de test utilisées dans l'ordre inverse d'initialisation
-		DomaineDaoImplTest.clean();
+		DomaineDaoTest.clean();
 	}
     /**
      * 
@@ -63,7 +63,7 @@ public class OffreDaoTest {
         offreDao = (OffreDao) o;
         
         //On utilise le jeu de tests des autres classes de test
-        DomaineDaoImplTest.init();
+        DomaineDaoTest.init();
         EntrepriseDaoTest.init();
         
 		//Ajout de deux offres pour les tests
@@ -74,8 +74,8 @@ public class OffreDaoTest {
 		calendar.set(2014, 03, 17);
 		
 		testOffre1 = new Offre("offreTest1", "Description offre 1 DomaineTest1", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
-								Calendar.set(), calendar.getTime(), calendar.getTime(),  {
-								}, );
+								Calendar.set(), calendar.getTime(), calendar.getTime(), "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
+								EntrepriseDaoTest.entreprisesTest.firstElement(), null, new Set<Domaine>(DomaineDaoTest) );
 		testOffre2 = new Offre();
 		domainesTest.add(domaineDao.sauvegarder(testDom1));
 		domainesTest.add(domaineDao.sauvegarder(testDom2));

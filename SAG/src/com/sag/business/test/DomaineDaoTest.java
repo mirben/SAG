@@ -16,7 +16,7 @@ import org.junit.Test;
 import com.sag.business.model.Domaine;
 import com.sag.business.service.DomaineDao;
 
-public class DomaineDaoImplTest {
+public class DomaineDaoTest {
 	
 
 	private static Context initial;
