@@ -28,7 +28,7 @@ public class EntrepriseDaoTest {
 
 	private static Context initial;
 	private static EntrepriseDao entrepriseDao;
-	private static Vector<Entreprise> entreprisesTest;
+	public static Vector<Entreprise> entreprisesTest;
 
 	@AfterClass
 	public static void clean() {
