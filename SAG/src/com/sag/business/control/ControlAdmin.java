@@ -1,6 +1,7 @@
 package com.sag.business.control;
 
 import java.util.Collection;
+import java.util.Vector;
 
 import javax.ejb.EJB;
 
@@ -15,6 +16,7 @@ import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
+import com.sag.business.model.StatutOffre;
 import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
@@ -48,11 +50,18 @@ public class ControlAdmin {
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
 		
-		//A decouper en 2 liste avec StatutOffre
-		Collection<Offre> cofferv = offerDao.chercherTous();
-		model.addAttribute("offers_validated", cofferv);
+		Collection<Offre> coffer = offerDao.chercherTous();
+		Collection<Offre> cofferv = new Vector<Offre>();
+		Collection<Offre> cofferw = new Vector<Offre>();
 		
-		Collection<Offre> cofferw = offerDao.chercherTous();
+		for (Offre offre : coffer) {
+			StatutOffre s = offre.getStatut();
+			if(s==StatutOffre.ACTIVE || s==StatutOffre.TERMINEE)
+				cofferv.add(offre);
+			else if(offre.getStatut()==StatutOffre.ENVOYEE)
+				cofferw.add(offre);
+		}
+		model.addAttribute("offers_validated", cofferv);
 		model.addAttribute("offers_waiting", cofferw);
 		
 		Collection<Domaine> cdom =  domDao.chercherTous();
