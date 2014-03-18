@@ -83,16 +83,17 @@ public class OffreDaoImlp implements OffreDao {
 				listMots.remove(i);
 				continue;
 			}
-			sb.append("upper(titre) LIKE '%:mot" + i +"%' ")
-			.append("OR upper(description) LIKE '%:mot" + i +"%' ")
-			.append("OR upper(D.nom) LIKE '%:mot" + i +"%' OR ");
+			sb.append("upper(titre) LIKE :mot" + i +" ")
+			.append("OR upper(description) LIKE :mot" + i +" ")
+			.append("OR upper(D.nom) LIKE :mot" + i +" OR ");
 			++i;
 		}
 		;
 		TypedQuery<Offre> q = em
 				.createQuery(sb.toString().replaceFirst("OR $", ""), Offre.class);
 	 	for(i = 0; i < listMots.size(); ++i){
-	 		q.setParameter("mot"+i, listMots.get(i));
+	 		q.setParameter("mot"+i, "%"+listMots.get(i)+"%");
+	 		System.out.println("HERE mot" +i);
 	 	}
 	 	return q.getResultList();
 	}

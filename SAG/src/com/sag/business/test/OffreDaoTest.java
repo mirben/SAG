@@ -60,12 +60,12 @@ public class OffreDaoTest {
         
 		//Ajout de deux offres pour les tests
 		//Utilise Sauvegarder donc si le test ne passe pas, cette partie ne fonctionne pas
-        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateAjout = null;
 		Date dateFin = null;
 		try {
-			dateAjout = sdf.parse("17/03/2014");
-			dateFin = sdf.parse("20/03/2014");
+			dateAjout = sdf.parse("2014-03-17");
+			dateFin = sdf.parse("2014-03-20");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,12 +88,12 @@ public class OffreDaoTest {
 	@Test
 	public void testSauvagarder() {
 		System.out.println("**** Test de la méthode testSauvegarder ****");
-		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateAjout = null;
 		Date dateFin = null;
 		try {
-			dateAjout = sdf.parse("17/03/2014");
-			dateFin = sdf.parse("20/03/2014");
+			dateAjout = sdf.parse("2014-03-17");
+			dateFin = sdf.parse("2014-03-20");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
