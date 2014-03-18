@@ -30,7 +30,7 @@ public class OffreDaoTest {
 	private static OffreDao offreDao;
 	private static Vector<Offre> offresTest;
 	
-	//@AfterClass
+	@AfterClass
 	public static void clean(){
 		for (Offre curOffre : offresTest) {
 			offreDao.supprimer(curOffre.getId());
@@ -69,13 +69,12 @@ public class OffreDaoTest {
         offresTest = new Vector<Offre>();
 		Offre testOffre1, testOffre2;
 
-		
-		testOffre1 = new Offre("offreTest1", "Description offre 1 DomaineTest1", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
+		testOffre1 = new Offre("offreTest1", "Description offre 1 sansDomaine", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
 								dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
 								EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );
 		testOffre2 = new Offre("offreTest2", "Description offre 2", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
 				dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),
-				EntrepriseDaoTest.entreprisesTest.firstElement(), null, null, null );
+				EntrepriseDaoTest.entreprisesTest.firstElement(), null, DomaineDaoTest.domainesTest, null );
 		offresTest.add(offreDao.sauvegarder(testOffre1));
 		offresTest.add(offreDao.sauvegarder(testOffre2));
 	}
@@ -144,16 +143,16 @@ public class OffreDaoTest {
 	@Test
 	public void testChercherParMotCle(){
 		System.out.println("**** Test de la méthode ChercherParMotCle ****");
-		System.out.println("Nombre minimal d'offres à trouver : 1" );
-		Collection<Offre> fetchedOffers = offreDao.chercherParMotCle("DomaineTest1");
+		System.out.println("Nombre minimal d'offres à trouver : 2" );
+		Collection<Offre> fetchedOffers = offreDao.chercherParMotCle("sansDomaine DomaineTest1");
 		System.out.println(fetchedOffers);
-		assertTrue(fetchedOffers.size() >= 1 );
+		assertTrue(fetchedOffers.size() >= 2 );
 	}
 	
 	@Test
 	public void testChercherParMotCleFaux(){
 		//Test avec un nom inexistant
-	assertNull(offreDao.chercherParMotCle("BlaBla"));
+	assertEquals(0,offreDao.chercherParMotCle("BlaBla").size());
 	}
 
 	@Test

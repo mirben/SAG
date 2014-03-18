@@ -72,14 +72,16 @@ public class OffreDaoImlp implements OffreDao {
 	@Override
 	public Collection<Offre> chercherParMotCle(String mots) {
 		mots.toUpperCase();
+		System.out.println(mots);
 		List<String> listMots = Arrays.asList(mots.trim().split(" "));
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT O ")
-		.append("FROM Offre O JOIN O.domaines as D ")
+		.append("FROM Offre O LEFT JOIN O.domaines as D ")
 		.append("WHERE ");
 		int i = 0;
 		while(i < listMots.size())
 		{
+			System.out.println("Mot" + i + " = " +listMots.get(i));
 			if(listMots.get(i).isEmpty()){
 				listMots.remove(i);
 				continue;
@@ -93,7 +95,7 @@ public class OffreDaoImlp implements OffreDao {
 		TypedQuery<Offre> q = em
 				.createQuery(sb.toString().replaceFirst("OR $", ""), Offre.class);
 	 	for(i = 0; i < listMots.size(); ++i){
-	 		q.setParameter("mot"+i, "'%"+listMots.get(i)+"%'");
+	 		q.setParameter("mot"+i, "%"+listMots.get(i)+"%");
 	 	}
 	 	return q.getResultList();
 	}
