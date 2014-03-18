@@ -19,11 +19,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>404 - Ressource inexistante</title>
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-resources/css/style.css" />
+	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 <script
-	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js" type='text/javascript'></script>
 <script type="text/javascript">
 	//Redirige vers la liste de l'annuaire après 5 secondes
 	window.setTimeout("location=('${pageContext.request.contextPath}/home');",

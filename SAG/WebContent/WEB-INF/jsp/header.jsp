@@ -26,7 +26,9 @@
 		</div>
 	</div>
 	<div class="contain-to-grid sticky">
-		<nav class="top-bar" <jsp:text>data-topbar</jsp:text> >
+		<![CDATA[
+			nav class="top-bar" data-topbar >
+		]]>
 			<ul class="title-area">
 				<li class="name"></li>
 				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
@@ -72,6 +74,6 @@
 					</ul>
 				</section>
 			</section>
-		</nav>
+		<![CDATA[</nav>]]>
 	</div>
 </jsp:root>

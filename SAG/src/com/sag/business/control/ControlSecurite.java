@@ -49,4 +49,14 @@ public class ControlSecurite {
 	public String logout(Model model) {
 		return "logout_confirm";
 	}
+	
+	/**
+	 * Méthode mappé sur /register et les requêtes GET
+	 * @param model L'objet Model de spring
+	 * @return Le nom de la jsp à afficher, register
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String register(Model model) {
+		return "register";
+	}
 }

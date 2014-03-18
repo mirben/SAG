@@ -12,12 +12,14 @@
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-
-	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
+	<spring:url value="/j_spring_security_check" var="auth" />
+	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en">
 <head>
-<title>Authentification au SAG</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-resources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-resources/js/vendor/modernizr.js"></script>
+	<title>Authentification au SAG</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+    <![CDATA[
+    	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+    ]]>
 </head>
   <body>
 	<div class="row">
@@ -29,13 +31,13 @@
 						<legend>ENT - Authentifiez vous</legend>
 						<div class="name-field">
 							<label>Identifiant *
-							  <input type="text" id="login" name='username' placeholder="Identifiant" required="required" />
+						  		<input type="text" id="login" name="username" placeholder="Identifiant" required="required" />
 							</label>
 							<small class="error">Identifiant incorrect</small>
 						</div>
 						<div class="password-field">
 							<label>Mot de passe *
-							  <input type="password" name='password' placeholder="Mot de passe" required="required" />
+						  		<input type="password" name="password" placeholder="Mot de passe" required="required" />
 							</label>
 							<small class="error">Mot de passe incorrect</small>
 						</div>
@@ -45,14 +47,16 @@
 						<small>* : Champs obligatoires.</small>
 					</div>
 					<div class="right">
-							<span data-tooltip data-options="disable_for_touch:true" class="has-tip" 
+						<![CDATA[
+							<span data-tooltip data-options='disable_for_touch:true' class="has-tip" 
 								title="<dl>
-											<dt>Etudiants et entreprises</dt>
-											<dd>- Entreprise : cochez la case correspondante,</dd>
-											<dd>- Etudiant : renseignez vos identifiants ENT.</dd>
-										</dl>">
+										<dt>Etudiants et entreprises</dt>
+										<dd>- Entreprise : cochez la case correspondante,</dd>
+										<dd>- Etudiant : renseignez vos identifiants ENT.</dd>
+									</dl>">
 								<input id="submit_button" type="submit" class="small button" value="Se connecter" />
 							</span>
+						]]>
 					</div>
 				</form>
 			</div>
@@ -62,15 +66,15 @@
 			</div>
 		</div>
     </div>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.abide.js"></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js"></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.abide.js"></script>
+	<script type='text/javascript'>
+		$(document).foundation(); 
+	</script>
   </body>
 </html>
 </jsp:root>

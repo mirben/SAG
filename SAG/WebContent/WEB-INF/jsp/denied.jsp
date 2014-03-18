@@ -16,7 +16,7 @@
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
 		<head>
 			<link type="text/css" rel="stylesheet"
-				href="${pageContext.request.contextPath}/public-resources/css/style.css" />
+				href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 			<link rel="stylesheet"
 				href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 			<script

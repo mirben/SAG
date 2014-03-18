@@ -18,6 +18,9 @@
 	<!-- Pour prendre en compte les annotations @controler -->
 	<mvc:annotation-driven />
 	
+	<!--  Pour les ressources js et css -->
+	<mvc:resources location="/public-ressources/" mapping="/public-ressources/**" />
+	
 	<!-- Classe chargée de trouver vers quelle jsp le controler doit donner la main -->
 	<bean id="ViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
