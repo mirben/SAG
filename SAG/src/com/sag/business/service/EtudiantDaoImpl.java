@@ -52,7 +52,7 @@ public class EtudiantDaoImpl implements EtudiantDao {
 	@Override
 	public Collection<Etudiant> chercherParDomaine(String nom_domaine) {
 		TypedQuery<Etudiant> q = em
-				.createQuery("SELECT e FROM Etudiant e,Etudiant_Domaine ed, Domaine d WHERE ed.Etudiant_ID_U = e.id and ed.domaine_id = d.id and d.nom = :nom_d",
+				.createQuery("SELECT e FROM Etudiant join O.domaines d WHERE d.nom = :nom_d",
 						Etudiant.class)
 				.setParameter("nom_d", nom_domaine);
 		return q.getResultList();

@@ -159,7 +159,7 @@ public class OffreDaoTest {
 	@Test
 	public void testSupprimer() {
 		System.out.println("**** Test de la méthode Supprimer ****");
-		Offre offre = offresTest.firstElement();
+		Offre offre = offresTest.lastElement();
 		//Test suppression valide
 		Collection<Offre> fetchedOffers = offreDao.chercherTous();
 		int expected = fetchedOffers.size();
