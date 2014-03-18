@@ -1,11 +1,10 @@
 package com.sag.business.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Vector;
 
 import javax.naming.Context;
@@ -74,7 +73,6 @@ public class EtudiantDaoTest {
 		System.out.println(etudiantsTest.firstElement());
 	}
 
-
 	@Test
 	public void testSauvagarder() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
@@ -82,31 +80,29 @@ public class EtudiantDaoTest {
 		// Test ajouté
 
 		Date date = new Date(Calendar.getInstance().getTimeInMillis());
-		
+
 		Etudiant expected = new Etudiant("etdt3@lmail.com",
 				StatutUtilisateur.INACTIF, etudiantDao.chercherRoleParID(1),
 				"e45875", "SARKOZYT", "NicolaT", date,
 				"20 rue Enfer 13001 Marseille", "http://ncolab.com",
 				"Master 3 Politique", DomaineDaoTest.domainesTest);
 		expected = etudiantDao.sauvegarder(expected);
-		
 
 		Etudiant actual = etudiantDao.chercherParID(expected.getId());
 		System.out.println("expected ************************** : "
 				+ expected.getId() + ":" + expected);
-		System.out.println("actual ************************** : " + expected.getId() + ":" + actual);
+		System.out.println("actual ************************** : "
+				+ expected.getId() + ":" + actual);
 		assertEquals(expected, actual);
-		
+
 		// Test modification
 		expected.setNom("ANELKA");
 		actual = etudiantDao.sauvegarder(expected);
 		assertEquals(actual.getNom(), "ANELKA");
 
-
 		etudiantDao.supprimer(expected.getId());
 
 	}
-	
 
 	@Test
 	public void testChercherParID() {
@@ -143,38 +139,81 @@ public class EtudiantDaoTest {
 		assertNull(etudiantDao.chercherParEnt("nob000"));
 	}
 
-	@Ignore
-	@Test
-	public void testChercherParDomaine() {
-		
-		assertTrue(etudiantDao.chercherParDomaine("DomaineTest1").contains(etudiantsTest.firstElement()));
-	}
-
-	@Ignore("no tested")
 	
 	@Test
-	public void testChercherParStatut() {
-		assertTrue(etudiantDao.chercherParStatut(StatutUtilisateur.ACTIF)
-				.contains(etudiant));
+	public void testChercherParDomaine() {
+		System.out.println("**** Test de la méthode chercherParDomaine ****");
+
+		assertTrue(etudiantDao.chercherParDomaine("DomaineTest1").contains(
+				etudiantsTest.firstElement()));
 	}
 
-	@Ignore("no tested")
+	@Ignore
+	@Test
+	public void testChercherParStatut() {
+		System.out
+				.println("**** Test de la méthode chercherChercherParStatut ****");
+		Collection<Etudiant> experted = etudiantDao
+				.chercherParStatut(StatutUtilisateur.ACTIF);
+
+		System.out.println(experted.size());
+		//test trouvé
+		assertTrue(experted.contains(etudiantsTest.firstElement()));
+		assertFalse(experted.contains(etudiantsTest.elementAt(1)));
+	}
+
+	@Ignore
 	@Test
 	public void testChercherTous() {
-		assertTrue(etudiantDao.chercherTous().contains(etudiant));
-	}
+		System.out.println("**** Test de la méthode chercherTous ****");
 
-	@Ignore("no tested")
+		assertTrue(etudiantDao.chercherTous().size() >= etudiantsTest
+				.size());	}
+
+	@Ignore
 	@Test
 	public void testChercherTousIntInt() {
-		assertTrue(etudiantDao.chercherTous(1, 5).size() > 4);
+		System.out.println("**** Test de la méthode chercherTous [a, b] ****");
+		int expected = etudiantDao.chercherTous().size();
+
+		int actual = etudiantDao.chercherTous(0, expected).size();
+		System.err.println("expected : " + expected);
+		System.err.println("actual : " + actual);
+		assertEquals(expected, actual);
 	}
 
-	@Ignore("no tested")
+	@Ignore
 	@Test
 	public void testSupprimer() {
-		etudiantDao.supprimer(etudiant.getId());
-		assertNull(etudiantDao.chercherParEnt(etudiant.getLogENT()));
+		System.out.println("**** Test de la méthode Supprimer  ****");
+		Date date = new Date(Calendar.getInstance().getTimeInMillis());
+
+
+		Etudiant expected = new Etudiant("etdt3@lmail.com",
+				StatutUtilisateur.INACTIF, etudiantDao.chercherRoleParID(1),
+				"e45875", "SARKOZYT", "NicolaT", date,
+				"20 rue Enfer 13001 Marseille", "http://ncolab.com",
+				"Master 3 Politique", DomaineDaoTest.domainesTest);
+		expected = etudiantDao.sauvegarder(expected);
+		
+		assertNotNull(etudiantDao.chercherParID(expected.getId()));
+		System.out.println("expected avant supprimer: " + expected);
+
+		etudiantDao.supprimer(expected.getId());
+		System.out.println("expected après supprimer: " + expected);
+
+		assertNull(etudiantDao.chercherParID(expected.getId()));
+
+		assertFalse(etudiantDao.supprimer(0));
 	}
 
+	@Ignore
+	@Test
+	public void TestChercherRoleParID(){
+		System.out.println("**** Test de la méthode ChercherRoleParID  ****");
+
+		assertNotNull(etudiantDao.chercherRoleParID(1));
+		assertNotNull(etudiantDao.chercherRoleParID(2));
+
+	}
 }
