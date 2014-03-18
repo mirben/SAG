@@ -2,7 +2,6 @@ package com.sag.business.model;
 
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.persistence.Column;
@@ -149,12 +148,12 @@ public class Etudiant extends Utilisateur{
 		if (dateNaiss == null) {
 			if (other.dateNaiss != null)
 				return false;
-		} else if (!dateNaiss.equals(other.dateNaiss))
+		} else if (!dateNaiss.toString().equals(other.dateNaiss.toString()))
 			return false;
 		if (domaines == null) {
 			if (other.domaines != null)
 				return false;
-		} else if (!domaines.equals(other.domaines))
+		} else if (!(domaines.containsAll(other.domaines) && other.domaines.containsAll(domaines)))
 			return false;
 		if (formation == null) {
 			if (other.formation != null)

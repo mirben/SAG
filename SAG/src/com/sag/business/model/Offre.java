@@ -259,16 +259,16 @@ public class Offre implements Serializable{
 		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		/*result = prime * result
-				+ ((domaines == null) ? 0 : domaines.hashCode());*/
+		result = prime * result
+				+ ((domaines == null) ? 0 : domaines.hashCode());
 		result = prime * result
 				+ ((emetteur == null) ? 0 : emetteur.hashCode());
 		result = prime * result
 				+ ((fournisseur == null) ? 0 : fournisseur.hashCode());
 		result = prime * result + id;
-		/*result = prime * result + ((images == null) ? 0 : images.hashCode());
+		result = prime * result + ((images == null) ? 0 : images.hashCode());
 		result = prime * result
-				+ ((participants == null) ? 0 : participants.hashCode());*/
+				+ ((participants == null) ? 0 : participants.hashCode());
 		result = prime * result + participantsMax;
 		result = prime * result + participantsMin;
 		long temp;
@@ -293,28 +293,28 @@ public class Offre implements Serializable{
 		if (dateAjout == null) {
 			if (other.dateAjout != null)
 				return false;
-		} else if (!dateAjout.equals(other.dateAjout))
+		} else if (!dateAjout.toString().equals(other.dateAjout.toString()))
 			return false;
 		if (dateDebut == null) {
 			if (other.dateDebut != null)
 				return false;
-		} else if (!dateDebut.equals(other.dateDebut))
+		} else if (!dateDebut.toString().equals(other.dateDebut.toString()))
 			return false;
 		if (dateFin == null) {
 			if (other.dateFin != null)
 				return false;
-		} else if (!dateFin.equals(other.dateFin))
+		} else if (!dateFin.toString().equals(other.dateFin.toString()))
 			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		/*if (domaines == null) {
+		if (domaines == null) {
 			if (other.domaines != null)
 				return false;
-		} else if (!domaines.equals(other.domaines))
-			return false;*/
+		} else if (!(domaines.containsAll(other.domaines) && other.domaines.containsAll(domaines)))
+			return false;
 		if (emetteur == null) {
 			if (other.emetteur != null)
 				return false;
@@ -327,16 +327,16 @@ public class Offre implements Serializable{
 			return false;
 		if (id != other.id)
 			return false;
-		/*if (images == null) {
+		if (images == null) {
 			if (other.images != null)
 				return false;
-		} else if (!images.equals(other.images))
+		} else if (!(images.containsAll(other.images) && other.images.containsAll(images)))
 			return false;
 		if (participants == null) {
 			if (other.participants != null)
 				return false;
-		} else if (!participants.equals(other.participants))
-			return false;*/
+		} else if (!(participants.containsAll(other.participants) && other.participants.containsAll(participants)))
+			return false;
 		if (participantsMax != other.participantsMax)
 			return false;
 		if (participantsMin != other.participantsMin)
