@@ -6,6 +6,6 @@
 		pageEncoding="UTF-8" session="false" />
 	<!-- Pied de page -->
 	<div class="row">
-		<jsp:text><u>© 2014 - SAG - Joël KARCHER - Benjamin MIRETTI - Tuan NGUYEN - Guillaume CUEVAS</u></jsp:text>
+		<jsp:text>© 2014 - SAG - Joël KARCHER - Benjamin MIRETTI - Tuan NGUYEN - Guillaume CUEVAS</jsp:text>
 	</div>
 </jsp:root>

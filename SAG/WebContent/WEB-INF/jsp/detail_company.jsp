@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Profil <c:out value=${company.nom}</c:out></title>
+    <title>SAG - Profil <c:out value=${company.nom} /></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-resources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-resources/js/vendor/modernizr.js"></script>
   </head>
@@ -26,7 +26,7 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-			<h3>Profil <c:out value=${company.nom}</c:out></h3>
+			<h3>Profil <c:out value=${company.nom} /></h3>
 			<div class="row">
 				<form:form method="post" commandName="company" accept-charset="utf-8">
 				<form:errors path="*" cssClass="errorblock" element="div" />

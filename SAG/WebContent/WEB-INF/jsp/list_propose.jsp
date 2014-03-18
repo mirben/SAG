@@ -17,8 +17,8 @@
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>SAG - Liste des offres de <c:if test=${ user_co.prenom!=null }>
-			<c:out value="${user.prenom} "</c:out></c:if>
-			<c:out value=${user_co.nom}</c:out>
+			<c:out value="${user.prenom} " /></c:if>
+			<c:out value=${user_co.nom} />
 			</title>
 			<link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 			<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
@@ -29,8 +29,8 @@
 		      <div class="large-12 columns">
 		      	<div class="panel">
 		        <h3>Liste des propositions d'offre de <c:if test=${ user_co.prenom!=null }>
-		        <c:out value="${user.prenom} "</c:out></c:if>
-		        <c:out value=${ user_co.nom }</c:out></h3>
+		        <c:out value="${user.prenom} " /></c:if>
+		        <c:out value=${ user_co.nom } /></h3>
 				<div class="row">
 					<table>
 					  <c:choose>

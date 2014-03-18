@@ -27,8 +27,8 @@
       <div class="large-12 columns">
       	<div class="panel">
 	        <h3 id="welcome">Bienvenue 
-	        <c:if test=${ user_co.prenom!=null }><c:out value="${user.prenom} "</c:out></c:if>
-	        <c:out value=${user_co.nom}</c:out> !</h3>
+	        <c:if test=${ user_co.prenom!=null }><c:out value="${user.prenom} " /></c:if>
+	        <c:out value=${user_co.nom} /> !</h3>
 	        <p>Sur ce site, vous pourrez participer aux différentes offres disponibles et ainsi bénéficier de tarifs avantageux.</p>
 	        <p>Différentes fonctionnalités sont mises à votre disposition:</p>
 	        <div class="row">

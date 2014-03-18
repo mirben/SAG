@@ -27,7 +27,7 @@ import com.sag.business.service.UtilisateurDao;
  *
  */
 @Controller()
-@RequestMapping("/")
+@RequestMapping("/SAG")
 public class ControlOffre {
 	
 	@EJB(mappedName = "java:global/SAG/offreDao!com.sag.business.service.OffreDao")

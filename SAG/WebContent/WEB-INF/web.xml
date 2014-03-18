@@ -54,7 +54,7 @@
 	<!-- Capte toutes les requêtes -->
 	<servlet-mapping>
 		<servlet-name>springDispatcherServlet</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/SAG/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- Indique les fichiers de configuration de spring MVC et spring security -->

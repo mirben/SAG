@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Détail <c:out value=${offer.titre}</c:out></title>
+    <title>SAG - Détail <c:out value=${offer.titre} /></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
   </head>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  */
 @Controller()
-@RequestMapping("/")
+@RequestMapping("/SAG")
 public class ControlSecurite {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
