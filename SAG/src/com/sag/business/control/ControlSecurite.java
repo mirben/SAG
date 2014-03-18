@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  */
 @Controller()
-@RequestMapping("/SAG")
+@RequestMapping("/")
 public class ControlSecurite {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -25,6 +25,7 @@ public class ControlSecurite {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		System.out.println("Request login mapping");
 		return "login";
 	}
 

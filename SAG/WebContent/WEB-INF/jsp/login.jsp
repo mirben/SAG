@@ -29,17 +29,17 @@
 						<legend>ENT - Authentifiez vous</legend>
 						<div class="name-field">
 							<label>Identifiant *
-							  <input type="text" id="login" name='username' placeholder="Identifiant" required />
+							  <input type="text" id="login" name='username' placeholder="Identifiant" required="required" />
 							</label>
 							<small class="error">Identifiant incorrect</small>
 						</div>
 						<div class="password-field">
 							<label>Mot de passe *
-							  <input type="password" name='password' placeholder="Mot de passe" required />
+							  <input type="password" name='password' placeholder="Mot de passe" required="required" />
 							</label>
 							<small class="error">Mot de passe incorrect</small>
 						</div>
-						<input id="checkbox1" type="checkbox"><label for="checkbox1">Se connecter en tant qu'entreprise.</label>
+						<input id="checkbox1" type="checkbox" /><label for="checkbox1">Se connecter en tant qu'entreprise.</label>
 					</fieldset>
 					<div class="left">
 						<small>* : Champs obligatoires.</small>

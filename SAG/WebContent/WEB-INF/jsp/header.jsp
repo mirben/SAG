@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="contain-to-grid sticky">
-		<nav class="top-bar">
+		<nav class="top-bar" <jsp:text>data-topbar</jsp:text> >
 			<ul class="title-area">
 				<li class="name"></li>
 				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
