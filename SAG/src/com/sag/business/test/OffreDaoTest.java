@@ -30,7 +30,7 @@ public class OffreDaoTest {
 	private static OffreDao offreDao;
 	private static Vector<Offre> offresTest;
 	
-	@AfterClass
+	//@AfterClass
 	public static void clean(){
 		for (Offre curOffre : offresTest) {
 			offreDao.supprimer(curOffre.getId());
