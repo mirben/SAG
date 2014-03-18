@@ -10,18 +10,36 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
-	<context:annotation-config/>
+	<context:annotation-config />
 	<!-- Classes à scanner pour mettre en place les contrôleurs -->
 	<context:component-scan base-package="com.sag.business.service" />
 	<context:component-scan base-package="com.sag.business.control" />
-	
+
 	<!-- Pour prendre en compte les annotations @controler -->
 	<mvc:annotation-driven />
-	
-	<!-- Classe chargée de trouver vers quelle jsp le controler doit donner la main -->
+
+	<!-- Classe chargée de trouver vers quelle jsp le controler doit donner 
+		la main -->
 	<bean id="ViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Classe définissant le service CAS -->
+	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
+		<property name="service" value="https://ident.univ-amu.fr:443" />
+		<property name="sendRenew" value="false" />
+	</bean>
+
+	<bean id="casFilter"
+		class="org.springframework.security.cas.web.CasAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
+	<bean id="casEntryPoint"
+		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+		<property name="loginUrl" value="https://localhost:9443/cas/login" />
+		<property name="serviceProperties" ref="serviceProperties" />
 	</bean>
 </beans>
