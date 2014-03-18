@@ -1,8 +1,8 @@
 package com.sag.business.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 import java.util.Vector;
 
@@ -15,8 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -37,13 +35,13 @@ public class Offre implements Serializable{
 	private double prix;
 	private StatutOffre statut;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dateDebut;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dateFin;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dateAjout;
 	
 	private String siteWeb;

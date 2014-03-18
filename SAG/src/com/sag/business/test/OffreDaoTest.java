@@ -5,11 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.naming.Context;
@@ -60,16 +58,13 @@ public class OffreDaoTest {
         
 		//Ajout de deux offres pour les tests
 		//Utilise Sauvegarder donc si le test ne passe pas, cette partie ne fonctionne pas
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateAjout = null;
-		Date dateFin = null;
-		try {
-			dateAjout = sdf.parse("2014-03-17");
-			dateFin = sdf.parse("2014-03-20");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar dateA = Calendar.getInstance();
+		Calendar dateF = Calendar.getInstance();
+		dateF.add(Calendar.DAY_OF_MONTH, 5);
+        //DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateAjout = new Date(dateA.getTimeInMillis());
+		Date dateFin = new Date(dateF.getTimeInMillis());
+		
         
         offresTest = new Vector<Offre>();
 		Offre testOffre1, testOffre2;
@@ -88,16 +83,12 @@ public class OffreDaoTest {
 	@Test
 	public void testSauvagarder() {
 		System.out.println("**** Test de la méthode testSauvegarder ****");
-		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateAjout = null;
-		Date dateFin = null;
-		try {
-			dateAjout = sdf.parse("2014-03-17");
-			dateFin = sdf.parse("2014-03-20");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar dateA = Calendar.getInstance();
+		Calendar dateF = Calendar.getInstance();
+		dateF.add(Calendar.DAY_OF_MONTH, 5);
+        //DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateAjout = new Date(dateA.getTimeInMillis());
+		Date dateFin = new Date(dateF.getTimeInMillis());
 		//Test ajout
 		Offre offre = new Offre("offreTest3", "Description offre 3", Type.CONCRET, 5, 10, 100.0, StatutOffre.ACTIVE,
 				dateAjout, dateFin, dateAjout, "www.test.com", EntrepriseDaoTest.entreprisesTest.firstElement(),

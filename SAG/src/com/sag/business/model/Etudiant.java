@@ -1,7 +1,7 @@
 package com.sag.business.model;
 
+import java.sql.Date;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 import java.util.Vector;
 
@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -26,7 +24,7 @@ public class Etudiant extends Utilisateur{
 	private String nom; 
 	private String prenom;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date dateNaiss;
 	private String adresse;
 	private String siteWeb;
