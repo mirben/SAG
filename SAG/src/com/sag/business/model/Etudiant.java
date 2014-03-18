@@ -41,7 +41,7 @@ public class Etudiant extends Utilisateur{
 	
 	public Etudiant(String email, StatutUtilisateur statut, Role role, String logENT, String nom, String prenom, Date dateNaiss,
 			String adresse, String siteWeb, String formation,
-			Set<Domaine> domaines) {
+			Collection<Domaine> domaines) {
 		super(email, statut, role);
 		this.logENT = logENT;
 		this.nom = nom;

@@ -260,16 +260,16 @@ public class Offre implements Serializable{
 		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((domaines == null) ? 0 : domaines.hashCode());
+		/*result = prime * result
+				+ ((domaines == null) ? 0 : domaines.hashCode());*/
 		result = prime * result
 				+ ((emetteur == null) ? 0 : emetteur.hashCode());
 		result = prime * result
 				+ ((fournisseur == null) ? 0 : fournisseur.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((images == null) ? 0 : images.hashCode());
+		/*result = prime * result + ((images == null) ? 0 : images.hashCode());
 		result = prime * result
-				+ ((participants == null) ? 0 : participants.hashCode());
+				+ ((participants == null) ? 0 : participants.hashCode());*/
 		result = prime * result + participantsMax;
 		result = prime * result + participantsMin;
 		long temp;
@@ -311,9 +311,9 @@ public class Offre implements Serializable{
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (domaines == null) {
+		/*if (domaines == null) {
 			if (other.domaines != null)
-				return false;
+				return false;*/
 		} else if (!domaines.equals(other.domaines))
 			return false;
 		if (emetteur == null) {
@@ -328,7 +328,7 @@ public class Offre implements Serializable{
 			return false;
 		if (id != other.id)
 			return false;
-		if (images == null) {
+		/*if (images == null) {
 			if (other.images != null)
 				return false;
 		} else if (!images.equals(other.images))
@@ -337,7 +337,7 @@ public class Offre implements Serializable{
 			if (other.participants != null)
 				return false;
 		} else if (!participants.equals(other.participants))
-			return false;
+			return false;*/
 		if (participantsMax != other.participantsMax)
 			return false;
 		if (participantsMin != other.participantsMin)
