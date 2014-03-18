@@ -91,7 +91,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao{
 	 */
 	@Override
 	public Collection<Utilisateur> chercherTous(int offset , int limite){
-		return em.createQuery("FROM Utlisateur", Utilisateur.class)
+		return em.createQuery("FROM Utilisateur", Utilisateur.class)
 				.setFirstResult(offset).setMaxResults(limite).getResultList();
 
 	}
