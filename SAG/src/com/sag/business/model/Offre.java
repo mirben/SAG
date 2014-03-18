@@ -3,7 +3,6 @@ package com.sag.business.model;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.persistence.Entity;
@@ -80,7 +79,7 @@ public class Offre implements Serializable{
 			int participantsMin, int participantsMax, double prix,
 			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
 			String siteWeb, Utilisateur emetteur, Entreprise fournisseur,
-			Set<Etudiant> participants, Set<Domaine> domaines, Set<Image> images) {
+			Collection<Etudiant> participants, Collection<Domaine> domaines, Collection<Image> images) {
 		super();
 		this.titre = titre;
 		this.description = description;
@@ -313,9 +312,9 @@ public class Offre implements Serializable{
 			return false;
 		/*if (domaines == null) {
 			if (other.domaines != null)
-				return false;*/
+				return false;
 		} else if (!domaines.equals(other.domaines))
-			return false;
+			return false;*/
 		if (emetteur == null) {
 			if (other.emetteur != null)
 				return false;
