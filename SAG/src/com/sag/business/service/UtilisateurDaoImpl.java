@@ -22,7 +22,7 @@ import com.sag.business.model.Utilisateur;
  * 
  */
 @Remote(value = UtilisateurDao.class)
-@Stateless(name = "UtilisateurDao", description = "Dao pour utilisateur")
+@Stateless(name = "utilisateurDao", description = "Dao pour utilisateur")
 @Startup
 public class UtilisateurDaoImpl implements UtilisateurDao{
 	

@@ -13,7 +13,7 @@
 	<context:annotation-config/>
 	<!-- Classes à scanner pour mettre en place les contrôleurs -->
 	<context:component-scan base-package="com.sag.business.service" />
-<!-- 	<context:component-scan base-package="com.sag.business.test" /> -->
+	<context:component-scan base-package="com.sag.business.control" />
 	
 	<!-- Pour prendre en compte les annotations @controler -->
 	<mvc:annotation-driven />
@@ -24,45 +24,4 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	
-<!--    <bean id="myEmf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"> -->
-<!--       <property name="persistenceUnitName" value="SAG_PU"/> -->
-<!--    </bean> -->
-   
-<!-- 		<bean id="SAG_DS" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!-- 		    <property name="jndiName" value="java:comp/env/jdbc/SAG_DS"/> -->
-<!-- 		</bean> -->
-		
-<!-- 		<jee:jndi-lookup id="SAG_DS" -->
-<!--    jndi-name="jdbc/SAG_DS" -->
-<!--    expected-type="javax.sql.DataSource" /> -->
-	
-	<!-- LocalEntityManagerFactoryBean didn't support dataSource and Global transaction 
-	use this one when you declare dataSource in persistence.xml -->
-<!-- 	<bean  id="entityManagerFactory"  class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean"> -->
-<!-- 		<property name="persistenceUnitName" value="SAG_PU" /> -->
-<!-- 	</bean> -->
-<!-- 	<bean  id="entityManagerFactory"  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
-<!-- 		<property name="dataSource" ref="SAG_DS" /> -->
-<!-- 		<property name="persistenceXmlLocation" value="classpath:/META-INF/resources.xml" /> -->
-<!-- 	</bean> -->
-<!-- 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" > -->
-<!-- 		<property name="entityManagerFactory" ref="entityManagerFactory" /> -->
-<!-- 	</bean> -->
-<!-- 	 Active detection of annotation @Transactional, @TransactionAttribute --> 
-<!-- 	<tx:annotation-driven transaction-manager="transactionManager" /> -->
-	
-	<!-- DAO des domaines -->
-<!-- 	<bean id="domaineDao" class="com.sag.business.service.DomaineDaoImpl"/> -->
-	
-	<!-- DataSource indiquant comment se connecter à la base de données -->
-	<!--  <bean name="SAG_DS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	    <property name="url" value="jdbc:mysql://dbs-perso.luminy.univmed.fr/k1104696" />
-	    <property name="username" value="k1104696" />
-	    <property name="password" value="d7H:8-" />
-	</bean>-->
-	
-
 </beans>

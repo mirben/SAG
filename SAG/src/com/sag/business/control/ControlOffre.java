@@ -30,11 +30,11 @@ import com.sag.business.service.UtilisateurDao;
 @RequestMapping("/")
 public class ControlOffre {
 	
-	@EJB(mappedName = "java:global/SAG/OffreDaoImpl!com.sag.business.service.OffreDao")
+	@EJB(mappedName = "java:global/SAG/offreDao!com.sag.business.service.OffreDao")
 	OffreDao offerDao;
-	@EJB(mappedName = "java:global/SAG/DomaineDaoImpl!com.sag.business.service.DomaineDao")
+	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
-	@EJB(mappedName = "java:global/SAG/UtilisateurDaoImpl!com.sag.business.service.UtilisateurDao")
+	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
 	
 	protected final Log logger = LogFactory.getLog(getClass());

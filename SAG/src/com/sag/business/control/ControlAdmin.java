@@ -26,15 +26,15 @@ import com.sag.business.service.OffreDao;
 import com.sag.business.service.UtilisateurDao;
 
 public class ControlAdmin {
-	@EJB(mappedName = "java:global/SAG/DomaineDaoImpl!com.sag.business.service.DomaineDao")
+	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
-	@EJB(mappedName = "java:global/SAG/UtilisateurDaoImpl!com.sag.business.service.UtilisateurDao")
+	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
-	@EJB(mappedName = "java:global/SAG/EntrepriseDaoImpl!com.sag.business.service.EntrepriseDao")
+	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao companyDao;
-	@EJB(mappedName = "java:global/SAG/EtudiantDaoImpl!com.sag.business.service.EtudiantDao")
+	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
-	@EJB(mappedName = "java:global/SAG/OffreDaoImpl!com.sag.business.service.OffreDao")
+	@EJB(mappedName = "java:global/SAG/offreDao!com.sag.business.service.OffreDao")
 	OffreDao offerDao;
 	
 	protected final Log logger = LogFactory.getLog(getClass());
