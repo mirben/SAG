@@ -12,6 +12,13 @@
 
 		<access-denied-handler error-page="/accessdenied" />
 
+		<form-login login-page="/SAG/login" default-target-url="/SAG/home"
+			username-parameter="username" password-parameter="password"
+			always-use-default-target="true" authentication-failure-url="/SAG/accessdenied" />
+
+		<logout invalidate-session="true" logout-url="/SAG/logout"
+			logout-success-url="/SAG/logoutconfirm" />
+
 		<form-login login-page="/login"
 			default-target-url="/home"
 			username-parameter="username" 
@@ -24,17 +31,15 @@
 
 	<!-- Fournit les requêtes ainsi que l'algorithme de cryptage pour vérifier 
 		le mail et le mot de passe utilisé pour l'authentification -->
-	  <authentication-manager alias="authenticationManager">
-		<!-- <authentication-provider>
-			<password-encoder hash="sha" />
-			<jdbc-user-service data-source-ref="SAG_DS"
-				users-by-username-query="
-		      			select mail,password, actif 
-		      			from Person where mail=?"
-
-				authorities-by-username-query="
-		     			select p.mail, r.role from Person p, Role r 
-		      			where p.role_id = r.id and p.mail =?  " />
-		</authentication-provider> -->
+	<authentication-manager alias="authenticationManager">
+		<!-- <authentication-provider> <password-encoder hash="sha" /> <jdbc-user-service 
+			data-source-ref="SAG_DS" users-by-username-query=" select mail,password, 
+			actif from Person where mail=?" authorities-by-username-query=" select p.mail, 
+			r.role from Person p, Role r where p.role_id = r.id and p.mail =? " /> </authentication-provider> -->
 	</authentication-manager>
+
+<http entry-point-ref="casEntryPoint">
+   <custom-filter position="CAS_FILTER" ref="casFilter" />
+</http>
+
 </beans:beans>
