@@ -151,7 +151,6 @@ public class EtudiantDaoTest {
 
 		while (it.hasNext()) // tant que j'ai un element non parcouru
 		{
-			System.err.println("étudiant");
 			System.err.println(it.next());
 			// mes opérations
 		}
