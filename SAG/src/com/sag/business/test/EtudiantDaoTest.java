@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Vector;
 
 import javax.naming.Context;
@@ -39,6 +40,7 @@ public class EtudiantDaoTest {
 		for (Etudiant curEtd : etudiantsTest) {
 			etudiantDao.supprimer(curEtd.getId());
 		}
+		DomaineDaoTest.clean();
 	}
 
 	@BeforeClass
@@ -50,12 +52,13 @@ public class EtudiantDaoTest {
 		assertTrue(o instanceof EtudiantDao);
 		etudiantDao = (EtudiantDao) o;
 
+		DomaineDaoTest.init();
 		etudiantsTest = new Vector<Etudiant>();
 
 		Etudiant etud1, etud2;
 
-		Date date1 = com.sag.business.test.util.string2Date("13/01/2000");
-		Date date2 = com.sag.business.test.util.string2Date("13/03/2005");
+		Date date1 = new Date(Calendar.getInstance().getTimeInMillis());
+		Date date2 = new Date(Calendar.getInstance().getTimeInMillis());
 
 		etud1 = new Etudiant("etdt1@lmail.com", StatutUtilisateur.ACTIF,
 				etudiantDao.chercherRoleParID(1), "e12345", "HOLLANDE",
@@ -71,40 +74,80 @@ public class EtudiantDaoTest {
 		System.out.println(etudiantsTest.firstElement());
 	}
 
+
 	@Test
 	public void testSauvagarder() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
 
-		// Test ajout8
+		// Test ajouté
 
-		Date date = com.sag.business.test.util.string2Date("13/03/2005");
+		Date date = new Date(Calendar.getInstance().getTimeInMillis());
+		
 		Etudiant expected = new Etudiant("etdt3@lmail.com",
 				StatutUtilisateur.INACTIF, etudiantDao.chercherRoleParID(1),
 				"e45875", "SARKOZYT", "NicolaT", date,
 				"20 rue Enfer 13001 Marseille", "http://ncolab.com",
-				"Master 3 Politique", null);
+				"Master 3 Politique", DomaineDaoTest.domainesTest);
 		expected = etudiantDao.sauvegarder(expected);
-		System.out.println("expected ************************** : "
-				+ expected.getId() + ":" + expected);
+		
 
 		Etudiant actual = etudiantDao.chercherParID(expected.getId());
-		System.out.println("actual ************************** : " + actual);
+		System.out.println("expected ************************** : "
+				+ expected.getId() + ":" + expected);
+		System.out.println("actual ************************** : " + expected.getId() + ":" + actual);
 		assertEquals(expected, actual);
+		
+		// Test modification
+		expected.setNom("ANELKA");
+		actual = etudiantDao.sauvegarder(expected);
+		assertEquals(actual.getNom(), "ANELKA");
+
 
 		etudiantDao.supprimer(expected.getId());
 
 	}
+	
 
-	@Ignore("no tested")
 	@Test
-	public void testChercherParEnt() {
-		assertTrue(etudiant == etudiantDao.chercherParEnt("x12546"));
+	public void testChercherParID() {
+		System.out.println("**** Test de la méthode chercherParID ****");
+
+		Etudiant actual = etudiantsTest.firstElement();
+		Etudiant expected = etudiantDao.chercherParID(actual.getId());
+
+		System.out.println("expected : " + expected);
+		System.out.println("actual : " + actual);
+
+		// test trouvé
+		assertEquals(expected, actual);
+
+		// test non trouvé
+		assertNull(etudiantDao.chercherParID(0));
+
 	}
 
-	@Ignore("no tested")
+	@Test
+	public void testChercherParEnt() {
+		System.out.println("**** Test de la méthode chercherParLogENT ****");
+
+		Etudiant actual = etudiantsTest.firstElement();
+		Etudiant expected = etudiantDao.chercherParEnt(actual.getLogENT());
+
+		System.out.println("expected : " + expected);
+		System.out.println("actual : " + actual);
+
+		// test trouvé
+		assertEquals(expected, actual);
+
+		// test non trouvé
+		assertNull(etudiantDao.chercherParEnt("nob000"));
+	}
+
+	@Ignore
 	@Test
 	public void testChercherParDomaine() {
-		assertTrue(etudiantDao.chercherParDomaine("Cinémat").contains(etudiant));
+		
+		assertTrue(etudiantDao.chercherParDomaine("DomaineTest1").contains(etudiantsTest.firstElement()));
 	}
 
 	@Ignore("no tested")
