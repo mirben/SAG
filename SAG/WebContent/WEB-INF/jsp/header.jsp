@@ -20,15 +20,13 @@
 						placeholder="Rechercher une offre" />
 				</div>
 				<div class="large-4 small-3 columns">
-					<a href="#" class="button expand postfix">Rechercher</a>
+					<a href="#" onclick="search_key()" class="button expand postfix">Rechercher</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="contain-to-grid sticky">
-		<![CDATA[
-			<nav class="top-bar" data-topbar >
-		]]>
+			<nav class="top-bar" data-topbar="" >
 			<ul class="title-area">
 				<li class="name"></li>
 				<li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
@@ -53,7 +51,7 @@
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co}" /></a>
+						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co}" />.</a>
 							<ul class="dropdown">
 								<c:choose>
 									<c:when test="${entreprise != null}">
@@ -74,6 +72,6 @@
 					</ul>
 				</section>
 			</section>
-		<![CDATA[</nav>]]>
+		</nav>
 	</div>
 </jsp:root>

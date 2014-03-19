@@ -1,11 +1,18 @@
 package com.sag.business.control;
 
+import javax.ejb.EJB;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sag.business.model.Etudiant;
+import com.sag.business.service.EtudiantDao;
 
 /**
  * 
@@ -17,6 +24,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ControlSecurite {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
+	
+	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
+	EtudiantDao etuDao;
+	
+	/**
+	 * Créer un etudiant
+	 * 
+	 * @return L'etudiant crée
+	 */
+	@ModelAttribute
+	public Etudiant newUser() {
+		Etudiant e = new Etudiant();
+		logger.info("new user = " + e);
+		return e;
+	}
 	
 	/**
 	 * Méthode mappé sur /login et les requêtes GET
@@ -56,8 +78,37 @@ public class ControlSecurite {
 	 * @return Le nom de la jsp à afficher, register
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(Model model) {
-		return "register";
+	public String register(@ModelAttribute Etudiant e,Model model) {
+		if (e != null){
+			model.addAttribute("user", e);
+			return "register";
+		}
+		return "login";
+	}
+	
+	/**
+	 * Méthode mappé sur /register et les requêtes POST Crée un etudiant
+	 * 
+	 * @param d
+	 *            L'etudiant recupéré
+	 * @return Redirection vers un autre mapping, login
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String saveEtudiant(@ModelAttribute Etudiant etu, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			return "register";
+		}
+		if(etu==null) return "redirect:register";
+		logger.info("save student " + etu.getNom());
+		try {
+			etuDao.sauvegarder(etu);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Nom d'utilisateur déjà utilisé");
+			return "new_domain";
+		}
+		return "redirect:login";
 	}
 	
 	/**
