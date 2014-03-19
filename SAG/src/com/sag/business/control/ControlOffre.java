@@ -66,7 +66,22 @@ public class ControlOffre {
 		logger.info("search offers with " + keyword);
 		return "list";
 	}
-
+	
+	/**
+	 * Méthode mappé sur /list_offer et les requêtes GET Recherche les offres
+	 * 
+	 * @param model
+	 *            L'objet Model de spring
+	 * @return Redirection vers un autre mapping, list
+	 */
+	@RequestMapping(value = "/list_offer", method = RequestMethod.GET)
+	public String listOffers(Model model) {
+		Collection<Offre> offers = offerDao.chercherTous();
+		model.addAttribute("offers", offers);
+		logger.info("get offer's list ");
+		return "list";
+	}
+	
 	/**
 	 * Méthode mappé sur /domain_list et les requêtes GET Recherche les offres
 	 * du domaine
@@ -114,7 +129,7 @@ public class ControlOffre {
 		}
 		model.addAttribute("offer_propose", offersprop);
 		model.addAttribute("user_co", uco);
-		logger.info("get user's offers " + uco.getId());
+		//logger.info("get user's offers " + uco.getId());
 		return "list_propose";
 	}
 

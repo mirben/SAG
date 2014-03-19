@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Liste des offres</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+    <![CDATA[<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>]]>
   </head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
