@@ -18,8 +18,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Formulaire d'inscription</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+    <![CDATA[<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>]]>
   </head>
   <body>
 	<div class="row">
@@ -32,13 +32,12 @@
 					<div class="row">
 						<form:form method="post" commandName="user" accept-charset="utf-8">
 						<form:errors path="*" cssClass="errorblock" element="div" />
-						<dl class="tabs" data-tab>
-						  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
-						  <dd><a href="#panel2-2">Domaines</a></dd>
-						</dl>
+							<dl class="tabs" data-tab="">
+							  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
+							  <dd><a href="#panel2-2">Domaines</a></dd>
+							</dl>
 						<div class="tabs-content">
 						  <div class="content active" id="panel2-1">
-							<form>
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Nom
@@ -58,8 +57,8 @@
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Identifiant ENT
-									<form:input path="ent" placeholder="Identifiant ENT"/>
-									<form:errors path="ent" cssClass="error" />
+									<form:input path="logENT" placeholder="Identifiant ENT"/>
+									<form:errors path="logENT" cssClass="error" />
 								  </label>
 								</div>
 							  </div>
@@ -113,9 +112,9 @@
 							  <div class="row">
 								<div class="large-6 columns">
 								  <label>Sélectionnez les domaines suivis :</label>
-								  <form:select path="user.domaine">
+								  <form:select path="domaines">
 			              			<form:option value="-" label="-- Sélectionnez les domaines --"/>
-						            <form:options items="${user.domaine}" itemLabel="nom"/>
+						            <form:options items="${domaines}" itemLabel="domaines.nom"/>
 						          </form:select>
 								</div>
 							  </div>
@@ -124,22 +123,23 @@
 						</form:form>
 					</div>
 					<div class="row">
-						<a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal>Envoyer</a>
-		    			<a class="button" onclick="window.history.back();" href="#">Annuler</a>
+						<a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal="">Envoyer</a>
+		    			<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 					</div>
 				 </div>
 			</div>
 		</div>
 	</div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+   	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Demande d'inscription envoyée.</h2>
 		<p class="lead">Votre inscription a bien été prise en compte.</p>
 		<p>Un email vous sera envoyé à  l'adresse renseignée dès que votre inscription aura été validée.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"></script>
+	</div>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
 	<script>
 	  $(document).foundation();
 	</script>

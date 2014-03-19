@@ -51,7 +51,6 @@
 	<beans:bean id="casFilter"
 		class="org.springframework.security.cas.web.CasAuthenticationFilter">
 		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<security:intercept-url pattern="/login" access="isAuthenticated()" />
 	</beans:bean>
 
 	<beans:bean id="casEntryPoint"

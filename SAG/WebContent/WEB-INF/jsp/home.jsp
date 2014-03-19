@@ -51,6 +51,7 @@
 			search_key();
 			return false;
 		  }
+		  return true;
 		};
 		function search_key(){
 			var chaine = document.getElementById("search_in").value;
@@ -59,6 +60,7 @@
 			if(chaine.length!=0){
 				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
 			}
+			return true;
 		}
 	</script>
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
