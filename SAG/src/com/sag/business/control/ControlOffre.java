@@ -55,7 +55,7 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/search_offers", method = RequestMethod.GET)
 	public String searchOffers(
-			@RequestParam(value = "id", required = true) String keyword,
+			@RequestParam(value = "key", required = true) String keyword,
 			Model model) {
 		Collection<Offre> offersmatch = offerDao.chercherParMotCle(keyword);
 		model.addAttribute("offers", offersmatch);

@@ -59,4 +59,14 @@ public class ControlSecurite {
 	public String register(Model model) {
 		return "register";
 	}
+	
+	/**
+	 * Méthode mappé sur /home et les requêtes GET
+	 * @param model L'objet Model de spring
+	 * @return Le nom de la jsp à afficher, home
+	 */
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String accueil(Model model) {
+		return "home";
+	}
 }

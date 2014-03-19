@@ -20,14 +20,14 @@
 						placeholder="Rechercher une offre" />
 				</div>
 				<div class="large-4 small-3 columns">
-					<a href="#" onClick="search_key()" class="button expand postfix">Rechercher</a>
+					<a href="#" class="button expand postfix">Rechercher</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="contain-to-grid sticky">
 		<![CDATA[
-			nav class="top-bar" data-topbar >
+			<nav class="top-bar" data-topbar >
 		]]>
 			<ul class="title-area">
 				<li class="name"></li>
