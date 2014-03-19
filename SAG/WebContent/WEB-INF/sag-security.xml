@@ -69,7 +69,7 @@
 			<beans:bean
 				class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
 				<beans:constructor-arg index="0"
-					value="https://localhost:9443/cas" />
+					value="https://ident.univ-amu.fr:443" />
 			</beans:bean>
 		</beans:property>
 		<beans:property name="key" value="casAuthProviderKey" 
