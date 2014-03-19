@@ -12,12 +12,12 @@
 
 		<access-denied-handler error-page="/accessdenied" />
 
-		<form-login login-page="/SAG/login" default-target-url="/SAG/home"
+		<form-login login-page="login" default-target-url="home"
 			username-parameter="username" password-parameter="password"
-			always-use-default-target="true" authentication-failure-url="/SAG/accessdenied" />
+			always-use-default-target="true" authentication-failure-url="accessdenied" />
 
-		<logout invalidate-session="true" logout-url="/SAG/logout"
-			logout-success-url="/SAG/logoutconfirm" />
+		<logout invalidate-session="true" logout-url="logout"
+			logout-success-url="logoutconfirm" />
 
 		<form-login login-page="/login"
 			default-target-url="/home"
