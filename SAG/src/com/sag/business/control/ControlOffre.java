@@ -121,6 +121,7 @@ public class ControlOffre {
 	public String listOffersPropose(Model model) {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
+		
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersprop = new Vector<Offre>();
 		for (Offre offre : offers) {
