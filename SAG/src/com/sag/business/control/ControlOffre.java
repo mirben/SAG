@@ -41,7 +41,7 @@ public class ControlOffre {
 	DomaineDao domDao;
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
-	@EJB(mappedName = "java:global/classpath.ear/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
+	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etudiantDao;
 
 
