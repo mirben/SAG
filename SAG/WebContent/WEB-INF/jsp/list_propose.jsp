@@ -16,9 +16,11 @@
 		<head>
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<title>SAG - Liste des offres de <c:if test=${ user_co.prenom!=null }>
-			<c:out value="${user.prenom} " /></c:if>
-			<c:out value=${user_co.nom} />
+			<title>SAG - Liste des offres de 
+			<c:if test="${user_co.prenom!=null}">
+			<c:out value="${user.prenom} " />
+			</c:if>
+			<c:out value="${user_co.nom}" />
 			</title>
 			<link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 			<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
@@ -28,9 +30,9 @@
 		    <div class="row">
 		      <div class="large-12 columns">
 		      	<div class="panel">
-		        <h3>Liste des propositions d'offre de <c:if test=${ user_co.prenom!=null }>
+		        <h3>Liste des propositions d'offre de <c:if test="${ user_co.prenom!=null }">
 		        <c:out value="${user.prenom} " /></c:if>
-		        <c:out value=${ user_co.nom } /></h3>
+		        <c:out value="${ user_co.nom }" /></h3>
 				<div class="row">
 					<table>
 					  <c:choose>
@@ -56,8 +58,8 @@
 											<td>${offerp.prix}</td>
 											<td>${offerp.dateFin}</td>
 											<td>
-												<a href="${pageContext.request.contextPath}/detail_offer?id=${offerp.id}" class="tiny button split">Détail<span data-dropdown="drop1"></span></a><br>
-												<ul id="drop1" class="f-dropdown" data-dropdown-content>
+												<a href="${pageContext.request.contextPath}/detail_offer?id=${offerp.id}" class="tiny button split">Détail<span data-dropdown="drop1"></span></a><br/>
+												<ul id="drop1" class="f-dropdown" data-dropdown-content = "">
 												  <li><a href="${pageContext.request.contextPath}/edit_offer?id=${offerp.id}">Modifier</a></li>
 												  <li><a href="${pageContext.request.contextPath}/delete_offer?id=${offerp.id}">Supprimer</a></li>
 												</ul>
