@@ -248,7 +248,7 @@ public class ControlOffre {
 		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		if(enprs != null){
-			offre.setEmetteur(enprs);etud
+			offre.setEmetteur(enprs);
 		} else {
 			Etudiant etud = etudiantDao.chercherParEnt(SecurityContextHolder
 					.getContext().getAuthentication().getName());
