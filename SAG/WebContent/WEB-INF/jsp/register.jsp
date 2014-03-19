@@ -97,7 +97,7 @@
 							  <div class="row">
 								<div class="large-4 columns">
 								  <label>Formation
-									<form:select path="statut">
+									<form:select path="formation">
 									    <form:option value="Licence 1"/>
 									    <form:option value="Licence 2"/>
 									    <form:option value="Licence 3"/>

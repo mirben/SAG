@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Etudiant;
 import com.sag.business.service.EtudiantDao;
@@ -34,7 +35,7 @@ public class ControlSecurite {
 	 * @return L'etudiant crée
 	 */
 	@ModelAttribute
-	public Etudiant newUser() {
+	public Etudiant newUser(@RequestParam(value = "id", required = false) Integer studentNumber) {
 		Etudiant e = new Etudiant();
 		logger.info("new user = " + e);
 		return e;
@@ -96,9 +97,9 @@ public class ControlSecurite {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String saveEtudiant(@ModelAttribute Etudiant etu, BindingResult result,
 			Model model) {
-		if (result.hasErrors()) {
-			return "register";
-		}
+//		if (result.hasErrors()) {
+//			return "register";
+//		}
 		if(etu==null) return "redirect:register";
 		logger.info("save student " + etu.getNom());
 		try {
@@ -106,7 +107,7 @@ public class ControlSecurite {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom d'utilisateur déjà utilisé");
-			return "new_domain";
+			return "register";
 		}
 		return "redirect:login";
 	}
