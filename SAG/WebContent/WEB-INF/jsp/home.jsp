@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Accueil</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+    <![CDATA[<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>]]>
   </head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -27,8 +27,8 @@
       <div class="large-12 columns">
       	<div class="panel">
 	        <h3 id="welcome">Bienvenue 
-	        <c:if test=${ user_co.prenom!=null }><c:out value="${user.prenom} " /></c:if>
-	        <c:out value=${user_co.nom} /> !</h3>
+	        <c:if test="${ user_co.prenom!=null }"><c:out value="${user.prenom} " /></c:if>
+	        <c:out value="${user_co.nom}" /> !</h3>
 	        <p>Sur ce site, vous pourrez participer aux différentes offres disponibles et ainsi bénéficier de tarifs avantageux.</p>
 	        <p>Différentes fonctionnalités sont mises à votre disposition:</p>
 	        <div class="row">
@@ -56,14 +56,8 @@
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
-				$(location).attr('href',"detail_offre1.html");
-			}
-			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
-				$(location).attr('href',"detail_offre2.html");
-			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")){
-				$(location).attr('href',"detail_offre3.html");
+			if(chaine.length!=0){
+				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
 			}
 		}
 	</script>
