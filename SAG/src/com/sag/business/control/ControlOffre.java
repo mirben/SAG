@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.sag.business.model.Domaine;
-import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
@@ -234,7 +232,7 @@ public class ControlOffre {
 	}
 
 	/**
-	 * ??????page de retour????? Méthode mappé sur /propose_offre et les
+	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
 	 * requêtes POST Sauvagarder une offre envoyé
 	 * 
 	 * @param offre
