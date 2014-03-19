@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.sag.business.model.Domaine;
+import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
+import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
 import com.sag.business.service.UtilisateurDao;
 
@@ -40,6 +41,9 @@ public class ControlOffre {
 	DomaineDao domDao;
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
+	EtudiantDao etudiantDao;
+
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -133,17 +137,20 @@ public class ControlOffre {
 	}
 
 	/**
-	 * PROBLèM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * Méthode mappé sur /edit_offer et les requêtes POST Sauvagarder une offre
+	 * 
+	 * Méthode mappé sur /edit_offer et les requêtes GET mettre une offre dans
+	 * dans la formule edition
 	 * 
 	 * @param offre
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/edit_offer", method = RequestMethod.POST)
-	public String editOffre(@ModelAttribute Offre offre,
-			BindingResult result) {
-		
+	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
+	public String editOffre(
+			@RequestParam(value = "id", required = true) int idOffre,
+			Model model) {
+		Offre offre = offerDao.chercherParID(idOffre);
+		model.addAttribute("offer", offre);
 
 		return "new_offre";
 	}
@@ -186,44 +193,75 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/detail_offer", method = RequestMethod.GET)
-	public ModelAndView detailOffre(
-			@RequestParam(value = "id", required = true) int idOffre) {
+	public String detailOffre(
+			@RequestParam(value = "id", required = true) int idOffre,
+			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
+		model.addAttribute(offre);
 		logger.info("offer détail" + offre);
-		return new ModelAndView ("detail_offre","offer",offre);
+
+		return "detail_offre";
 	}
-	
+
 	/**
 	 * Méthode mappé sur /save_offer et les requêtes POST Sauvagarder une offre
+	 * en brouillon
 	 * 
 	 * @param offre
 	 * @param result
 	 * @return
 	 */
 	@RequestMapping(value = "/save_offer", method = RequestMethod.POST)
-	public String sauvegardeOffre(@ModelAttribute Offre offre,
+	public String sauvegardeOffre(@ModelAttribute Offre offre, Model model,
 			BindingResult result) {
+
+		offre.setStatut(StatutOffre.BROUILLON);
 		if (result.hasErrors()) {
-			return "new_offre";
+			return "offer_propose";
 		}
+		
 		offerDao.sauvegarder(offre);
 		logger.info("offre sauvagardé " + offre);
 
-		return "redirect:admin";
+		Offre offer = offerDao.sauvegarder(offre);
+		model.addAttribute("offer", offer);
+		
+		
+		
+		return "offer_propose";
 	}
-	
-	/**  
-	 * ????????????????????????????????????????????????????????????????
+
+	/**
+	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
+	 * requêtes POST Sauvagarder une offre envoyé
+	 * 
 	 * @param offre
 	 * @param result
 	 * @return
 	 */
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
-	public String proposerOffre(@ModelAttribute Offre offre){
-			
-
+	public String proposerOffre(@ModelAttribute Offre offre, Model model,
+			BindingResult result) {
 		
-		return "????";
+		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		if(enprs != null){
+			offre.setEmetteur(enprs);
+		} else {
+			Etudiant etud = etudiantDao.chercherParEnt(SecurityContextHolder
+					.getContext().getAuthentication().getName());
+			offre.setEmetteur(etud);
+		}
+		
+		offre.setStatut(StatutOffre.ENVOYEE);
+		if (result.hasErrors()) {
+			return "offer_propose";
+		}
+		Offre offer = offerDao.sauvegarder(offre);
+		model.addAttribute("offer", offer);
+		logger.info("offre sauvagardé " + offre);
+
+		return "offer_propose";
 	}
 
 }
