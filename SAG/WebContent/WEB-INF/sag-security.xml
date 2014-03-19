@@ -72,8 +72,8 @@
 					value="https://localhost:9443/cas" />
 			</beans:bean>
 		</beans:property>
-		<!-- <beans:property name="key" value="an_id_for_this_auth_provider_only" 
-			/> -->
+		<beans:property name="key" value="casAuthProviderKey" 
+			/> 
 	</beans:bean>
 	
 	<jdbc-user-service id="jdbcCasUserService" data-source-ref="SAG_security_DS"
