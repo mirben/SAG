@@ -63,9 +63,9 @@
 		</div>
 	   </div>
 	</div>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text></script>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
     <script>
       $(document).foundation();
     </script>
