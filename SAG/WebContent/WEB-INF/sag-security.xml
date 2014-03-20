@@ -48,13 +48,12 @@
 		<form-login login-page="login" default-target-url="/home"
 			username-parameter="username" password-parameter="password"
 			always-use-default-target="true" authentication-failure-url="/accessdenied" />
-		<logout invalidate-session="true" logout-url="/logout"
-			logout-success-url="/logoutconfirm" />
+		<logout invalidate-session="true" logout-url="logout" logout-success-url="/logoutconfirm" />
 
 		<!-- Configuration pour le CAS -->
 		<custom-filter position="CAS_FILTER" ref="casFilter" />
-		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/>
-    	<custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/>
+<!-- 		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/> -->
+<!--     	<custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/> -->
 	</http>
 
 	<!-- Url de retour du CAS -->
@@ -114,16 +113,16 @@
 												where u.id = e.ID_U and u.ID_ROLE = r.id and logENT =? " />
 												
 	<!-- Ce filtre gère le Single Logout Request du CAS Server -->
-  <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>
+<!--   <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/> -->
   <!-- Ce filtre redirige vers le CAS Server pour signaler que Single Logout doit être effectué -->
-  <beans:bean id="requestSingleLogoutFilter"
-        class="org.springframework.security.web.authentication.logout.LogoutFilter">
-    <beans:constructor-arg value="https://ident.univ-amu.fr:443/cas/logout"/>
-    <beans:constructor-arg>
-      <beans:bean class=
-          "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
-    </beans:constructor-arg>
-    <beans:property name="filterProcessesUrl" value="/j_spring_cas_security_logout"/>
-  </beans:bean>
+<!--   <beans:bean id="requestSingleLogoutFilter" -->
+<!--         class="org.springframework.security.web.authentication.logout.LogoutFilter"> -->
+<!--     <beans:constructor-arg value="https://ident.univ-amu.fr:443/cas/logout"/> -->
+<!--     <beans:constructor-arg> -->
+<!--       <beans:bean class= -->
+<!--           "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/> -->
+<!--     </beans:constructor-arg> -->
+<!--     <beans:property name="filterProcessesUrl" value="/logout"/> -->
+<!--   </beans:bean> -->
 
 </beans:beans>
