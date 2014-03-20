@@ -77,6 +77,11 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!--  Classe qui gère les logout du CAS -->
+	<listener>
+    <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+  	</listener>
 
 	<!-- Page à afficher lorsque la ressource n'existe pas -->
 	<error-page>
