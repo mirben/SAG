@@ -26,7 +26,7 @@
 
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
-		<intercept-url pattern="/cas" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/home" access="hasRole('ROLE_ADMIN')" />
 <!-- 		<intercept-url pattern="/login" access="hasRole('ROLE_ADMIN')" /> -->
 		<custom-filter position="CAS_FILTER" ref="casFilter" />
 	</http>
@@ -34,7 +34,7 @@
 	<!-- Url de retour du CAS -->
 	<beans:bean id="serviceProperties"
 		class="org.springframework.security.cas.ServiceProperties">
-		<beans:property name="service" value="http://localhost:8080/SAG/home" />
+		<beans:property name="service" value="http://localhost:8080/SAG/j_spring_cas_security_check" />
 		<beans:property name="sendRenew" value="false" />
 	</beans:bean>
 
@@ -70,7 +70,7 @@
 			<beans:bean
 				class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
 				<beans:constructor-arg index="0"
-					value="https://ident.univ-amu.fr:443/cas/proxyValidate" />
+					value="https://ident.univ-amu.fr:443/cas/" />
 			</beans:bean>
 		</beans:property>
 		<beans:property name="key" value="casAuthProviderKey" 
@@ -81,8 +81,8 @@
 				users-by-username-query="select logENT,1, statut 
 										from Utilisateur u, Etudiant e 
 										where u.id = e.ID_U and logENT=?"
-				authorities-by-username-query="select logENT, r.nom,  
+				authorities-by-username-query="select logENT, r.nom 
 												from Utilisateur u, Etudiant e, Role r 
-												where u.id = e.ID_U and u.ID_ROLE = r.id and logEnt =? " />
+												where u.id = e.ID_U and u.ID_ROLE = r.id and logENT =? " />
 
 </beans:beans>
