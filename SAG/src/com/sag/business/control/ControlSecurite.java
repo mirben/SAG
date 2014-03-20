@@ -82,7 +82,7 @@ public class ControlSecurite {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(@ModelAttribute Etudiant e,Model model) {
 		if (e != null){
-			model.addAttribute("user", e);
+			model.addAttribute("etudiant", e);
 			return "register";
 		}
 		return "login";
@@ -96,11 +96,11 @@ public class ControlSecurite {
 	 * @return Redirection vers un autre mapping, login
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String saveEtudiant(@ModelAttribute Etudiant etu, BindingResult result,
+	public String saveEtudiant(@ModelAttribute @Valid Etudiant etu, BindingResult result,
 			Model model) {
-//		if (result.hasErrors()) {
-//			return "register";
-//		}
+		if (result.hasErrors()) {
+			return "register";
+		}
 		if(etu==null) return "redirect:register";
 		logger.info("save student " + etu.getNom());
 		try {

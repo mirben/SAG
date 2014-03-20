@@ -31,8 +31,7 @@
 				<h3>Inscription - <b>SAG</b></h3>
 				<div class="panel">
 					<div class="row">
-						<form:form method="post" commandName="user" accept-charset="utf-8">
-						<form:errors path="*" cssClass="errorblock" element="div" />
+						<form:form method="post" commandName="etudiant" accept-charset="utf-8">
 							<dl class="tabs" data-tab="">
 							  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 							  <dd><a href="#panel2-2">Domaines</a></dd>
@@ -121,6 +120,7 @@
 							  </div>
 						  </div>
 						</div>
+						<form:errors path="*" cssClass="errorblock" element="div" />
 						</form:form>
 					</div>
 					<div class="row">

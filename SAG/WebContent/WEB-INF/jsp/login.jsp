@@ -38,7 +38,7 @@
 						  		<input type="password" name="password" placeholder="Mot de passe" required="required" />
 							</label>
 						</div>
-						<input id="checkbox1" type="checkbox" /><label for="checkbox1">Se connecter en tant qu'entreprise.</label>
+						<input id="entreprise" type="checkbox" name="entreprise" value="true" /><label for="checkbox1">Se connecter en tant qu'entreprise.</label>
 					</fieldset>
 					<div class="left">
 						<small>* : Champs obligatoires.</small>
