@@ -45,10 +45,10 @@
 		<intercept-url pattern="/home" access="hasRole('ROLE_USER')" />
 		<!-- <intercept-url pattern="/login" access="hasRole('ROLE_ADMIN')" /> -->
 		<access-denied-handler error-page="/accessdenied" />
-		<form-login login-page="login" default-target-url="/home"
+		<form-login login-page="/login" default-target-url="/home"
 			username-parameter="username" password-parameter="password"
 			always-use-default-target="true" authentication-failure-url="/accessdenied" />
-		<logout invalidate-session="true" logout-url="logout" logout-success-url="/logoutconfirm" />
+		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/logoutconfirm" />
 
 		<!-- Configuration pour le CAS -->
 		<custom-filter position="CAS_FILTER" ref="casFilter" />

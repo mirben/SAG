@@ -30,6 +30,7 @@
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<div class="panel callout radius">
 		<p>Vous avez bien été déconnecté !</p>
+		<iframe src="https://ident.univ-amu.fr:443/cas/logout" />
 	</div>
 	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
 	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
