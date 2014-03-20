@@ -18,8 +18,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Nouvelle entreprise</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"></script>
+    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -74,7 +75,7 @@
 			  </div>
 			  <div class="row">
 				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
-				<a class="button" onclick="window.history.back();" href="#">Annuler</a>
+				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>
 		</div>
@@ -86,32 +87,28 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>
-	<script type="text/javascript" >
+	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
 		  if(event.keyCode == '13') {
 			search_key();
 			return false;
 		  }
+		  return true;
 		};
 		function search_key(){
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
-				$(location).attr('href',"detail_offre1.html");
+			if(chaine.length!=0){
+				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
 			}
-			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
-				$(location).attr('href',"detail_offre2.html");
-			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")){
-				$(location).attr('href',"detail_offre3.html");
-			}
+			return true;
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />

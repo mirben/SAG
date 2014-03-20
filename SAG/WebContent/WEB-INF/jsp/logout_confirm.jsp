@@ -17,6 +17,8 @@
 <head>
 	<link type="text/css" rel="stylesheet"
 		href="${pageContext.request.contextPath}/public-resources/styles/style.css" />
+		<link type="text/css" rel="stylesheet"
+		href="${pageContext.request.contextPath}/public-resources/styles/foundation.css" />
 	<title>Déconnection du SAG</title>
     <script type="text/javascript">
 		//Redirige vers la page d'authentification après 5 secondes
@@ -26,9 +28,33 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
-	<div class="row">
+	<div class="panel callout radius">
 		<p>Vous avez bien été déconnecté !</p>
 	</div>
+	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script>
+	  $(document).foundation();
+	</script>
+	<script type="text/javascript">
+		document.getElementById("search_in").onkeydown = function(event) {
+		  if(event.keyCode == '13') {
+			search_key();
+			return false;
+		  }
+		  return true;
+		};
+		function search_key(){
+			var chaine = document.getElementById("search_in").value;
+			chaine = chaine.toUpperCase();
+			console.log(chaine);
+			if(chaine.length!=0){
+				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
+			}
+			return true;
+		}
+	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 	</html>

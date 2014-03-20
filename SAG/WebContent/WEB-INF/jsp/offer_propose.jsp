@@ -149,9 +149,9 @@
 		<p>Un email vous sera envoyé dès que votre offre aura été activée.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>

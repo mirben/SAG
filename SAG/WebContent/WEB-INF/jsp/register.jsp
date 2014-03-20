@@ -18,8 +18,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Formulaire d'inscription</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <![CDATA[<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>]]>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
 	<div class="row">
@@ -137,9 +138,9 @@
 		<a class="close-reveal-modal">&#215;</a>
     </div>
 	</div>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>
