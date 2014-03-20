@@ -51,7 +51,7 @@
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co}" />.</a>
+						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co}" />Anonymous</a>
 							<ul class="dropdown">
 								<c:choose>
 									<c:when test="${entreprise != null}">
@@ -61,7 +61,7 @@
 										<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
 									</c:otherwise>
 								</c:choose>
-								<li id="offers"><a href="${pageContext.request.contextPath}/list_proposition?id=${user_co.id}">Consulter ses offres</a></li>
+								<li id="offers"><a href="${pageContext.request.contextPath}/offer_propose?id=${user_co.id}">Consulter ses offres</a></li>
 								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
 							</ul>
 						</li>

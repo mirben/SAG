@@ -22,8 +22,9 @@
 	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <script
-	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js" type='text/javascript'></script>
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js" type='text/javascript'><jsp:text /></script>
 <script type="text/javascript">
 	//Redirige vers la liste de l'annuaire après 5 secondes
 	window.setTimeout("location=('${pageContext.request.contextPath}/home');",
@@ -33,7 +34,7 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<!-- Message visible avant la redirection -->
-	<div class="row">
+	<div class="panel callout radius">
 		<p>La ressource demandée est inexistante, vous allez être
 			redirigé.</p>
 	</div>

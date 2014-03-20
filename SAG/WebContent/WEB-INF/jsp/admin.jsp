@@ -17,13 +17,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SAG - Accueil</title>
+<title>SAG - Administrateur</title>
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/public-resources/css/style.css" />
+	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 <script
-	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+	type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -36,30 +36,30 @@
 				<div class="row">
 					<dl class="tabs" data-tab="">
 						<dd class="active">
-							<a href="#panel2-1">Gestion des utilisateurs</a>
+							<a href="#panel1">Gestion des utilisateurs</a>
 						</dd>
 						<dd>
-							<a href="#panel2-2">Gestion des entreprises</a>
+							<a href="#panel2">Gestion des entreprises</a>
 						</dd>
 						<dd>
-							<a href="#panel2-3">Gestion des offres</a>
+							<a href="#panel3">Gestion des offres</a>
 						</dd>
 						<dd>
-							<a href="#panel2-4">Gestion des domaines</a>
+							<a href="#panel4">Gestion des domaines</a>
 						</dd>
 					</dl>
 					<div class="tabs-content">
-						<div class="content active" id="panel2-1">
+						<div class="content active" id="panel1">
 							<dl class="tabs vertical" data-tab = "">
 								<dd class="active">
-									<a href="#panel1a">Actifs</a>
+									<a href="#panel1-1">Actifs</a>
 								</dd>
 								<dd>
-									<a href="#panel2a">En attente</a>
+									<a href="#panel1-2">En attente</a>
 								</dd>
 							</dl>
 							<div class="tabs-content vertical">
-								<div class="content active" id="panel1a">
+								<div class="content active" id="panel1-1">
 									<table>
 										<c:choose>
 											<!-- Si la liste des utilisateurs est vide -->
@@ -101,7 +101,7 @@
 										</c:choose>
 									</table>
 								</div>
-								<div class="content" id="panel2a">
+								<div class="content" id="panel1-2">
 									<table>
 										<c:choose>
 											<!-- Si la liste des utilisateurs est vide -->
@@ -143,11 +143,8 @@
 									</table>
 								</div>
 							</div>
-							<div class="left">
-								<a href="${pageContext.request.contextPath}/edit_user" class="button">Ajouter un nouvel utilisateur</a>
-							</div>
 						</div>
-						<div class="content" id="panel2-2">
+						<div class="content" id="panel2">
 							<table>
 								<c:choose>
 									<!-- Si la liste des entreprises est vide -->
@@ -192,21 +189,18 @@
 									</c:otherwise>
 								</c:choose>
 							</table>
-							<div class="left">
-								<a href="${pageContext.request.contextPath}/edit_company" class="button">Ajouter une nouvelle entreprise</a>
-							</div>
 						</div>
-						<div class="content" id="panel2-3">
-							<dl class="tabs vertical" data-tab = "">
+						<div class="content" id="panel3">
+							<dl class="tabs vertical" data-tab="">
 								<dd class="active">
-									<a href="#panel3a">Validées</a>
+									<a href="#panel3-1">Validées</a>
 								</dd>
 								<dd>
-									<a href="#panel4a">En attente</a>
+									<a href="#panel3-2">En attente</a>
 								</dd>
 							</dl>
 							<div class="tabs-content vertical">
-								<div class="content active" id="panel3a">
+								<div class="content active" id="panel3-1">
 									<table>
 										<c:choose>
 											<!-- Si la liste des offres validées est vide -->
@@ -244,7 +238,7 @@
 										</c:choose>
 									</table>
 								</div>
-								<div class="content" id="panel4a">
+								<div class="content" id="panel3-2">
 									<table>
 										<c:choose>
 											<!-- Si la liste des offres en attente est vide -->
@@ -283,11 +277,8 @@
 									</table>
 								</div>
 							</div>
-							<div class="left">
-								<a href="${pageContext.request.contextPath}/edit_offer" class="button">Ajouter une nouvelle offre</a>
-							</div>
 						</div>
-						<div class="content" id="panel2-4">
+						<div class="content" id="panel4">
 							<table>
 								<c:choose>
 									<!-- Si la liste des offres en attente est vide -->
@@ -319,45 +310,45 @@
 									</c:otherwise>
 								</c:choose>
 							</table>
-							<div class="left">
-								<a href="${pageContext.request.contextPath}/edit_domain" class="button">Ajouter un nouveau domaine</a>
-							</div>
 						</div>
+					</div>
+					<div class="right">
+						<a href="#" data-dropdown="hover1" data-options="is_hover:true; align:right" class="button">Ajouter une entitée</a>
+						<ul id="hover1" class="f-dropdown" data-dropdown-content="">
+	  						<li><a href="${pageContext.request.contextPath}/edit_user">un nouvel utilisateur</a></li>
+	  						<li><a href="${pageContext.request.contextPath}/edit_company">une nouvelle entreprise</a></li>
+	  						<li><a href="${pageContext.request.contextPath}/edit_offer">une nouvelle offre</a></li>
+	  						<li><a href="${pageContext.request.contextPath}/edit_domain">un nouveau domaine</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script src="${pageContext.request.contextPath}/public-resources/js/vendor/jquery.js"></script>
-	<script src="${pageContext.request.contextPath}/public-resources/js/foundation.min.js"></script>
-	<script src="${pageContext.request.contextPath}/public-resources/js/foundation/foundation.topbar.js"></script>
-	<script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.dropdown.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script type="text/javascript">
 	  $(document).foundation();
 	</script>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
-			if (event.keyCode == '13') {
-				search_key();
-				return false;
-			}
+		  if(event.keyCode == '13') {
+			search_key();
+			return false;
+		  }
+		  return true;
 		};
-		function search_key() {
+		function search_key(){
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if (chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")) {
-				$(location).attr('href', "detail_offre1.html");
+			if(chaine.length!=0){
+				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
 			}
-			if (chaine
-					.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")) {
-				$(location).attr('href', "detail_offre2.html");
-			}
-			if (chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")) {
-				$(location).attr('href', "detail_offre3.html");
-			}
-		}
-		function clear_session(){
-			window.sessionStorage.clear();
+			return true;
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />

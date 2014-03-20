@@ -5,7 +5,11 @@
 	<jsp:directive.page contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8" session="false" />
 	<!-- Pied de page -->
-	<div class="row">
-		<jsp:text>© 2014 - SAG - Joël KARCHER - Benjamin MIRETTI - Tuan NGUYEN - Guillaume CUEVAS</jsp:text>
+	<div class="contain-to-grid sticky">
+		<center>
+			<p id="foot">
+				<jsp:text>© 2014 - SAG - Joël KARCHER - Benjamin MIRETTI - Tuan NGUYEN - Guillaume CUEVAS</jsp:text>
+			</p>
+		</center>
 	</div>
 </jsp:root>

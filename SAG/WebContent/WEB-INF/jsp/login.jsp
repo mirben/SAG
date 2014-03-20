@@ -17,29 +17,25 @@
 <head>
 	<title>Authentification au SAG</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <![CDATA[
-    	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
-    ]]>
+    <script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 </head>
   <body>
 	<div class="row">
 		<div class="large-8 columns">
 			<h1><b>SAG</b> - Site d'Achat Groupé</h1>
 			<div class="row">
-				<form id="form_login" action="${auth}" method="post" data-abide="ajax">
+				<form id="form_login" action="${auth}" method="post">
 					<fieldset>
 						<legend>ENT - Authentifiez vous</legend>
-						<div class="name-field">
+						<div class="input-wrapper">
 							<label>Identifiant *
 						  		<input type="text" id="login" name="username" placeholder="Identifiant" required="required" />
 							</label>
-							<small class="error">Identifiant incorrect</small>
 						</div>
-						<div class="password-field">
+						<div class="input-wrapper">
 							<label>Mot de passe *
 						  		<input type="password" name="password" placeholder="Mot de passe" required="required" />
 							</label>
-							<small class="error">Mot de passe incorrect</small>
 						</div>
 						<input id="checkbox1" type="checkbox" /><label for="checkbox1">Se connecter en tant qu'entreprise.</label>
 					</fieldset>
@@ -47,16 +43,16 @@
 						<small>* : Champs obligatoires.</small>
 					</div>
 					<div class="right">
-						<![CDATA[
-							<span data-tooltip data-options='disable_for_touch:true' class="has-tip" 
-								title="<dl>
+							<![CDATA[
+								<span data-tooltip="" data-options='disable_for_touch:true' class="has-tip" 
+									title="<dl>
 										<dt>Etudiants et entreprises</dt>
 										<dd>- Entreprise : cochez la case correspondante,</dd>
 										<dd>- Etudiant : renseignez vos identifiants ENT.</dd>
 									</dl>">
-								<input id="submit_button" type="submit" class="small button" value="Se connecter" />
-							</span>
-						]]>
+									<input id="submit_button" type="submit" class="small button" value="Se connecter" />
+								</span>
+							]]>
 					</div>
 				</form>
 			</div>
@@ -67,11 +63,10 @@
 		</div>
     </div>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
-	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
-	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"></script>
-	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js"></script>
-	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.abide.js"></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js"><jsp:text /></script>
+	<script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js"><jsp:text /></script>
 	<script type='text/javascript'>
 		$(document).foundation(); 
 	</script>

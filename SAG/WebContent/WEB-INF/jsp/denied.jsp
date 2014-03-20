@@ -20,7 +20,7 @@
 			<link rel="stylesheet"
 				href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 			<script
-				src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
+				src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 			<title>Accès refusé</title>
 		</head>
 		<body>
