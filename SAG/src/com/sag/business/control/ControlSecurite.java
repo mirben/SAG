@@ -80,7 +80,7 @@ public class ControlSecurite {
 	 * @return Le nom de la jsp à afficher, register
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(@ModelAttribute @Valid Etudiant e,Model model) {
+	public String register(@ModelAttribute Etudiant e,Model model) {
 		if (e != null){
 			model.addAttribute("user", e);
 			return "register";
