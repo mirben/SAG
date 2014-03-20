@@ -30,12 +30,12 @@
 						<legend>ENT - Authentifiez vous</legend>
 						<div class="input-wrapper">
 							<label>Identifiant *
-						  		<input type="text" id="login" name="username" placeholder="Identifiant" required="required" />
+						  		<input type="text" id="login" name="username" placeholder="Identifiant" />
 							</label>
 						</div>
 						<div class="input-wrapper">
 							<label>Mot de passe *
-						  		<input type="password" name="password" placeholder="Mot de passe" required="required" />
+						  		<input type="password" name="password" placeholder="Mot de passe" />
 							</label>
 						</div>
 						<input id="entreprise" type="checkbox" name="entreprise" value="true" /><label for="checkbox1">Se connecter en tant qu'entreprise.</label>

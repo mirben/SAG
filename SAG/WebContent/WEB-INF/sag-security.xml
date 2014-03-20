@@ -41,19 +41,19 @@
 
 
 
-	<http entry-point-ref="casEntryPoint" use-expressions="true">
-		<intercept-url pattern="/home" access="hasRole('ROLE_USER')" />
-		<!-- <intercept-url pattern="/login" access="hasRole('ROLE_ADMIN')" /> -->
+	<http entry-point-ref="delegatingAuthenticationEntryPoint"
+		use-expressions="true">
+		<intercept-url pattern="/home" access="isAuthenticated()" />
+		<!-- <intercept-url pattern="/" access="hasRole('ROLE_ADMIN')" /> -->
 		<access-denied-handler error-page="/accessdenied" />
 		<form-login login-page="/login" default-target-url="/home"
 			username-parameter="username" password-parameter="password"
 			always-use-default-target="true" authentication-failure-url="/accessdenied" />
-		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/logoutconfirm" />
+		<logout invalidate-session="true" logout-url="/logout"
+			logout-success-url="/logoutconfirm" />
 
 		<!-- Configuration pour le CAS -->
 		<custom-filter position="CAS_FILTER" ref="casFilter" />
-<!-- 		<custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/> -->
-<!--     	<custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/> -->
 	</http>
 
 	<!-- Url de retour du CAS -->
@@ -62,6 +62,18 @@
 		<beans:property name="service"
 			value="http://localhost:8080/SAG/j_spring_cas_security_check" />
 		<beans:property name="sendRenew" value="false" />
+	</beans:bean>
+
+	<!-- Point d'entrée de délégation -->
+	<beans:bean id="delegatingAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint">
+		<beans:constructor-arg>
+			<beans:map>
+				<beans:entry key="!hasHeader('entreprise','true')"
+					value-ref="loginUrlAuthenticationEntryPoint" />
+			</beans:map>
+		</beans:constructor-arg>
+		<beans:property name="defaultEntryPoint" ref="casEntryPoint" />
 	</beans:bean>
 
 	<!-- Filtre d'authentification CAS -->
@@ -78,9 +90,27 @@
 		<beans:property name="serviceProperties" ref="serviceProperties" />
 	</beans:bean>
 
+	<!-- Point d'entrée sans CAS -->
+	<beans:bean id="loginUrlAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login" />
+	</beans:bean>
+
 	<!-- Configuration du athentication Manager du CAS -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="casAuthenticationProvider" />
+		<!-- Fournit les requêtes ainsi que l'algorithme de cryptage pour vérifier -->
+		<!-- le mail et le mot de passe utilisé pour l'authentification -->
+		<authentication-provider>
+			<password-encoder hash="sha" />
+			<jdbc-user-service data-source-ref="SAG_security_DS"
+				users-by-username-query="select email,password, statut 
+										from Utilisateur u, Entreprise e 
+										where u.id = e.ID_U and email=?"
+				authorities-by-username-query="select email, r.nom 
+										from Utilisateur u, Role r 
+										where u.ID_ROLE = r.id and email =? " />
+		</authentication-provider>
 	</authentication-manager>
 
 	<!-- Configuration du authenticationProvider du CAS pour gérer les rôles -->
@@ -103,6 +133,7 @@
 		<beans:property name="key" value="casAuthProviderKey" />
 	</beans:bean>
 
+	<!-- User service pour le CAS -->
 	<jdbc-user-service id="jdbcCasUserService"
 		data-source-ref="SAG_security_DS"
 		users-by-username-query="select logENT,1, statut 
@@ -111,18 +142,9 @@
 		authorities-by-username-query="select logENT, r.nom 
 												from Utilisateur u, Etudiant e, Role r 
 												where u.id = e.ID_U and u.ID_ROLE = r.id and logENT =? " />
-												
-	<!-- Ce filtre gère le Single Logout Request du CAS Server -->
-<!--   <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/> -->
-  <!-- Ce filtre redirige vers le CAS Server pour signaler que Single Logout doit être effectué -->
-<!--   <beans:bean id="requestSingleLogoutFilter" -->
-<!--         class="org.springframework.security.web.authentication.logout.LogoutFilter"> -->
-<!--     <beans:constructor-arg value="https://ident.univ-amu.fr:443/cas/logout"/> -->
-<!--     <beans:constructor-arg> -->
-<!--       <beans:bean class= -->
-<!--           "org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/> -->
-<!--     </beans:constructor-arg> -->
-<!--     <beans:property name="filterProcessesUrl" value="/logout"/> -->
-<!--   </beans:bean> -->
+
+
+
+
 
 </beans:beans>
