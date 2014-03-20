@@ -16,6 +16,7 @@
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en">
 <head>
 	<title>Authentification au SAG</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
     <script type='text/javascript' src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 </head>

@@ -18,7 +18,7 @@
 				href="${pageContext.request.contextPath}/public-resources/css/style.css" />
 			<title>Accueil, redirection vers le SAG</title>
 			<!-- Rédirige vers l'accueil -->
-			<meta http-equiv="refresh" content="5; URL="${pageContext.request.contextPath}/home">
+			<meta http-equiv="refresh" content="1; URL='${pageContext.request.contextPath}/home'" />
 		</head>
 		<body>
 			<div id='main'></div>
