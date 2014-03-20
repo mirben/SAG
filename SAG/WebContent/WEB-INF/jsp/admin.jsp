@@ -81,7 +81,7 @@
 												<!-- On parcours tous les utilisateurs actifs -->
 												<c:forEach items="${users_ebabled}" var="user">
 													<tr>
-														<td>${user.ent}</td>
+														<td>${user.logENT}</td>
 														<td>${user.role.nom}</td>
 														<td>${user.nom}</td>
 														<td>${user.prenom}</td>
@@ -123,7 +123,7 @@
 												<!-- On parcours tous les utilisateurs en attente -->
 												<c:forEach items="${users_waiting}" var="userw">
 													<tr>
-														<td>${userw.ent}</td>
+														<td>${userw.logENT}</td>
 														<td>${userw.role.nom}</td>
 														<td>${userw.nom}</td>
 														<td>${userw.prenom}</td>
