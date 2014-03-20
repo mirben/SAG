@@ -18,8 +18,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Nouvelle entreprise</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>

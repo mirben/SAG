@@ -140,9 +140,9 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script type="text/javascript">
 	  $(document).foundation();
 	</script>

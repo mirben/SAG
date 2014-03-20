@@ -18,8 +18,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Proposer une offre</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
   </head>
   <body>
     <div class="row">
@@ -149,32 +149,28 @@
 		<p>Un email vous sera envoyé dès que votre offre aura été activée.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>
-	<script type="text/javascript" >
+	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
 		  if(event.keyCode == '13') {
 			search_key();
 			return false;
 		  }
+		  return true;
 		};
 		function search_key(){
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")){
-				$(location).attr('href',"detail_offre1.html");
+			if(chaine.length!=0){
+				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
 			}
-			if(chaine.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")){
-				$(location).attr('href',"detail_offre2.html");
-			}
-			if(chaine.match("^.*(NOEL|SAPIN|NATUREL|NOEL).*$")){
-				$(location).attr('href',"detail_offre3.html");
-			}
+			return true;
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
