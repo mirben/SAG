@@ -14,6 +14,7 @@
 		omit-xml-declaration="true" />
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
+<<<<<<< HEAD
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,43 +79,147 @@
 				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Enregistrer</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
+=======
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAG - Profil <c:out value="${company.nom}" /></title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-resources/css/foundation.css" />
+<script
+	src="${pageContext.request.contextPath}/public-resources/js/vendor/modernizr.js"></script>
+</head>
+<body>
+	<jsp:include page="/WEB-INF/jsp/header.jsp" />
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<h3>
+					Profil
+					<c:out value="${company.nom}" />
+				</h3>
+				<div class="row">
+					<form:form method="post" commandName="company"
+						accept-charset="utf-8">
+						<form:errors path="*" cssClass="errorblock" element="div" />
+						<div class="row">
+							<div class="large-4 columns">
+								<label>SIRET <form:input path="siret"
+										placeholder="Numéro SIRET" /> <form:errors path="siret"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Raison sociale <form:input path="nom"
+										placeholder="Nom/Raison sociale" /> <form:errors path="nom"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-8 columns">
+								<label>Adresse Postale <form:textarea path="adresse"
+										placeholder="Adresse postale du siège social" /> <form:errors
+										path="adresse" cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Adresse Email <form:input path="email"
+										placeholder="Adresse Email" /> <form:errors path="email"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Site internet <form:input path="site"
+										placeholder="Url du site internet" /> <form:errors path="site"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+					</form:form>
+				</div>
+				<div class="row">
+					<a class="button"
+						onclick="document.forms[0].submit(); return false;" href="#"
+						data-reveal-id="myModal" data-reveal="">Enregistrer</a> <a
+						class="button" onclick="window.history.back();" href="#">Annuler</a>
+				</div>
+>>>>>>> branch 'master' of https://github.com/mirben/SAG.git
 			</div>
 		</div>
-	  </div>
 	</div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+
+	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Profil sauvegardé.</h2>
 		<p class="lead">Les modifications ont bien été prises en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
+<<<<<<< HEAD
     </div>
 	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
 	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
 	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
+=======
+	</div>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"></script>
+>>>>>>> branch 'master' of https://github.com/mirben/SAG.git
 	<script>
-	  $(document).foundation();
+		$(document).foundation();
 	</script>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
+<<<<<<< HEAD
 		  if(event.keyCode == '13') {
 			search_key();
 			return false;
 		  }
 		  return true;
+=======
+			if (event.keyCode == '13') {
+				search_key();
+				return false;
+			}
+>>>>>>> branch 'master' of https://github.com/mirben/SAG.git
 		};
-		function search_key(){
+		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
+<<<<<<< HEAD
 			if(chaine.length!=0){
 				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
+=======
+			if (chaine.match("^.*(OREILLET|MEMOIRE|FORME|LITERIE|MEMOIRE).*$")) {
+				$(location).attr('href', "detail_offre1.html");
+>>>>>>> branch 'master' of https://github.com/mirben/SAG.git
 			}
+<<<<<<< HEAD
 			return true;
+=======
+			if (chaine
+					.match("^.*(DAFT ??PUNK|DAFT|PUNK|RAM|MEMORIE|ACCESS|ALBUM).*$")) {
+				$(location).attr('href', "detail_offre2.html");
+			}
+			if (chaine.match("^.*(NOEL|SAPIN|NATUREL).*$")) {
+				$(location).attr('href', "detail_offre3.html");
+			}
+>>>>>>> branch 'master' of https://github.com/mirben/SAG.git
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-  </body>
-</html>
+</body>
+	</html>
 </jsp:root>
 
 
