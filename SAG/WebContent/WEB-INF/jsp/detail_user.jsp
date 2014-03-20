@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Profil <c:out value=${user.nom} /></title>
+    <title>SAG - Profil <c:out value="${user.nom}" /></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
   </head>
@@ -26,11 +26,11 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-	    <h3>Profil <c:out value=${user.nom} /></h3>
+	    <h3>Profil <c:out value="${user.nom}" /></h3>
 	    <div class="row">
 	    	<form:form method="post" commandName="user" accept-charset="utf-8">
 			<form:errors path="*" cssClass="errorblock" element="div" />
-			<dl class="tabs" data-tab>
+			<dl class="tabs" data-tab="">
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 			  <dd><a href="#panel2-2">Domaines</a></dd>
 			</dl>
@@ -122,13 +122,13 @@
 			</form:form>
 		</div>
 		<div class="row">
-		    <a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Enregistrer</a>
+		    <a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
 		    <a class="button" onclick="window.history.back();" href="#">Annuler</a>
 		</div>
 	   </div>
       </div>
     </div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+    <div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Profil sauvegardé.</h2>
 		<p class="lead">Les modifications ont bien été prises en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
