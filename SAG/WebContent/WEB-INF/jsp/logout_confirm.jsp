@@ -16,9 +16,9 @@
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
 <head>
 	<link type="text/css" rel="stylesheet"
-		href="${pageContext.request.contextPath}/public-resources/styles/style.css" />
+		href="${pageContext.request.contextPath}/public-ressources/styles/style.css" />
 		<link type="text/css" rel="stylesheet"
-		href="${pageContext.request.contextPath}/public-resources/styles/foundation.css" />
+		href="${pageContext.request.contextPath}/public-ressources/styles/foundation.css" />
 	<title>Déconnection du SAG</title>
     <script type="text/javascript">
 		//Redirige vers la page d'authentification après 5 secondes

@@ -55,8 +55,8 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Identifiant ENT
-						<form:input path="ent" placeholder="Identifiant ENT"/>
-						<form:errors path="ent" cssClass="error" />
+						<form:input path="logENT" placeholder="Identifiant ENT"/>
+						<form:errors path="logENT" cssClass="error" />
 					  </label>
 					</div>
 				  </div>

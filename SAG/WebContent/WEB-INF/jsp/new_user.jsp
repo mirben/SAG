@@ -18,9 +18,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAG - Nouvel utilisateur</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
     <div class="row">
@@ -55,8 +55,8 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Identifiant ENT
-						<form:input path="ent" placeholder="Identifiant ENT"/>
-						<form:errors path="ent" cssClass="error" />
+						<form:input path="logENT" placeholder="Identifiant ENT"/>
+						<form:errors path="logENT" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -143,9 +143,9 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script type="text/javascript">
 	  $(document).foundation();
 	</script>

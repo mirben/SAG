@@ -52,7 +52,6 @@ public class ControlAdmin {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
-		
 		Collection<Offre> coffer = offerDao.chercherTous();
 		Collection<Offre> cofferv = new Vector<Offre>();
 		Collection<Offre> cofferw = new Vector<Offre>();

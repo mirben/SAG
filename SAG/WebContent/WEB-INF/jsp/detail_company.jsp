@@ -21,8 +21,8 @@
     <title>SAG - Profil <c:out value=${company.nom} /></title>
     <link type="text/css" rel="stylesheet"
 				href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-resources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-resources/js/vendor/modernizr.js"><jsp:text /></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
