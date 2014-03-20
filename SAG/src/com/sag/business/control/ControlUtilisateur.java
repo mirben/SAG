@@ -77,7 +77,9 @@ public class ControlUtilisateur {
 		}
 		Etudiant e = new Etudiant();
 		logger.info("new student = " + e);
-
+		//Ajout du rôle étudiant par défaut et du statut désactivé
+		e.setRole(etuDao.chercherRoleParID(2));
+		e.setStatut(StatutUtilisateur.INACTIF);
 		return e;
 	}
 
