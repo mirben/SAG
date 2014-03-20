@@ -62,7 +62,8 @@
 									</c:otherwise>
 								</c:choose>
 								<li id="offers"><a href="${pageContext.request.contextPath}/offer_propose?id=${user_co.id}">Consulter ses offres</a></li>
-								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
+								<li><a href="${pageContext.request.contextPath}/logout" onclick="window.open('https://ident.univ-amu.fr:443/cas/logout', 'Déconnection du CAS',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">Se déconnecter</a></li>
 							</ul>
 						</li>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
