@@ -8,9 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @PrimaryKeyJoinColumn(name="ID_U")
@@ -19,11 +23,23 @@ public class Etudiant extends Utilisateur{
 	private static final long serialVersionUID = 1L;
 	
 	@Column(nullable = false, unique = true)
+	
+	@NotNull(message = "Le nom est obligatoire")
+	@Size(min = 6, message = "Le nom est obligatoire")
 	private String logENT;
+	
+	@NotNull(message = "Le nom est obligatoire")
+	@Size(min = 1, message = "Le nom est obligatoire")
 	private String nom; 
+	
+	@NotNull(message = "Le nom est obligatoire")
+	@Size(min = 1, message = "Le nom est obligatoire")
 	private String prenom;
 	
 	//@Temporal(TemporalType.DATE)
+	@NotNull(message = "La date de naissance est obligatoire")
+	//@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Past(message = "La date de naissance doit être passé")
 	private Date dateNaiss;
 	private String adresse;
 	private String siteWeb;
