@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Etudiant;
+import com.sag.business.model.Utilisateur;
+import com.sag.business.service.DomaineDao;
 import com.sag.business.service.EtudiantDao;
+import com.sag.business.service.UtilisateurDao;
 
 /**
  * 
@@ -36,6 +40,10 @@ public class ControlSecurite {
 
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
+	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
+	UtilisateurDao userDao;
+	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
+	DomaineDao domDao;
 
 	/**
 	 * Créer un etudiant
@@ -139,6 +147,10 @@ public class ControlSecurite {
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String accueil(Model model) {
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		model.addAttribute("user_co", uco);
+		model.addAttribute("domains", domDao.chercherTous());
 		return "home";
 	}
 

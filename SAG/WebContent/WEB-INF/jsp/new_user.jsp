@@ -69,7 +69,7 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Date de naissance
-						<form:input type="date" path="dateNaiss" placeholder="Date de naissance"/>
+						<form:input type="date" path="dateNaiss" pattern="dd/MM/yyyy" placeholder="Date de naissance"/>
 						<form:errors path="dateNaiss" cssClass="error" />
 					  </label>
 					</div>
@@ -115,8 +115,7 @@
 					<div class="large-4 columns">
 					  <label>Rôle
 						<form:select path="role">
-						    <form:option value="Etudiant"/>
-						    <form:option value="Aministrateur"/>
+						    <form:options items="${roles}" itemLabel="nom"/>
 						</form:select>
 					  </label>
 					</div>
