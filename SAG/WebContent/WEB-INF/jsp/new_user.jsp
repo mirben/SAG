@@ -115,7 +115,7 @@
 					<div class="large-4 columns">
 					  <label>Rôle
 						<form:select path="role">
-						    <form:options items="${roles}" itemLabel="nom"/>
+						    <form:options items="${roles}" itemLabel="nom" itemValue="id"/>
 						</form:select>
 					  </label>
 					</div>
@@ -126,8 +126,7 @@
 					<div class="large-6 columns">
 						<label>Sélectionnez les domaines suivis :</label>
 						<form:select path="domaines">
-			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${domains}" itemLabel="nom"/>
+			              <form:options items="${domains}" itemLabel="nom" itemValue="id"/>
 			          	</form:select>
 					</div>
 				  </div>

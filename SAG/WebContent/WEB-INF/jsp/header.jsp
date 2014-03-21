@@ -53,7 +53,7 @@
 					<ul id="rightmenu" class="right">
 						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co.nom}" /></a>
 							<ul class="dropdown">
-								<sec:authorize access="hasRole('ROLE_USER')">
+								<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
 										<li id="infos"><a href="${pageContext.request.contextPath}/edit_user?id=${user_co.id}">Modifier mes informations</a></li>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ROLE_ENTR')">

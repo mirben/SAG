@@ -9,8 +9,10 @@
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
 		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/*company*" access="hasAnyRole('ROLE_ENTR','ROLE_ADMIN')" />
+		<intercept-url pattern="/*user*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
-<!-- 		<intercept-url pattern="/" access="hasRole('ROLE_ADMIN')" /> -->
 		<access-denied-handler error-page="/accessdenied" />
 		<form-login login-page="/login" default-target-url="/home"
 			username-parameter="username" password-parameter="password"

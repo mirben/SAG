@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Profil <c:out value=${company.nom} /></title>
+    <title>SAG - Profil <c:out value="${entreprise.nom}" /></title>
     <link type="text/css" rel="stylesheet"
 				href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
@@ -28,10 +28,9 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-			<h3>Profil <c:out value=${company.nom} /></h3>
+			<h3>Profil <c:out value="${entreprise.nom}" /></h3>
 			<div class="row">
-				<form:form method="post" commandName="company" accept-charset="utf-8">
-				<form:errors path="*" cssClass="errorblock" element="div" />
+				<form:form method="post" commandName="entreprise" accept-charset="utf-8">
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>SIRET
@@ -67,15 +66,15 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Site internet
-					  	<form:input path="site" placeholder="Url du site internet"/>
-						<form:errors path="site" cssClass="error" />
+					  	<form:input path="siteWeb" placeholder="Url du site internet"/>
+						<form:errors path="siteWeb" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Enregistrer</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>

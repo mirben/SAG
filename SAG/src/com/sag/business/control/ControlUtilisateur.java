@@ -378,6 +378,33 @@ public class ControlUtilisateur {
 	}
 
 	/**
+	 * Méthode mappé sur /detail_company et les requêtes POST Modifie ou crée une
+	 * entreprise
+	 * 
+	 * @param ent
+	 *            L'entreprise recupérée
+	 * @return Redirection vers un autre mapping, admin
+	 */
+	@RequestMapping(value = "/detail_company", method = RequestMethod.POST)
+	public String detailCompany(@ModelAttribute Entreprise ent,
+			BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "new_company";
+		}
+		if (ent == null)
+			return "redirect:admin";
+		logger.info("save company " + ent.getNom());
+		try {
+			entDao.sauvegarder(ent);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Nom d'entreprise déjà utilisé");
+			return "new_company";
+		}
+		return "redirect:admin";
+	}
+	
+	/**
 	 * Méthode mappé sur /edit_company et les requêtes GET Modifie ou crée une
 	 * entreprise
 	 * 
@@ -452,6 +479,23 @@ public class ControlUtilisateur {
 						} else
 							return new SimpleDateFormat("dd/MM/yyyy")
 									.format((Date) getValue());
+					}
+				});
+		
+		b.registerCustomEditor(Role.class, "role",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						super.setValue(userDao.chercherRoleParID(Integer.parseInt(text)));
+					}
+				});
+		
+		b.registerCustomEditor(Domaine.class, "domaine",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						System.out.println(text+"****************");
+						super.setValue(domDao.chercherParID(Integer.parseInt(text)));
 					}
 				});
 	}
