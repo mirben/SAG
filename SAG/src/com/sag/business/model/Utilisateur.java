@@ -12,6 +12,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.apache.bval.constraints.Email;
+import org.apache.bval.constraints.NotEmpty;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Utilisateur implements Serializable{
@@ -22,6 +25,8 @@ public class Utilisateur implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@NotEmpty(message = "Le émail est obligatoire")
+	@Email(message = "Email invalide")
 	@Column(nullable = false, unique = true)
 	private String email;
 	
