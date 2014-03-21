@@ -120,7 +120,7 @@
 							  </div>
 						  </div>
 						</div>
-						<form:errors path="*" cssClass="errorblock" element="div" />
+						
 						</form:form>
 					</div>
 					<div class="row">

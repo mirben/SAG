@@ -12,49 +12,56 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.apache.bval.constraints.NotEmpty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@PrimaryKeyJoinColumn(name="ID_U")
-public class Etudiant extends Utilisateur{
+@PrimaryKeyJoinColumn(name = "ID_U")
+public class Etudiant extends Utilisateur {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(nullable = false, unique = true)
-	
-	@NotNull(message = "Le nom est obligatoire")
-	@Size(min = 6, message = "Le nom est obligatoire")
+	@NotNull(message = "L'identifiant ENT est obligatoire")
+	@Size(min = 6, message = "L'identifiant ENT est obligatoire")
 	private String logENT;
-	
-	@NotNull(message = "Le nom est obligatoire")
-	@Size(min = 1, message = "Le nom est obligatoire")
-	private String nom; 
-	
-	@NotNull(message = "Le nom est obligatoire")
-	@Size(min = 1, message = "Le nom est obligatoire")
+
+	@NotEmpty(message = "Le nom est obligatoire")
+	private String nom;
+
+	@NotEmpty(message = "Le prenom est obligatoire")
 	private String prenom;
+
 	
-	//@Temporal(TemporalType.DATE)
-	@NotNull(message = "La date de naissance est obligatoire")
-	//@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@NotNull(message = "La date de naissance est incorrect")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Past(message = "La date de naissance doit être passé")
 	private Date dateNaiss;
+
+	@NotEmpty(message = "L'adresse est obligatoire")
 	private String adresse;
+
+	@URL(message = "La siter internet est incorrect")
 	private String siteWeb;
+
+	@NotNull(message = "La formation est obligatoire")
+	@NotEmpty(message = "La formation est obligatoire")
 	private String formation;
-	
+
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private Collection<Domaine> domaines; 
-	
-	public Etudiant(){
+	private Collection<Domaine> domaines;
+
+	public Etudiant() {
 		super();
 		domaines = new Vector<Domaine>();
 	}
-	
-	public Etudiant(String email, StatutUtilisateur statut, Role role, String logENT, String nom, String prenom, Date dateNaiss,
+
+	public Etudiant(String email, StatutUtilisateur statut, Role role,
+			String logENT, String nom, String prenom, Date dateNaiss,
 			String adresse, String siteWeb, String formation,
 			Collection<Domaine> domaines) {
 		super(email, statut, role);
@@ -67,46 +74,59 @@ public class Etudiant extends Utilisateur{
 		this.formation = formation;
 		this.domaines = (domaines != null) ? domaines : new Vector<Domaine>();
 	}
-	
+
 	public String getLogENT() {
 		return logENT;
 	}
+
 	public void setLogENT(String logENT) {
 		this.logENT = logENT;
 	}
+
 	public String getNom() {
 		return nom;
 	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
 	public String getPrenom() {
 		return prenom;
 	}
+
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
 	public Date getDateNaiss() {
 		return dateNaiss;
 	}
+
 	public void setDateNaiss(Date dateNaiss) {
 		this.dateNaiss = dateNaiss;
 	}
+
 	public String getAdresse() {
 		return adresse;
 	}
+
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
 	public String getSiteWeb() {
 		return siteWeb;
 	}
+
 	public void setSiteWeb(String siteWeb) {
 		this.siteWeb = siteWeb;
 	}
+
 	public String getFormation() {
 		return formation;
 	}
+
 	public void setFormation(String formation) {
 		this.formation = formation;
 	}
@@ -169,7 +189,8 @@ public class Etudiant extends Utilisateur{
 		if (domaines == null) {
 			if (other.domaines != null)
 				return false;
-		} else if (!(domaines.containsAll(other.domaines) && other.domaines.containsAll(domaines)))
+		} else if (!(domaines.containsAll(other.domaines) && other.domaines
+				.containsAll(domaines)))
 			return false;
 		if (formation == null) {
 			if (other.formation != null)
@@ -198,7 +219,5 @@ public class Etudiant extends Utilisateur{
 			return false;
 		return true;
 	}
-	
-	
 
 }
