@@ -20,7 +20,7 @@
     <title>SAG - Nouvelle entreprise</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
+    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -94,9 +94,9 @@
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>

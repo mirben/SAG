@@ -36,7 +36,6 @@
 	    </c:choose>
 	    <div class="row">
 	    	<form:form method="post" commandName="etudiant" accept-charset="utf-8">
-			<form:errors path="*" cssClass="errorblock" element="div" />
 			<dl class="tabs" data-tab="">
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 			  <dd><a href="#panel2-2">Domaines</a></dd>
@@ -70,7 +69,7 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Date de naissance
-						<form:input path="dateNaiss" placeholder="Date de naissance"/>
+						<form:input type="date" path="dateNaiss" placeholder="Date de naissance"/>
 						<form:errors path="dateNaiss" cssClass="error" />
 					  </label>
 					</div>
@@ -102,7 +101,7 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Formation
-						<form:select path="statut">
+						<form:select path="formation">
 						    <form:option value="Licence 1"/>
 						    <form:option value="Licence 2"/>
 						    <form:option value="Licence 3"/>
@@ -115,7 +114,7 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Rôle
-						<form:select path="formation">
+						<form:select path="role">
 						    <form:option value="Etudiant"/>
 						    <form:option value="Aministrateur"/>
 						</form:select>
@@ -129,7 +128,7 @@
 						<label>Sélectionnez les domaines suivis :</label>
 						<form:select path="domaines">
 			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${etudiant.domaines}" itemLabel="nom"/>
+			              <form:options items="${domains}" itemLabel="nom"/>
 			          	</form:select>
 					</div>
 				  </div>
