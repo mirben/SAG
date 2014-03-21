@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Domaine;
+import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
@@ -148,7 +149,7 @@ public class ControlOffre {
 			return offerDao.chercherParID(idOffre);
 		}
 		Offre o = new Offre();
-		logger.info("new product = " + o);
+		logger.info("new offer = " + o);
 		return o;
 	}
 
@@ -162,13 +163,39 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
-	public String editOffre(
-			@RequestParam(value = "id", required = true) int idOffre,
-			Model model) {
-		Offre offre = offerDao.chercherParID(idOffre);
-		model.addAttribute("offer", offre);
+	public String editOffre(@ModelAttribute Offre o, Model model) {
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		model.addAttribute("user_co", uco);
+		if (o != null){
+			model.addAttribute("offre", o);
+			return "new_offer";
+		}
+		return "redirect:admin";
+	}
+	
+	/**
+	 * Méthode mappé sur /save_offer et les requêtes POST Sauvagarder une offre
+	 * en brouillon
+	 * 
+	 * @param offre
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value = "/edit_offer", method = RequestMethod.POST)
+	public String editOffre(@ModelAttribute Offre offre, Model model,
+			BindingResult result) {
+		if (result.hasErrors()) {
+			return "offer_propose";
+		}
+		
+		offerDao.sauvegarder(offre);
+		logger.info("offre sauvagardé " + offre);
 
-		return "new_offre";
+		Offre offer = offerDao.sauvegarder(offre);
+		model.addAttribute("offre", offre);
+		
+		return "offer_propose";
 	}
 
 	/**
@@ -230,7 +257,6 @@ public class ControlOffre {
 	@RequestMapping(value = "/save_offer", method = RequestMethod.POST)
 	public String sauvegardeOffre(@ModelAttribute Offre offre, Model model,
 			BindingResult result) {
-
 		offre.setStatut(StatutOffre.BROUILLON);
 		if (result.hasErrors()) {
 			return "offer_propose";
@@ -240,9 +266,7 @@ public class ControlOffre {
 		logger.info("offre sauvagardé " + offre);
 
 		Offre offer = offerDao.sauvegarder(offre);
-		model.addAttribute("offer", offer);
-		
-		
+		model.addAttribute("offre", offer);
 		
 		return "offer_propose";
 	}

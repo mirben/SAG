@@ -65,7 +65,7 @@
 											<!-- Si la liste des utilisateurs est vide -->
 											<c:when test="${empty users_enabled}">
 												<tr>
-													<td colspan="3">Aucun utilisateur.</td>
+													<td colspan="3">Aucun utilisateur actif.</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
@@ -73,6 +73,7 @@
 													<tr>
 														<th>Utilisateur</th>
 														<th>Rôle</th>
+														<th>Statut</th>
 														<th>Nom</th>
 														<th>Prénom</th>
 													</tr>
@@ -83,6 +84,7 @@
 													<tr>
 														<td>${user.logENT}</td>
 														<td>${user.role.nom}</td>
+														<td>${user.statut }</td>
 														<td>${user.nom}</td>
 														<td>${user.prenom}</td>
 														<td><a href="${pageContext.request.contextPath}/detail_user?id=${user.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
@@ -107,7 +109,7 @@
 											<!-- Si la liste des utilisateurs est vide -->
 											<c:when test="${empty users_waiting}">
 												<tr>
-													<td colspan="3">Aucun utilisateur.</td>
+													<td colspan="3">Aucun utilisateur en attente.</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
@@ -115,6 +117,7 @@
 													<tr>
 														<th>Utilisateur</th>
 														<th>Rôle</th>
+														<th>Statut</th>
 														<th>Nom</th>
 														<th>Prénom</th>
 													</tr>
@@ -125,6 +128,7 @@
 													<tr>
 														<td>${userw.logENT}</td>
 														<td>${userw.role.nom}</td>
+														<td>${userw.statut }</td>
 														<td>${userw.nom}</td>
 														<td>${userw.prenom}</td>
 														<td><a href="${pageContext.request.contextPath}/detail_user?id=${userw.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
@@ -159,6 +163,7 @@
 												<th>Entreprise</th>
 												<th>SIRET</th>
 												<th>Site internet</th>
+												<th>Statut</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -167,14 +172,15 @@
 											<tr>
 												<td>${comp.nom}</td>
 												<td>${comp.siret}</td>
-												<td>${comp.site}</td>
+												<td>${comp.siteWeb}</td>											
+												<td>${comp.statut}</td>
 												<td><a href="${pageContext.request.contextPath}/detail_company?id=${comp.id}" class="tiny button split" onclick="this.target='_blank'">Profil<span
 													data-dropdown="drop3"></span></a><br/>
 													<ul id="drop3" class="f-dropdown" data-dropdown-content = "">
 														<li><a href="${pageContext.request.contextPath}/edit_company?id=${comp.id}">Modifier</a></li>
 														<c:choose>
 															<!-- Si la liste des utilisateurs est vide -->
-															<c:when test="${company.actif==1}">
+															<c:when test="${company.statut=='ACTIF'}">
 																<li><a href="${pageContext.request.contextPath}/disable_company?id=${comp.id}">Désactiver</a></li>
 															</c:when>
 															<c:otherwise>
@@ -297,7 +303,7 @@
 											<c:forEach items="${domains}" var="dom">
 												<tr>
 													<td>${dom.nom}</td>
-													<td><a href="${pageContext.request.contextPath}/domain_list?id=${dom.id}"
+													<td><a href="${pageContext.request.contextPath}/domain_list?idd=${dom.id}"
 														class="tiny button split" onclick="this.target='_blank'">Offres<span
 															data-dropdown="drop7"></span></a><br/>
 														<ul id="drop7" class="f-dropdown" data-dropdown-content = "">

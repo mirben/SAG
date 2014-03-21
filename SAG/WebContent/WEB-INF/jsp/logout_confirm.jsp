@@ -16,9 +16,9 @@
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
 <head>
 	<link type="text/css" rel="stylesheet"
-		href="${pageContext.request.contextPath}/public-ressources/styles/style.css" />
+		href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 		<link type="text/css" rel="stylesheet"
-		href="${pageContext.request.contextPath}/public-ressources/styles/foundation.css" />
+		href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 	<title>Déconnection du SAG</title>
     <script type="text/javascript">
 		//Redirige vers la page d'authentification après 5 secondes
@@ -30,11 +30,11 @@
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
 	<div class="panel callout radius">
 		<p>Vous avez bien été déconnecté !</p>
-		<iframe src="https://ident.univ-amu.fr:443/cas/logout" />
+		<iframe hidden="true" src="https://ident.univ-amu.fr:443/cas/logout" />
 	</div>
-	<script src="${pageContext.request.contextPath}/js/vendor/jquery.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
 	</script>

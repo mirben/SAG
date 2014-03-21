@@ -17,9 +17,9 @@
 	  <meta charset="utf-8" />
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	  <title>SAG - Nouveau Domaine</title>
-	  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-	  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-	<script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
+	  <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+	  <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 	</head>
   	<body>
     <jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -41,14 +41,13 @@
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>
 		</div>
 	  </div>
-	</div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+    <div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Nouveau domaine sauvegardé.</h2>
 		<p class="lead">L'ajout a bien été pris en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>

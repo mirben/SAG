@@ -17,16 +17,23 @@
 	    <meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	    <title>SAG - Nouvelle offre</title>
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/foundation.css" />
-	    <script src="${pageContext.request.contextPath}/js/vendor/modernizr.js"><jsp:text /></script>
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+	    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
 		</head>
   <body>
   	<jsp:include page="/WEB-INF/jsp/header.jsp" />
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-			<h3>Nouvelle offre</h3>
+			<c:choose>
+      		<c:when test="${empty offre.titre}">
+	    		<h3>Nouvelle offre</h3>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<h3><c:out value="Offre ${offre.titre}" /></h3>
+	    	</c:otherwise>
+	    </c:choose>
 			<div class="row">
 				<form:form method="post" commandName="offre" accept-charset="utf-8">
 				<form:errors path="*" cssClass="errorblock" element="div" />
@@ -127,14 +134,13 @@
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>
 		</div>
-	  </div>
 	</div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+    <div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Nouvelle offre sauvegardée.</h2>
 		<p class="lead">L'ajout a bien été pris en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>

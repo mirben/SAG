@@ -29,7 +29,7 @@
       	<div class="panel">
 			<h3>Nouvelle entreprise</h3>
 			<div class="row">
-				<form:form method="post" commandName="company" accept-charset="utf-8">
+				<form:form method="post" commandName="entreprise" accept-charset="utf-8">
 				<form:errors path="*" cssClass="errorblock" element="div" />
 				  <div class="row">
 					<div class="large-4 columns">
@@ -65,23 +65,30 @@
 				  </div>
 				  <div class="row">
 					<div class="large-4 columns">
+					  <label>Mot de passe
+						<form:input type="password" path="password" placeholder="Mot de passe"/>
+						<form:errors path="password" cssClass="error" />
+					  </label>
+					</div>
+				  </div>
+				  <div class="row">
+					<div class="large-4 columns">
 					  <label>Site internet
-						<form:input path="site" placeholder="Url du site internet"/>
-						<form:errors path="site" cssClass="error" />
+						<form:input path="siteWeb" placeholder="Url du site internet"/>
+						<form:errors path="siteWeb" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>
 		</div>
 	  </div>
-	</div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+    <div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Nouvelle entreprise sauvegardée.</h2>
 		<p class="lead">L'ajout a bien été pris en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>

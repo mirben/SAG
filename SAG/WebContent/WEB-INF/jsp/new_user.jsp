@@ -26,11 +26,18 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-	    <h3>Nouvel utilisateur</h3>
+      	<c:choose>
+      		<c:when test="${empty etudiant.nom}">
+	    		<h3>Nouvel utilisateur</h3>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<h3><c:out value="${etudiant.prenom} ${etudiant.nom}" /></h3>
+	    	</c:otherwise>
+	    </c:choose>
 	    <div class="row">
-	    	<form:form method="post" commandName="user" accept-charset="utf-8">
+	    	<form:form method="post" commandName="etudiant" accept-charset="utf-8">
 			<form:errors path="*" cssClass="errorblock" element="div" />
-			<dl class="tabs" data-tab>
+			<dl class="tabs" data-tab="">
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
 			  <dd><a href="#panel2-2">Domaines</a></dd>
 			</dl>
@@ -120,9 +127,9 @@
 				  <div class="row">
 					<div class="large-6 columns">
 						<label>Sélectionnez les domaines suivis :</label>
-						<form:select path="user.domaine">
+						<form:select path="domaines">
 			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${user.domaine}" itemLabel="nom"/>
+			              <form:options items="${etudiant.domaines}" itemLabel="nom"/>
 			          	</form:select>
 					</div>
 				  </div>
@@ -131,13 +138,13 @@
 			</form:form>
 		</div>
 		<div class="row">
-		    <a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal>Ajouter</a>
-		    <a class="button" onclick="window.history.back();" href="#">Annuler</a>
+		    <a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
+		    <a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 		</div>
 	   </div>
       </div>
     </div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+    <div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Nouvel utilisateur sauvegardé.</h2>
 		<p class="lead">L'ajout a bien été pris en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>

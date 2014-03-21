@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Profil <c:out value="${user.nom}" /></title>
+    <title>SAG - Profil <c:out value="${etudiant.nom}" /></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
@@ -26,9 +26,9 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-	    <h3>Profil <c:out value="${user.nom}" /></h3>
+	    <h3>Profil <c:out value="${etudiant.nom}" /></h3>
 	    <div class="row">
-	    	<form:form method="post" commandName="user" accept-charset="utf-8">
+	    	<form:form method="post" commandName="etudiant" accept-charset="utf-8">
 			<form:errors path="*" cssClass="errorblock" element="div" />
 			<dl class="tabs" data-tab="">
 			  <dd class="active"><a href="#panel2-1">Informations personnelles</a></dd>
@@ -111,9 +111,9 @@
 				  <div class="row">
 					<div class="large-6 columns">
 					  <label>Sélectionnez les domaines suivis :</label>
-					  <form:select path="user.domaine">
+					  <form:select path="domaines">
 			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${user.domaine}" itemLabel="nom"/>
+			              <form:options items="${domaines}" itemLabel="nom"/>
 			          </form:select>
 					</div>
 				  </div>

@@ -168,7 +168,7 @@ public class ControlUtilisateur {
 	public String detailStudent(
 			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
-		model.addAttribute("user", e);
+		model.addAttribute("etudiant", e);
 		logger.info("detail student " + studentNumber);
 		return "detail_user";
 	}
@@ -189,7 +189,7 @@ public class ControlUtilisateur {
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
 		if (e != null){
-			model.addAttribute("user", e);
+			model.addAttribute("etudiant", e);
 			return "new_user";
 		}
 		return "redirect:admin";
@@ -283,12 +283,16 @@ public class ControlUtilisateur {
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_company", method = RequestMethod.GET)
-	public String detailCompany(
-			@RequestParam(value = "id", required = true) Integer companyNumber, Model model) {
-		Entreprise e = entDao.chercherParID(companyNumber);
-		model.addAttribute("company", e);
-		logger.info("detail company " + companyNumber);
-		return "detail_company";
+	public String detailCompany(@ModelAttribute Entreprise e, Model model) {
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		model.addAttribute("user_co", uco);
+		if (e != null){
+			model.addAttribute("entreprise", e);
+			logger.info("detail company " + e);
+			return "detail_company";
+		}
+		return "redirect:admin";
 	}
 	
 	/**
@@ -307,7 +311,7 @@ public class ControlUtilisateur {
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
 		if (e != null){
-			model.addAttribute("company", e);
+			model.addAttribute("entreprise", e);
 			return "new_company";
 		}
 		return "redirect:admin";
