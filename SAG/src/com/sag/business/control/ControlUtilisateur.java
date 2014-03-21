@@ -1,6 +1,14 @@
 package com.sag.business.control;
 
+import java.beans.PropertyEditorSupport;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
+
 import javax.ejb.EJB;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,13 +16,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
+import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
@@ -178,9 +190,38 @@ public class ControlUtilisateur {
 			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
 		model.addAttribute("etudiant", e);
+		model.addAttribute("roles",Arrays.asList(etuDao.chercherRoleParID(1),etuDao.chercherRoleParID(2),etuDao.chercherRoleParID(3)));
 		model.addAttribute("domains",domDao.chercherTous());
 		logger.info("detail student " + studentNumber);
 		return "detail_user";
+	}
+	
+	/**
+	 * Méthode mappé sur /detail_user et les requêtes POST Modifie ou crée un etudiant
+	 * 
+	 * @param ent
+	 *            L'etudiant recupérée
+	 * @return Redirection vers un autre mapping, admin
+	 */
+	@RequestMapping(value = "/detail_user", method = RequestMethod.POST)
+	public String saveCompany(@ModelAttribute @Valid Etudiant etu, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			return "detail_user";
+		}
+		if(etu==null) return "redirect:admin";
+		logger.info("save detail student " + etu.getNom());
+		try {
+			etuDao.sauvegarder(etu);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Nom d'etudiant déjà utilisé");
+			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+					.getContext().getAuthentication().getName());
+			model.addAttribute("user_co", uco);
+			return "detail_user";
+		}
+		return "redirect:admin";
 	}
 	
 	/**
@@ -200,10 +241,13 @@ public class ControlUtilisateur {
 		model.addAttribute("user_co", uco);
 		if (e != null){
 			model.addAttribute("etudiant", e);
+			model.addAttribute("domains", domDao.chercherTous());
+			model.addAttribute("roles",Arrays.asList(etuDao.chercherRoleParID(1),etuDao.chercherRoleParID(2),etuDao.chercherRoleParID(3)));
 			return "new_user";
 		}
 		return "redirect:admin";
 	}
+	
 	
 	/**
 	 * Méthode mappé sur /edit_user et les requêtes POST Modifie ou crée un etudiant
@@ -213,7 +257,7 @@ public class ControlUtilisateur {
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
-	public String saveStudent(@ModelAttribute Etudiant etu, BindingResult result,
+	public String saveStudent(@ModelAttribute @Valid Etudiant etu, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
 			return "new_user";
@@ -297,6 +341,7 @@ public class ControlUtilisateur {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
+		model.addAttribute("domains", domDao.chercherTous());
 		if (e != null){
 			model.addAttribute("entreprise", e);
 			logger.info("detail company " + e);
@@ -320,6 +365,7 @@ public class ControlUtilisateur {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
+		model.addAttribute("domains", domDao.chercherTous());
 		if (e != null){
 			model.addAttribute("entreprise", e);
 			return "new_company";
@@ -353,5 +399,39 @@ public class ControlUtilisateur {
 			return "new_company";
 		}
 		return "redirect:admin";
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		b.registerCustomEditor(java.sql.Date.class, "dateNaiss",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						java.util.Date date = null;
+						try {
+							date = sdf.parse(text);
+							java.sql.Date dateSQL = null;
+							dateSQL = new java.sql.Date(date.getTime());
+
+							super.setValue(dateSQL);
+						} catch (ParseException e) { // TODO Auto-generated
+														// catch block
+							e.printStackTrace();
+						}
+						
+					}
+
+					@Override
+					public String getAsText() {
+						if (getValue() == null) {
+							return "";
+						} else
+							return new SimpleDateFormat("dd/MM/yyyy")
+									.format((Date) getValue());
+					}
+				});
+
 	}
 }
