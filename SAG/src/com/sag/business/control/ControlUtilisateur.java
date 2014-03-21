@@ -17,6 +17,7 @@ import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.model.Utilisateur;
+import com.sag.business.service.DomaineDao;
 import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
@@ -36,6 +37,8 @@ public class ControlUtilisateur {
 	EntrepriseDao entDao;
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
+	DomaineDao domDao;
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -141,17 +144,23 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/switch_role_user", method = RequestMethod.GET)
 	public String switchRoleStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber) {
+			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
 		
+		if(e==null) {
+			model.addAttribute("erreur", "Impossible de changer le rôle");
+			return "redirect:admin";
+		}
+		
 		switch (e.getRole().getId()) {
-			case 1: e.setRole(etuDao.chercherRoleParID(2));
-			case 2: e.setRole(etuDao.chercherRoleParID(1));
-			default: e.setRole(etuDao.chercherRoleParID(2));
+			case 1: e.setRole(etuDao.chercherRoleParID(2)); break;
+			case 2: e.setRole(etuDao.chercherRoleParID(3)); break;
+			case 3: e.setRole(etuDao.chercherRoleParID(1)); break;
+			default: e.setRole(etuDao.chercherRoleParID(2)); break;
 		}
 		
 		etuDao.sauvegarder(e);
-		logger.info("switch role student " + studentNumber);
+		logger.info("switch role student " + studentNumber + ":" + e.getRole());
 		return "redirect:admin";
 	}
 	
@@ -169,6 +178,7 @@ public class ControlUtilisateur {
 			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
 		model.addAttribute("etudiant", e);
+		model.addAttribute("domains",domDao.chercherTous());
 		logger.info("detail student " + studentNumber);
 		return "detail_user";
 	}

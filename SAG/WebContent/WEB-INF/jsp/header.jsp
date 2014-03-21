@@ -43,7 +43,7 @@
 							<li class="has-dropdown"><a href="#" id="dom_menu">Domaines</a>
 								<ul class="dropdown">
 									<c:forEach items="${domains}" var="dom">
-										<li><a href="${pageContext.request.contextPath}domain_list?idd=${dom.id}">${dom.nom}</a></li>
+										<li><a href="${pageContext.request.contextPath}/domain_list?idd=${dom.id}">${dom.nom}</a></li>
 									</c:forEach>
 								</ul>
 							</li>

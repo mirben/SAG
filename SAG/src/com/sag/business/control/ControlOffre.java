@@ -136,10 +136,10 @@ public class ControlOffre {
 	}
 
 	/**
-	 * Méthode créer une nouvelle offre, ou récupérer une offre exsite
+	 * Méthode créer une nouvelle offre, ou récupérer une offre existante
 	 * 
 	 * @param idOffre
-	 * @return
+	 * @return L'objet offre récupéré
 	 */
 	@ModelAttribute
 	public Offre newOffre(
@@ -175,27 +175,34 @@ public class ControlOffre {
 	}
 	
 	/**
-	 * Méthode mappé sur /save_offer et les requêtes POST Sauvagarder une offre
+	 * Méthode mappé sur /edit_offer et les requêtes POST Sauvegarder une offre
 	 * en brouillon
 	 * 
 	 * @param offre
 	 * @param result
+	 * @param model
+	 *            L'objet Model de spring
 	 * @return
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.POST)
 	public String editOffre(@ModelAttribute Offre offre, Model model,
 			BindingResult result) {
 		if (result.hasErrors()) {
-			return "offer_propose";
+			return "new_offer";
 		}
-		
-		offerDao.sauvegarder(offre);
-		logger.info("offre sauvagardé " + offre);
-
-		Offre offer = offerDao.sauvegarder(offre);
-		model.addAttribute("offre", offre);
-		
-		return "offer_propose";
+		if(offre==null) return "redirect:admin";
+		logger.info("save offer " + offre.getTitre());
+		try {
+			offerDao.sauvegarder(offre);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
+			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+					.getContext().getAuthentication().getName());
+			model.addAttribute("user_co", uco);
+			return "new_offer";
+		}
+		return "redirect:admin";
 	}
 
 	/**

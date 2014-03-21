@@ -63,8 +63,7 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Date de naissance
-						<input id="datee" type="Date" />
-						<form:input path="dateNaiss" placeholder="Date de naissance"/>
+						<form:input type="date" path="dateNaiss" placeholder="Date de naissance"/>
 						<form:errors path="dateNaiss" cssClass="error" />
 					  </label>
 					</div>
@@ -113,7 +112,7 @@
 					  <label>Sélectionnez les domaines suivis :</label>
 					  <form:select path="domaines">
 			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${domaines}" itemLabel="nom"/>
+			              <form:options items="${domains}" itemLabel="nom"/>
 			          </form:select>
 					</div>
 				  </div>
@@ -123,7 +122,7 @@
 		</div>
 		<div class="row">
 		    <a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
-		    <a class="button" onclick="window.history.back();" href="#">Annuler</a>
+		    <a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 		</div>
 	   </div>
       </div>
