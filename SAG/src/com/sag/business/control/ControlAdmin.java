@@ -1,5 +1,8 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -7,9 +10,9 @@ import javax.ejb.EJB;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,6 +45,18 @@ public class ControlAdmin {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if(getAuthority() == "ROLE_ENTR")
+			return companyDao.chercherParEmail(p.getName());
+		return etuDao.chercherParEnt(p.getName());
+	}
+	
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines(){
+		return domDao.chercherTous();
+	}
+	
 	/**
 	 * Méthode mappé sur /admin et les requêtes GET
 	 * @param model L'objet Model de spring
@@ -49,13 +64,9 @@ public class ControlAdmin {
 	 */
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
 		Collection<Offre> coffer = offerDao.chercherTous();
 		Collection<Offre> cofferv = new Vector<Offre>();
 		Collection<Offre> cofferw = new Vector<Offre>();
-		
 		for (Offre offre : coffer) {
 			StatutOffre s = offre.getStatut();
 			if(s==StatutOffre.ACTIVE || s==StatutOffre.TERMINEE)
@@ -65,9 +76,6 @@ public class ControlAdmin {
 		}
 		model.addAttribute("offers_validated", cofferv);
 		model.addAttribute("offers_waiting", cofferw);
-		
-		Collection<Domaine> cdom =  domDao.chercherTous();
-		model.addAttribute("domains", cdom);
 		
 		Collection<Etudiant> cetuact = etuDao.chercherParStatut(StatutUtilisateur.ACTIF);
 		model.addAttribute("users_enabled", cetuact);
@@ -80,4 +88,5 @@ public class ControlAdmin {
 		
 		return "admin";
 	}
+
 }

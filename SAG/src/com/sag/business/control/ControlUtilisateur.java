@@ -1,6 +1,9 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,6 +57,18 @@ public class ControlUtilisateur {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if (getAuthority() == "ROLE_ENTR")
+			return entDao.chercherParEmail(p.getName());
+		return etuDao.chercherParEnt(p.getName());
+	}
+
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines() {
+		return domDao.chercherTous();
+	}
+
 	/**
 	 * Créer une entreprise, à partir de la base de données si l'argument
 	 * existe, ou ex-nihilo sinon
@@ -92,7 +107,7 @@ public class ControlUtilisateur {
 		}
 		Etudiant e = new Etudiant();
 		logger.info("new student = " + e);
-		//Ajout du rôle étudiant par défaut et du statut désactivé
+		// Ajout du rôle étudiant par défaut et du statut désactivé
 		e.setRole(etuDao.chercherRoleParID(2));
 		e.setStatut(StatutUtilisateur.INACTIF);
 		return e;
@@ -129,7 +144,7 @@ public class ControlUtilisateur {
 		logger.info("disable student " + studentNumber);
 		return "redirect:admin";
 	}
-	
+
 	/**
 	 * Méthode mappé sur /enable_user et les requêtes GET Active un etudiant
 	 * 
@@ -148,7 +163,8 @@ public class ControlUtilisateur {
 	}
 
 	/**
-	 * Méthode mappé sur /switch_role_user et les requêtes GET change le rôle d'un etudiant
+	 * Méthode mappé sur /switch_role_user et les requêtes GET change le rôle
+	 * d'un etudiant
 	 * 
 	 * @param studentNumber
 	 *            L'identifiant de l'etudiant à modifier.
@@ -156,130 +172,142 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/switch_role_user", method = RequestMethod.GET)
 	public String switchRoleStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
+			@RequestParam(value = "id", required = true) Integer studentNumber,
+			Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
-		
-		if(e==null) {
+
+		if (e == null) {
 			model.addAttribute("erreur", "Impossible de changer le rôle");
 			return "redirect:admin";
 		}
-		
+
 		switch (e.getRole().getId()) {
-			case 1: e.setRole(etuDao.chercherRoleParID(2)); break;
-			case 2: e.setRole(etuDao.chercherRoleParID(3)); break;
-			case 3: e.setRole(etuDao.chercherRoleParID(1)); break;
-			default: e.setRole(etuDao.chercherRoleParID(2)); break;
+		case 1:
+			e.setRole(etuDao.chercherRoleParID(2));
+			break;
+		case 2:
+			e.setRole(etuDao.chercherRoleParID(3));
+			break;
+		case 3:
+			e.setRole(etuDao.chercherRoleParID(1));
+			break;
+		default:
+			e.setRole(etuDao.chercherRoleParID(2));
+			break;
 		}
-		
+
 		etuDao.sauvegarder(e);
 		logger.info("switch role student " + studentNumber + ":" + e.getRole());
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /detail_user et les requêtes GET affiche les détails d'un etudiant
+	 * Méthode mappé sur /detail_user et les requêtes GET affiche les détails
+	 * d'un etudiant
 	 * 
 	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à afficher.     
-	 *  @param model
+	 *            L'identifiant de l'etudiant à afficher.
+	 * @param model
 	 *            L'objet Model de spring
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.GET)
 	public String detailStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
+			@RequestParam(value = "id", required = true) Integer studentNumber,
+			Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
 		model.addAttribute("etudiant", e);
-		model.addAttribute("roles",Arrays.asList(etuDao.chercherRoleParID(1),etuDao.chercherRoleParID(2),etuDao.chercherRoleParID(3)));
-		model.addAttribute("domains",domDao.chercherTous());
+		model.addAttribute(
+				"roles",
+				Arrays.asList(etuDao.chercherRoleParID(1),
+						etuDao.chercherRoleParID(2),
+						etuDao.chercherRoleParID(3)));
 		logger.info("detail student " + studentNumber);
 		return "detail_user";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /detail_user et les requêtes POST Modifie ou crée un etudiant
+	 * Méthode mappé sur /detail_user et les requêtes POST Modifie ou crée un
+	 * etudiant
 	 * 
 	 * @param ent
 	 *            L'etudiant recupérée
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.POST)
-	public String saveCompany(@ModelAttribute @Valid Etudiant etu, BindingResult result,
-			Model model) {
+	public String saveCompany(@ModelAttribute @Valid Etudiant etu,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "detail_user";
 		}
-		if(etu==null) return "redirect:admin";
+		if (etu == null)
+			return "redirect:admin";
 		logger.info("save detail student " + etu.getNom());
 		try {
 			etuDao.sauvegarder(etu);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom d'etudiant déjà utilisé");
-			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			model.addAttribute("user_co", uco);
 			return "detail_user";
 		}
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /edit_user et les requêtes GET Modifie ou crée un etudiant
+	 * Méthode mappé sur /edit_user et les requêtes GET Modifie ou crée un
+	 * etudiant
 	 * 
 	 * @param e
 	 *            L'etudiant recupéré
 	 * @param model
 	 *            L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, new_user, ou redirection vers la
-	 *          page admin si etudiant null
+	 *         page admin si etudiant null
 	 */
 	@RequestMapping(value = "/edit_user", method = RequestMethod.GET)
 	public String editStudent(@ModelAttribute Etudiant e, Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		if (e != null){
+		if (e != null) {
 			model.addAttribute("etudiant", e);
-			model.addAttribute("domains", domDao.chercherTous());
-			model.addAttribute("roles",Arrays.asList(etuDao.chercherRoleParID(1),etuDao.chercherRoleParID(2),etuDao.chercherRoleParID(3)));
+			model.addAttribute(
+					"roles",
+					Arrays.asList(etuDao.chercherRoleParID(1),
+							etuDao.chercherRoleParID(2),
+							etuDao.chercherRoleParID(3)));
 			return "new_user";
 		}
 		return "redirect:admin";
 	}
-	
-	
+
 	/**
-	 * Méthode mappé sur /edit_user et les requêtes POST Modifie ou crée un etudiant
+	 * Méthode mappé sur /edit_user et les requêtes POST Modifie ou crée un
+	 * etudiant
 	 * 
 	 * @param etu
 	 *            L'etudiant recupéré
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
-	public String saveStudent(@ModelAttribute @Valid Etudiant etu, BindingResult result,
-			Model model) {
+	public String saveStudent(@ModelAttribute @Valid Etudiant etu,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "new_user";
 		}
-		if(etu==null) return "redirect:admin";
+		if (etu == null)
+			return "redirect:admin";
 		logger.info("save student " + etu.getNom());
 		try {
 			etuDao.sauvegarder(etu);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom d'utilisateur déjà utilisé");
-			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			model.addAttribute("user_co", uco);
 			return "new_user";
 		}
 		return "redirect:admin";
 	}
-	
-	
+
 	/**
-	 * Méthode mappé sur /delete_company et les requêtes GET Supprime une entreprise
+	 * Méthode mappé sur /delete_company et les requêtes GET Supprime une
+	 * entreprise
 	 * 
 	 * @param companyNumber
 	 *            L'identifiant de l'entreprise à supprimer
@@ -292,9 +320,10 @@ public class ControlUtilisateur {
 		logger.info("delete company " + companyNumber);
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /disable_company et les requêtes GET Désactive une entreprise
+	 * Méthode mappé sur /disable_company et les requêtes GET Désactive une
+	 * entreprise
 	 * 
 	 * @param companyNumber
 	 *            L'identifiant de l'entreprise à désactiver.
@@ -309,9 +338,10 @@ public class ControlUtilisateur {
 		logger.info("disable company " + companyNumber);
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /enable_company et les requêtes GET Active une entreprise
+	 * Méthode mappé sur /enable_company et les requêtes GET Active une
+	 * entreprise
 	 * 
 	 * @param companyNumber
 	 *            L'identifiant de l'entreprise à activer.
@@ -326,9 +356,10 @@ public class ControlUtilisateur {
 		logger.info("enable company " + companyNumber);
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /detail_company et les requêtes GET affiche les détails d'une entreprise
+	 * Méthode mappé sur /detail_company et les requêtes GET affiche les détails
+	 * d'une entreprise
 	 * 
 	 * @param companyNumber
 	 *            L'identifiant de l'entreprise à afficher.
@@ -338,69 +369,61 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/detail_company", method = RequestMethod.GET)
 	public String detailCompany(@ModelAttribute Entreprise e, Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		model.addAttribute("domains", domDao.chercherTous());
-		if (e != null){
+		if (e != null) {
 			model.addAttribute("entreprise", e);
 			logger.info("detail company " + e);
 			return "detail_company";
 		}
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /edit_company et les requêtes GET Modifie ou crée une entreprise
+	 * Méthode mappé sur /edit_company et les requêtes GET Modifie ou crée une
+	 * entreprise
 	 * 
 	 * @param e
 	 *            L'entreprise recupérée
 	 * @param model
 	 *            L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, new_company, ou redirection vers la
-	 *          page admin si entreprise null
+	 *         page admin si entreprise null
 	 */
 	@RequestMapping(value = "/edit_company", method = RequestMethod.GET)
 	public String editCompany(@ModelAttribute Entreprise e, Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		model.addAttribute("domains", domDao.chercherTous());
-		if (e != null){
+		if (e != null) {
 			model.addAttribute("entreprise", e);
 			return "new_company";
 		}
 		return "redirect:admin";
 	}
-	
+
 	/**
-	 * Méthode mappé sur /edit_company et les requêtes POST Modifie ou crée une entreprise
+	 * Méthode mappé sur /edit_company et les requêtes POST Modifie ou crée une
+	 * entreprise
 	 * 
 	 * @param ent
 	 *            L'entreprise recupérée
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_company", method = RequestMethod.POST)
-	public String saveCompany(@ModelAttribute Entreprise ent, BindingResult result,
-			Model model) {
+	public String saveCompany(@ModelAttribute Entreprise ent,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "new_company";
 		}
-		if(ent==null) return "redirect:admin";
+		if (ent == null)
+			return "redirect:admin";
 		logger.info("save company " + ent.getNom());
 		try {
 			entDao.sauvegarder(ent);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom d'entreprise déjà utilisé");
-			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			model.addAttribute("user_co", uco);
 			return "new_company";
 		}
 		return "redirect:admin";
 	}
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder b) {
 		b.registerCustomEditor(java.sql.Date.class, "dateNaiss",
@@ -420,7 +443,6 @@ public class ControlUtilisateur {
 														// catch block
 							e.printStackTrace();
 						}
-						
 					}
 
 					@Override
@@ -432,6 +454,5 @@ public class ControlUtilisateur {
 									.format((Date) getValue());
 					}
 				});
-
 	}
 }

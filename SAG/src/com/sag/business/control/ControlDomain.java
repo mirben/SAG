@@ -1,5 +1,10 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
+import java.security.Principal;
+import java.util.Collection;
+
 import javax.ejb.EJB;
 
 import org.apache.commons.logging.Log;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sag.business.model.Domaine;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
+import com.sag.business.service.EntrepriseDao;
+import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
 /**
@@ -31,8 +38,24 @@ public class ControlDomain {
 	DomaineDao domDao;
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
+	EtudiantDao etuDao;
+	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
+	EntrepriseDao companyDao;
 
 	protected final Log logger = LogFactory.getLog(getClass());
+	
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if(getAuthority() == "ROLE_ENTR")
+			return companyDao.chercherParEmail(p.getName());
+		return etuDao.chercherParEnt(p.getName());
+	}
+	
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines(){
+		return domDao.chercherTous();
+	}
 	
 	/**
 	 * Créer un domaine, à partir de la base de données si l'argument existe,
@@ -68,9 +91,6 @@ public class ControlDomain {
 	 */
 	@RequestMapping(value = "/edit_domain", method = RequestMethod.GET)
 	public String editDomain(@ModelAttribute Domaine d, Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
 		if (d != null){
 			model.addAttribute("domain", d);
 			return "new_domain";
@@ -98,9 +118,6 @@ public class ControlDomain {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom de domaine déjà utilisé");
-			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			model.addAttribute("user_co", uco);
 			return "new_domain";
 		}
 		return "redirect:admin";

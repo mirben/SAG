@@ -37,7 +37,7 @@
 	    			<p><a href="${pageContext.request.contextPath}/list_offer">Consulter les offres.</a><br />Consultez l'ensemble des offres disponibles et participez y si vous êtes interessé.</p>
 	    		</div>
 	        	<div class="large-4 medium-4 columns">
-	        		<p><a href="${pageContext.request.contextPath}/offer_propose">Proposer une offre.</a><br />Vous désirez effectuer un achat, cela pourrait interesser d'autres étudiants, n'hésitez pas et proposez votre offre.</p>
+	        		<p><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre.</a><br />Vous désirez effectuer un achat, cela pourrait interesser d'autres étudiants, n'hésitez pas et proposez votre offre.</p>
 	        	</div>
 	        	<div class="large-4 medium-4 columns">
 	        		<p><a href="#dom_menu">Différents domaines.</a><br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>

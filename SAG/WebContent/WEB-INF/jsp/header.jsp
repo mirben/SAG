@@ -51,16 +51,14 @@
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co}" />Anonymous</a>
+						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co.nom}" /></a>
 							<ul class="dropdown">
-								<c:choose>
-									<c:when test="${entreprise != null}">
+								<sec:authorize access="hasRole('ROLE_USER')">
 										<li id="infos"><a href="${pageContext.request.contextPath}/edit_user?id=${user_co.id}">Modifier mes informations</a></li>
-									</c:when>
-									<c:otherwise>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ROLE_ENTR')">
 										<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
-									</c:otherwise>
-								</c:choose>
+								</sec:authorize>
 								<li id="offers"><a href="${pageContext.request.contextPath}/offer_propose?id=${user_co.id}">Consulter ses offres</a></li>
 								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
 							</ul>

@@ -1,5 +1,8 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -22,6 +25,7 @@ import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
+import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
 import com.sag.business.service.UtilisateurDao;
@@ -47,6 +51,21 @@ public class ControlOffre {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
+	EntrepriseDao companyDao;
+	
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if(getAuthority() == "ROLE_ENTR")
+			return companyDao.chercherParEmail(p.getName());
+		return etudiantDao.chercherParEnt(p.getName());
+	}
+	
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines(){
+		return domDao.chercherTous();
+	}
+	
 	/**
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
@@ -78,7 +97,6 @@ public class ControlOffre {
 	public String listOffers(Model model) {
 		Collection<Offre> offers = offerDao.chercherTous();
 		model.addAttribute("offers", offers);
-		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("get offer's list ");
 		return "list";
 	}
@@ -98,8 +116,6 @@ public class ControlOffre {
 			@RequestParam(value = "idd", required = true) Integer domaineNumber,
 			Model model) {
 		Domaine d = domDao.chercherParID(domaineNumber);
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersdom = new Vector<Offre>();
 		for (Offre offre : offers) {
@@ -108,7 +124,6 @@ public class ControlOffre {
 		}
 		model.addAttribute("offers_domaine", offersdom);
 		model.addAttribute("domaine_courant", d);
-		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("get domain's offers " + domaineNumber);
 		return "domain_list";
 	}
@@ -123,18 +138,13 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/offer_propose", method = RequestMethod.GET)
 	public String listOffersPropose(Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersprop = new Vector<Offre>();
 		for (Offre offre : offers) {
-			if (offre.getEmetteur().equals(uco))
+			if (offre.getEmetteur().equals(model.asMap().get("user_co")))
 				offersprop.add(offre);
 		}
 		model.addAttribute("offer_propose", offersprop);
-		model.addAttribute("user_co", uco);
-		model.addAttribute("domains", domDao.chercherTous());
 		//logger.info("get user's offers " + uco.getId());
 		return "list_propose";
 	}
@@ -168,10 +178,6 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute Offre o, Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		model.addAttribute("domains", domDao.chercherTous());
 		if (o != null){
 			model.addAttribute("offre", o);
 			return "new_offer";
@@ -202,9 +208,6 @@ public class ControlOffre {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
-			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			model.addAttribute("user_co", uco);
 			return "new_offer";
 		}
 		return "redirect:admin";
@@ -235,7 +238,6 @@ public class ControlOffre {
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
 	public String supprimerOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
-
 		offerDao.supprimer(idOffre);
 		logger.info("offer supprimé" + idOffre);
 		return "redirect:admin";
@@ -253,7 +255,6 @@ public class ControlOffre {
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
 		model.addAttribute(offre);
-		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
@@ -286,7 +287,7 @@ public class ControlOffre {
 
 	/**
 	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
-	 * requêtes POST Sauvagarder une offre envoyé
+	 * requêtes POST Sauvegarder une offre envoyé
 	 * 
 	 * @param offre
 	 * @param result
@@ -295,27 +296,15 @@ public class ControlOffre {
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
 	public String proposerOffre(@ModelAttribute Offre offre, Model model,
 			BindingResult result) {
-		
-		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("domains", domDao.chercherTous());
-		if(enprs != null){
-			offre.setEmetteur(enprs);
-		} else {
-			Etudiant etud = etudiantDao.chercherParEnt(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			offre.setEmetteur(etud);
-		}
-		
+		offre.setEmetteur((Utilisateur) model.asMap().get("user_co"));
 		offre.setStatut(StatutOffre.ENVOYEE);
 		if (result.hasErrors()) {
 			return "offer_propose";
 		}
 		Offre offer = offerDao.sauvegarder(offre);
 		model.addAttribute("offer", offer);
-		logger.info("offre sauvagardé " + offre);
+		logger.info("offre sauvegardé " + offre);
 
 		return "offer_propose";
 	}
-
 }

@@ -1,9 +1,13 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -21,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sag.business.model.Domaine;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Utilisateur;
 import com.sag.business.service.DomaineDao;
+import com.sag.business.service.EntrepriseDao;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
@@ -44,7 +50,21 @@ public class ControlSecurite {
 	UtilisateurDao userDao;
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
-
+	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
+	EntrepriseDao companyDao;
+	
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if(getAuthority() == "ROLE_ENTR")
+			return companyDao.chercherParEmail(p.getName());
+		return etuDao.chercherParEnt(p.getName());
+	}
+	
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines(){
+		return domDao.chercherTous();
+	}
+	
 	/**
 	 * Créer un etudiant
 	 * 
@@ -147,10 +167,6 @@ public class ControlSecurite {
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String accueil(Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		model.addAttribute("domains", domDao.chercherTous());
 		return "home";
 	}
 
