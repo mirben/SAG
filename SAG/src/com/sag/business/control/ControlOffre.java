@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Domaine;
-import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
@@ -79,6 +78,7 @@ public class ControlOffre {
 	public String listOffers(Model model) {
 		Collection<Offre> offers = offerDao.chercherTous();
 		model.addAttribute("offers", offers);
+		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("get offer's list ");
 		return "list";
 	}
@@ -98,6 +98,8 @@ public class ControlOffre {
 			@RequestParam(value = "idd", required = true) Integer domaineNumber,
 			Model model) {
 		Domaine d = domDao.chercherParID(domaineNumber);
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersdom = new Vector<Offre>();
 		for (Offre offre : offers) {
@@ -106,6 +108,7 @@ public class ControlOffre {
 		}
 		model.addAttribute("offers_domaine", offersdom);
 		model.addAttribute("domaine_courant", d);
+		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("get domain's offers " + domaineNumber);
 		return "domain_list";
 	}
@@ -131,6 +134,7 @@ public class ControlOffre {
 		}
 		model.addAttribute("offer_propose", offersprop);
 		model.addAttribute("user_co", uco);
+		model.addAttribute("domains", domDao.chercherTous());
 		//logger.info("get user's offers " + uco.getId());
 		return "list_propose";
 	}
@@ -167,6 +171,7 @@ public class ControlOffre {
 		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		model.addAttribute("user_co", uco);
+		model.addAttribute("domains", domDao.chercherTous());
 		if (o != null){
 			model.addAttribute("offre", o);
 			return "new_offer";
@@ -248,6 +253,7 @@ public class ControlOffre {
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
 		model.addAttribute(offre);
+		model.addAttribute("domains", domDao.chercherTous());
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
@@ -292,6 +298,7 @@ public class ControlOffre {
 		
 		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
 				.getContext().getAuthentication().getName());
+		model.addAttribute("domains", domDao.chercherTous());
 		if(enprs != null){
 			offre.setEmetteur(enprs);
 		} else {
