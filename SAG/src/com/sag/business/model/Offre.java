@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Vector;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,61 +16,82 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.apache.bval.constraints.NotEmpty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Offre implements Serializable{
+public class Offre implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+
+	@NotEmpty(message = "Le titre est obligatoire")
 	private String titre;
+
+	@NotEmpty(message = "Le description est obligatoire")
 	private String description;
+
+	@Enumerated(EnumType.ORDINAL)
 	private Type type;
+
+	@Min(0)
 	private int participantsMin;
+	
+	@Min(0)
 	private int participantsMax;
+
+	@Min(0)
 	private double prix;
+
+	@Enumerated(EnumType.ORDINAL)
 	private StatutOffre statut;
-	
-	//@Temporal(TemporalType.DATE)
+
+	@NotNull(message = "La date de début est incorrect")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	// @Past(message = "La date de naissance doit être passé")
 	private Date dateDebut;
-	
-	//@Temporal(TemporalType.DATE)
+
+	@NotNull(message = "La date de fin est incorrect")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	// @Past(message = "La date de naissance doit être passé")
 	private Date dateFin;
-	
-	//@Temporal(TemporalType.DATE)
+
 	private Date dateAjout;
-	
+
 	private String siteWeb;
-	
+
 	@ManyToOne
-	@JoinColumn(name="ID_EMETTEUR")
+	@JoinColumn(name = "ID_EMETTEUR")
 	private Utilisateur emetteur;
-	
+
 	@ManyToOne
-	@JoinColumn(name="ID_FOURNISSEUR")
+	@JoinColumn(name = "ID_FOURNISSEUR")
 	private Entreprise fournisseur;
-	
+
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(inverseJoinColumns=@JoinColumn(name= "ETUDIANT_ID"))
+	@JoinTable(inverseJoinColumns = @JoinColumn(name = "ETUDIANT_ID"))
 	private Collection<Etudiant> participants;
-	
+
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(inverseJoinColumns=@JoinColumn(name= "DOMAINE_ID"))
+	@JoinTable(inverseJoinColumns = @JoinColumn(name = "DOMAINE_ID"))
 	private Collection<Domaine> domaines;
-	
+
 	@OneToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(inverseJoinColumns=@JoinColumn(name= "PHOTO_ID"))
+	@JoinTable(inverseJoinColumns = @JoinColumn(name = "PHOTO_ID"))
 	private Collection<Image> images;
-	
-	public Offre(){
+
+	public Offre() {
 		super();
 		participants = new Vector<Etudiant>();
 		domaines = new Vector<Domaine>();
@@ -79,7 +102,8 @@ public class Offre implements Serializable{
 			int participantsMin, int participantsMax, double prix,
 			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
 			String siteWeb, Utilisateur emetteur, Entreprise fournisseur,
-			Collection<Etudiant> participants, Collection<Domaine> domaines, Collection<Image> images) {
+			Collection<Etudiant> participants, Collection<Domaine> domaines,
+			Collection<Image> images) {
 		super();
 		this.titre = titre;
 		this.description = description;
@@ -94,7 +118,8 @@ public class Offre implements Serializable{
 		this.siteWeb = siteWeb;
 		this.emetteur = emetteur;
 		this.fournisseur = fournisseur;
-		this.participants = (participants != null) ? participants : new Vector<Etudiant>();
+		this.participants = (participants != null) ? participants
+				: new Vector<Etudiant>();
 		this.domaines = (domaines != null) ? domaines : new Vector<Domaine>();
 		this.images = (images != null) ? images : new Vector<Image>();
 	}
@@ -313,7 +338,8 @@ public class Offre implements Serializable{
 		if (domaines == null) {
 			if (other.domaines != null)
 				return false;
-		} else if (!(domaines.containsAll(other.domaines) && other.domaines.containsAll(domaines)))
+		} else if (!(domaines.containsAll(other.domaines) && other.domaines
+				.containsAll(domaines)))
 			return false;
 		if (emetteur == null) {
 			if (other.emetteur != null)
@@ -330,12 +356,14 @@ public class Offre implements Serializable{
 		if (images == null) {
 			if (other.images != null)
 				return false;
-		} else if (!(images.containsAll(other.images) && other.images.containsAll(images)))
+		} else if (!(images.containsAll(other.images) && other.images
+				.containsAll(images)))
 			return false;
 		if (participants == null) {
 			if (other.participants != null)
 				return false;
-		} else if (!(participants.containsAll(other.participants) && other.participants.containsAll(participants)))
+		} else if (!(participants.containsAll(other.participants) && other.participants
+				.containsAll(participants)))
 			return false;
 		if (participantsMax != other.participantsMax)
 			return false;
@@ -360,6 +388,5 @@ public class Offre implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

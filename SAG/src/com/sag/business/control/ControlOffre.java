@@ -1,12 +1,14 @@
 package com.sag.business.control;
 
-import static com.sag.business.control.Util.getAuthority;
-
-import java.security.Principal;
+import java.beans.PropertyEditorSupport;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Vector;
 
 import javax.ejb.EJB;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,12 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Domaine;
+import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
@@ -47,25 +52,11 @@ public class ControlOffre {
 	UtilisateurDao userDao;
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etudiantDao;
-
+	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
+	EntrepriseDao entrepriseDao;
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
-	EntrepriseDao companyDao;
-	
-	@ModelAttribute("user_co")
-	Utilisateur username(Principal p) {
-		if(getAuthority() == "ROLE_ENTR")
-			return companyDao.chercherParEmail(p.getName());
-		return etudiantDao.chercherParEnt(p.getName());
-	}
-	
-	@ModelAttribute("domains")
-	Collection<Domaine> domaines(){
-		return domDao.chercherTous();
-	}
-	
 	/**
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
@@ -85,7 +76,7 @@ public class ControlOffre {
 		logger.info("search offers with " + keyword);
 		return "list";
 	}
-	
+
 	/**
 	 * Méthode mappé sur /list_offer et les requêtes GET Recherche les offres
 	 * 
@@ -100,7 +91,7 @@ public class ControlOffre {
 		logger.info("get offer's list ");
 		return "list";
 	}
-	
+
 	/**
 	 * Méthode mappé sur /domain_list et les requêtes GET Recherche les offres
 	 * du domaine
@@ -138,14 +129,18 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/offer_propose", method = RequestMethod.GET)
 	public String listOffersPropose(Model model) {
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersprop = new Vector<Offre>();
 		for (Offre offre : offers) {
-			if (offre.getEmetteur().equals(model.asMap().get("user_co")))
+			if (offre.getEmetteur().equals(uco))
 				offersprop.add(offre);
 		}
 		model.addAttribute("offer_propose", offersprop);
-		//logger.info("get user's offers " + uco.getId());
+		model.addAttribute("user_co", uco);
+		// logger.info("get user's offers " + uco.getId());
 		return "list_propose";
 	}
 
@@ -163,7 +158,7 @@ public class ControlOffre {
 			return offerDao.chercherParID(idOffre);
 		}
 		Offre o = new Offre();
-		logger.info("new offer = " + o);
+		logger.info("----------------- new offer  = " + o);
 		return o;
 	}
 
@@ -178,13 +173,17 @@ public class ControlOffre {
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute Offre o, Model model) {
-		if (o != null){
+
+		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		model.addAttribute("user_co", uco);
+		if (o != null) {
 			model.addAttribute("offre", o);
 			return "new_offer";
 		}
-		return "redirect:admin";
+		return "new_offer";
 	}
-	
+
 	/**
 	 * Méthode mappé sur /edit_offer et les requêtes POST Sauvegarder une offre
 	 * en brouillon
@@ -196,18 +195,29 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.POST)
-	public String editOffre(@ModelAttribute Offre offre, Model model,
-			BindingResult result) {
-		if (result.hasErrors()) {
+	public String editOffre(@ModelAttribute @Valid Offre offre,
+			BindingResult result, Model model) {
+		System.out.println("hello edit offre");
+		if (result.hasErrors() || offre == null) {
+			System.out.println("statut ------------------------------- "
+					+ offre.getStatut());
+
 			return "new_offer";
 		}
-		if(offre==null) return "redirect:admin";
+
 		logger.info("save offer " + offre.getTitre());
 		try {
+			System.out.println("statut ------------------------------- "
+					+ offre.getStatut());
+
 			offerDao.sauvegarder(offre);
 		} catch (Exception e) {
+			System.out.println("********* erreur offre save -------");
 			e.printStackTrace();
 			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
+			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
+					.getContext().getAuthentication().getName());
+			model.addAttribute("user_co", uco);
 			return "new_offer";
 		}
 		return "redirect:admin";
@@ -238,6 +248,7 @@ public class ControlOffre {
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
 	public String supprimerOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
+
 		offerDao.supprimer(idOffre);
 		logger.info("offer supprimé" + idOffre);
 		return "redirect:admin";
@@ -273,22 +284,25 @@ public class ControlOffre {
 			BindingResult result) {
 		offre.setStatut(StatutOffre.BROUILLON);
 		if (result.hasErrors()) {
+
 			return "offer_propose";
 		}
-		
+
+		System.out.println("statut ------------------------------- "
+				+ offre.getStatut());
 		offerDao.sauvegarder(offre);
 		logger.info("offre sauvagardé " + offre);
 
 		Offre offer = offerDao.sauvegarder(offre);
 		model.addAttribute("offre", offer);
-		
+
 		return "offer_propose";
 	}
 
 	/**
-	 * gfdgfd??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
-	 * requêtes POST Sauvegarder une offre envoyé
-	 * vérifier le droit de commit
+	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et
+	 * les requêtes POST Sauvagarder une offre envoyé
+	 * 
 	 * @param offre
 	 * @param result
 	 * @return
@@ -296,15 +310,120 @@ public class ControlOffre {
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
 	public String proposerOffre(@ModelAttribute Offre offre, Model model,
 			BindingResult result) {
-		offre.setEmetteur((Utilisateur) model.asMap().get("user_co"));
+
+		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		if (enprs != null) {
+			offre.setEmetteur(enprs);
+		} else {
+			Etudiant etud = etudiantDao.chercherParEnt(SecurityContextHolder
+					.getContext().getAuthentication().getName());
+			offre.setEmetteur(etud);
+		}
+
 		offre.setStatut(StatutOffre.ENVOYEE);
 		if (result.hasErrors()) {
 			return "offer_propose";
 		}
 		Offre offer = offerDao.sauvegarder(offre);
 		model.addAttribute("offer", offer);
-		logger.info("offre sauvegardé " + offre);
+		logger.info("offre sauvagardé " + offre);
 
 		return "offer_propose";
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder b) {
+		b.registerCustomEditor(java.sql.Date.class, "dateDebut",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						java.util.Date date = null;
+						try {
+							date = sdf.parse(text);
+							java.sql.Date dateSQL = null;
+							dateSQL = new java.sql.Date(date.getTime());
+
+							super.setValue(dateSQL);
+						} catch (ParseException e) {
+							super.setValue(null);
+							e.printStackTrace();
+						}
+
+					}
+
+					@Override
+					public String getAsText() {
+						if (getValue() == null) {
+							return "";
+						} else
+							return new SimpleDateFormat("yyyy-MM-dd")
+									.format((Date) getValue());
+					}
+				});
+
+		b.registerCustomEditor(java.sql.Date.class, "dateFin",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						java.util.Date date = null;
+						try {
+							date = sdf.parse(text);
+							java.sql.Date dateSQL = null;
+							dateSQL = new java.sql.Date(date.getTime());
+
+							super.setValue(dateSQL);
+						} catch (ParseException e) {
+							super.setValue(null);
+							e.printStackTrace();
+						}
+
+					}
+
+					@Override
+					public String getAsText() {
+						if (getValue() == null) {
+							return "";
+						} else
+							return new SimpleDateFormat("yyyy-MM-dd")
+									.format((Date) getValue());
+					}
+				});
+
+		b.registerCustomEditor(com.sag.business.model.Entreprise.class,
+				"fournisseur", new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String id) {
+						if (id == "" || id == null) {
+							super.setValue(null);
+						} else {
+							try {
+								int i = Integer.parseInt(id);
+								Entreprise eprs = entrepriseDao
+										.chercherParID(i);
+								super.setValue(eprs);
+							} catch (NumberFormatException e) {
+								super.setValue(null);
+							}
+
+						}
+
+					}
+
+					@Override
+					public String getAsText() {
+						if (getValue() == null) {
+							return null;
+						} else {
+							Entreprise entps = (Entreprise) getValue();
+							return String.valueOf(entps.getId());
+						}
+					}
+				});
+
 	}
 }
