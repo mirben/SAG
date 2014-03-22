@@ -288,7 +288,7 @@ public class ControlOffre {
 	/**
 	 * gfdgfd??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
 	 * requêtes POST Sauvegarder une offre envoyé
-	 * 
+	 * vérifier le droit de commit
 	 * @param offre
 	 * @param result
 	 * @return
