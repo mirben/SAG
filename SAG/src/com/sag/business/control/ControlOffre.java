@@ -286,7 +286,7 @@ public class ControlOffre {
 	}
 
 	/**
-	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
+	 * gfdgfd??????page de retour pas sure????? Méthode mappé sur /propose_offre et les
 	 * requêtes POST Sauvegarder une offre envoyé
 	 * 
 	 * @param offre
