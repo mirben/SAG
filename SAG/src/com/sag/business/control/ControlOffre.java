@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
-import com.sag.business.model.Etudiant;
+
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Utilisateur;
@@ -71,6 +71,10 @@ public class ControlOffre {
 	public String searchOffers(
 			@RequestParam(value = "key", required = true) String keyword,
 			Model model) {
+
+		System.out.println("test -------------------------------------------");
+		System.out.println("Je cherche par la clé");
+		System.out.println("test -------------------------------------------");
 		Collection<Offre> offersmatch = offerDao.chercherParMotCle(keyword);
 		model.addAttribute("offers", offersmatch);
 		logger.info("search offers with " + keyword);
@@ -127,19 +131,34 @@ public class ControlOffre {
 	 *            L'objet Model de spring
 	 * @return Redirection vers un autre mapping, list_propose
 	 */
-	@RequestMapping(value = "/offer_propose", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer_proposed", method = RequestMethod.GET)
 	public String listOffersPropose(Model model) {
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
+
+		int idUser = 0;
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		if (username.contains("@")) {
+			idUser = entrepriseDao.chercherParEmail(
+					SecurityContextHolder.getContext().getAuthentication()
+							.getName()).getId();
+		} else {
+			idUser = etudiantDao.chercherParEnt(username).getId();
+		}
 
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersprop = new Vector<Offre>();
-		for (Offre offre : offers) {
-			if (offre.getEmetteur().equals(uco))
-				offersprop.add(offre);
+
+		if (!offers.isEmpty()) {
+			for (Offre offre : offers) {
+				if (offre.getEmetteur() != null
+						&& offre.getEmetteur().getId() == idUser)
+					offersprop.add(offre);
+			}
+			if (!offersprop.isEmpty()) {
+				model.addAttribute("offer_propose", offersprop);
+			}
 		}
-		model.addAttribute("offer_propose", offersprop);
-		model.addAttribute("user_co", uco);
+		// model.addAttribute("user_co", uco);
 		// logger.info("get user's offers " + uco.getId());
 		return "list_propose";
 	}
@@ -199,20 +218,13 @@ public class ControlOffre {
 			BindingResult result, Model model) {
 		System.out.println("hello edit offre");
 		if (result.hasErrors() || offre == null) {
-			System.out.println("statut ------------------------------- "
-					+ offre.getStatut());
-
 			return "new_offer";
 		}
 
 		logger.info("save offer " + offre.getTitre());
 		try {
-			System.out.println("statut ------------------------------- "
-					+ offre.getStatut());
-
 			offerDao.sauvegarder(offre);
 		} catch (Exception e) {
-			System.out.println("********* erreur offre save -------");
 			e.printStackTrace();
 			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
 			Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
@@ -272,6 +284,77 @@ public class ControlOffre {
 	}
 
 	/**
+	 * * Méthode mappé sur /propose_offre et les requêtes GET
+	 * 
+	 * 
+	 * @param o
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/propose_offre", method = RequestMethod.GET)
+	public String proposeOffre(@ModelAttribute Offre o, Model model) {
+		System.out.println("Je suis dans la GET");
+		Entreprise entreprise = entrepriseDao
+				.chercherParEmail(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+		model.addAttribute("entreprise", entreprise);
+
+		if (o != null) {
+			model.addAttribute("offre", o);
+			return "offer_propose";
+		}
+		return "offer_propose";
+	}
+
+	/**
+	 * Méthode mappé sur /propose_offre et les requêtes POST sauvegarder un
+	 * offre envoé
+	 * 
+	 * 
+	 * @param offre
+	 * @param model
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
+	public String proposeOffre(@ModelAttribute @Valid Offre offre,
+			BindingResult result, Model model, @RequestParam String action) {
+
+		int idUser = 0;
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		if (username.contains("@")) {
+			idUser = entrepriseDao.chercherParEmail(
+					SecurityContextHolder.getContext().getAuthentication()
+							.getName()).getId();
+		} else {
+			idUser = etudiantDao.chercherParEnt(username).getId();
+		}
+		offre.setEmetteur(userDao.chercherParID(idUser));
+
+		if (action.equals("Envoyer")) {
+			offre.setStatut(StatutOffre.ENVOYEE);
+
+		} else if (action.equals("Enregistrer")) {
+			offre.setStatut(StatutOffre.BROUILLON);
+		}
+		if (result.hasErrors() || offre == null) {
+			return "offer_propose";
+		}
+
+		logger.info("offre sauvagardé " + offre);
+		try {
+			offerDao.sauvegarder(offre);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
+			return "offer_propose";
+		}
+
+		return "offer_propose";
+	}
+
+	/**
 	 * Méthode mappé sur /save_offer et les requêtes POST Sauvagarder une offre
 	 * en brouillon
 	 * 
@@ -279,55 +362,36 @@ public class ControlOffre {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/save_offer", method = RequestMethod.POST)
-	public String sauvegardeOffre(@ModelAttribute Offre offre, Model model,
-			BindingResult result) {
-		offre.setStatut(StatutOffre.BROUILLON);
-		if (result.hasErrors()) {
+	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST, params = "enregistre")
+	public String sauvegardeOffre(@ModelAttribute @Valid Offre offre,
+			BindingResult result, Model model) {
 
-			return "offer_propose";
-		}
-
-		System.out.println("statut ------------------------------- "
-				+ offre.getStatut());
-		offerDao.sauvegarder(offre);
-		logger.info("offre sauvagardé " + offre);
-
-		Offre offer = offerDao.sauvegarder(offre);
-		model.addAttribute("offre", offer);
-
-		return "offer_propose";
-	}
-
-	/**
-	 * ??????page de retour pas sure????? Méthode mappé sur /propose_offre et
-	 * les requêtes POST Sauvagarder une offre envoyé
-	 * 
-	 * @param offre
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
-	public String proposerOffre(@ModelAttribute Offre offre, Model model,
-			BindingResult result) {
-
-		Utilisateur enprs = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		if (enprs != null) {
-			offre.setEmetteur(enprs);
+		int idUser = 0;
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		if (username.contains("@")) {
+			idUser = entrepriseDao.chercherParEmail(
+					SecurityContextHolder.getContext().getAuthentication()
+							.getName()).getId();
 		} else {
-			Etudiant etud = etudiantDao.chercherParEnt(SecurityContextHolder
-					.getContext().getAuthentication().getName());
-			offre.setEmetteur(etud);
+			idUser = etudiantDao.chercherParEnt(username).getId();
 		}
+		offre.setEmetteur(userDao.chercherParID(idUser));
 
-		offre.setStatut(StatutOffre.ENVOYEE);
-		if (result.hasErrors()) {
+		offre.setStatut(StatutOffre.BROUILLON);
+
+		if (result.hasErrors() || offre == null) {
 			return "offer_propose";
 		}
-		Offre offer = offerDao.sauvegarder(offre);
-		model.addAttribute("offer", offer);
+
 		logger.info("offre sauvagardé " + offre);
+		try {
+			offerDao.sauvegarder(offre);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
+			return "offer_propose";
+		}
 
 		return "offer_propose";
 	}
@@ -345,7 +409,6 @@ public class ControlOffre {
 							date = sdf.parse(text);
 							java.sql.Date dateSQL = null;
 							dateSQL = new java.sql.Date(date.getTime());
-
 							super.setValue(dateSQL);
 						} catch (ParseException e) {
 							super.setValue(null);

@@ -158,7 +158,6 @@
 	</div>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
-		_$tag_______
 	</script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">

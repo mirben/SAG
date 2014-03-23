@@ -20,7 +20,7 @@
 						placeholder="Rechercher une offre" />
 				</div>
 				<div class="large-4 small-3 columns">
-					<a href="#" onclick="search_key()" class="button expand postfix">Rechercher</a>
+					<a href="#" onclick="search_key()ers" class="button expand postfix">Rechercher</a>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 								<sec:authorize access="hasRole('ROLE_ENTR')">
 										<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
 								</sec:authorize>
-								<li id="offers"><a href="${pageContext.request.contextPath}/offer_propose?id=${user_co.id}">Consulter ses offres</a></li>
+								<li id="offers"><a href="${pageContext.request.contextPath}/offer_proposed?id=${user_co.id}">Consulter ses offres</a></li>
 								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
 							</ul>
 						</li>

@@ -12,168 +12,190 @@
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
 		omit-xml-declaration="true" />
-
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Proposer une offre</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"></script>
-  </head>
-  <body>
-    <div class="row">
-      <div class="large-12 columns">
-      	<div class="panel">
-			<h3>Nouvelle proposition d'offre</h3>
-			<div class="row">
-				<form:form method="post" commandName="offre" accept-charset="utf-8">
-				<form:errors path="*" cssClass="errorblock" element="div" />
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Titre
-						<form:input path="titre" placeholder="Titre de l'offre"/>
-						<form:errors path="titre" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-8 columns">
-					  <label>Description
-						<form:textarea path="description" placeholder="Description de l'offre"/>
-						<form:errors path="description" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-<!-- 						<label>Type -->
-<%-- 							<form:select path="type"> --%>
-<%-- 							    <form:option value="Théorique" /> --%>
-<%-- 							    <form:option value="Concrète"/> --%>
-<%-- 							</form:select> --%>
-<!-- 					 	 </label> -->
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAG - Nouvelle offre</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
+	<jsp:text />
+</script>
+<script
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js">
+	<jsp:text />
+</script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
+	<jsp:text />
+</script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
+	<jsp:text />
+</script>
+</head>
+<body>
+	<jsp:include page="/WEB-INF/jsp/header.jsp" />
+
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<h3>Nouvelle proposition d'offre</h3>
+				<div class="row">
+					<form:form method="post" commandName="offre" accept-charset="utf-8">
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Titre <form:input path="titre"
+										placeholder="Titre de l'offre" /> <form:errors path="titre"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-8 columns">
+								<label>Description <form:textarea path="description"
+										placeholder="Description de l'offre" /> <form:errors
+										path="description" cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+
+								<c:choose>
+									<c:when test="${entreprise!=null}">
+										<form:hidden path="type" value="CONCRET" />
+									</c:when>
+									<c:otherwise>
+										<form:hidden path="type" value="THEORIQUE" />
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
 						<c:choose>
-							<c:when test=${ entreprise!=null }>
-								<form:hidden path="type" value="Concrète" />
+							<c:when test="${entreprise!=null}">
+								<div class="row">
+									<div class="large-4 columns">
+										<label>Fournisseur <form:input path="fournisseur"
+												value="${entreprise.id}"
+												placeholder="Entreprise fournisseur de l'offre" /> <form:errors
+												path="fournisseur" cssClass="error" />
+										</label>
+									</div>
+								</div>
 							</c:when>
 							<c:otherwise>
-								<form:hidden path="type" value="Théorique" />
+								<form:hidden path="fournisseur" value="" />
 							</c:otherwise>
 						</c:choose>
-					</div>
-				  </div>
-				  <c:choose>
-					<c:when test=${ entreprise!=null }>
-					  <div class="row">
-						<div class="large-4 columns">
-						  <label>Fournisseur
-							<form:input path="fournisseur" value="${entreprise.nom}" placeholder="Entreprise fournisseur de l'offre"/>
-							<form:errors path="fournisseur" cssClass="error" />
-						  </label>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Participants minimum <form:input
+										path="participantsMin"
+										placeholder="Nombre de participants minimum" /> <form:errors
+										path="participantsMin" cssClass="error" />
+								</label>
+							</div>
 						</div>
-					  </div>
-					 </c:when>
-					 <c:otherwise>
-					 	<form:hidden path="fournisseur" value="null" />
-					 </c:otherwise>
-					</c:choose>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Participants minimum
-						<form:input path="participantsMin" placeholder="Nombre de participants minimum"/>
-						<form:errors path="participantsMin" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Participants maximum
-						<form:input path="participantsMax" placeholder="Nombre de participants maximum"/>
-						<form:errors path="participantsMax" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Prix (€)
-						<form:input path="prix" placeholder="Prix de l'offre"/>
-						<form:errors path="prix" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Date de début
-						<form:input path="dateDebut"/>
-						<form:errors path="dateDebut" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Date de fin
-						<form:input path="dateFin"/>
-						<form:errors path="dateFin" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				  <div class="row">
-					<div class="large-4 columns">
-					  <label>Site internet
-						<form:input path="siteWeb" placeholder="Url du site internet" />
-						<form:errors path="siteWeb" cssClass="error" />
-					  </label>
-					</div>
-				  </div>
-				</form:form>
-			  </div>
-			  <div class="row">
-				<a class="button" href="${pageContext.request.contextPath}/save_offer" data-reveal-id="myModal1" data-reveal>Enregistrer</a>
-				<a class="button" href="${pageContext.request.contextPath}/propose_offer" data-reveal-id="myModal2" data-reveal>Envoyer</a>
-				<a class="button" onclick="window.history.back();" href="#">Annuler</a>
-			  </div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Participants maximum <form:input
+										path="participantsMax"
+										placeholder="Nombre de participants maximum" /> <form:errors
+										path="participantsMax" cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Prix (€) <form:input path="prix"
+										placeholder="Prix de l'offre" /> <form:errors path="prix"
+										cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Date de début <form:input path="dateDebut"
+										type="date" /> <form:errors path="dateDebut" cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Date de fin <form:input path="dateFin"
+										type="date" /> <form:errors path="dateFin" cssClass="error" />
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-4 columns">
+								<label>Site internet <form:input path="siteWeb"
+										placeholder="Url du site internet" /> <form:errors
+										path="siteWeb" cssClass="error" />
+								</label>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<label>
+									<input class="button" type="submit" name="action" value="Enregistrer" /> 
+									<input class="button" type="submit" name="action" value="Envoyer" /> 
+									<input class="button" type="button" onclick="window.history.back(); return false;" value="Annuler" />
+							</label>
+						</div>
+					</form:form>
+				</div>
+
 			</div>
 		</div>
-	  </div>
 	</div>
-    <div id="myModal1" class="reveal-modal" data-reveal>
+	<div id="myModal1" class="reveal-modal" data-reveal="">
 		<h2>Nouvelle proposition d'offre enregistrée.</h2>
 		<p class="lead">Votre proposition d'offre a bien été sauvegardée.</p>
 		<p>Vous pourrez la modifier et l'envoyer plus tard.</p>
 		<a class="close-reveal-modal">&#215;</a>
-    </div>
-    <div id="myModal2" class="reveal-modal" data-reveal>
+	</div>
+	<div id="myModal2" class="reveal-modal" data-reveal="">
 		<h2>Nouvelle proposition d'offre envoyée.</h2>
 		<p class="lead">Votre proposition d'offre a bien été envoyée.</p>
 		<p>Un email vous sera envoyé dès que votre offre aura été activée.</p>
 		<a class="close-reveal-modal">&#215;</a>
-    </div>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
-	<script>
-	  $(document).foundation();
+	</div>
+
+
+	<script type="text/javascript">
+		$(document).foundation();
 	</script>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
-		  if(event.keyCode == '13') {
-			search_key();
-			return false;
-		  }
-		  return true;
+			if (event.keyCode == '13') {
+				search_key();
+				return false;
+			}
+			return true;
 		};
-		function search_key(){
+		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.length!=0){
-				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
+			if (chaine.length != 0) {
+				$(location).attr(
+						'href',
+						"${pageContext.request.contextPath}/search_offers?key="
+								+ chaine);
 			}
 			return true;
 		}
+		
 	</script>
+
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-  </body>
-</html>
+</body>
+	</html>
 </jsp:root>
