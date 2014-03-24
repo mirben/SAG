@@ -9,13 +9,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Vector;
 
 import javax.ejb.EJB;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -490,12 +491,16 @@ public class ControlUtilisateur {
 					}
 				});
 		
-		b.registerCustomEditor(Domaine.class, "domaines",
+		b.registerCustomEditor(Collection.class, "domaines",
 				new PropertyEditorSupport() {
 					@Override
 					public void setAsText(String text) {
-						System.out.println(text+"****************");
-						super.setValue(domDao.chercherParID(Integer.parseInt(text)));
+						List<String> listIdDom = Arrays.asList(text.split(","));
+						Collection<Domaine> listDom = new Vector<Domaine>();
+						for (String curId : listIdDom) {
+							listDom.add(domDao.chercherParID(Integer.parseInt(curId)));
+						}
+						super.setValue(listDom);
 					}
 				});
 	}
