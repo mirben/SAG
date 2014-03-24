@@ -142,6 +142,14 @@
 						</div>
 						<div class="row">
 							<div class="large-6 columns">
+								<label>Sélectionnez les domaines auxquels l'offre appartient :</label>
+								<form:select path="domaines" class="domlist">
+									<form:options items="${domains}" itemValue="id" itemLabel="nom" />
+								</form:select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="large-6 columns">
 								<label> <input class="button" type="submit"
 									name="action" value="Enregistrer" /> <input class="button"
 									type="submit" name="action" value="Envoyer" /> <input
