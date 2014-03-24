@@ -1,6 +1,9 @@
 package com.sag.business.control;
 
+import static com.sag.business.control.Util.getAuthority;
+
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +60,18 @@ public class ControlOffre {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	@ModelAttribute("user_co")
+	Utilisateur username(Principal p) {
+		if(getAuthority() == "ROLE_ENTR")
+			return entrepriseDao.chercherParEmail(p.getName());
+		return etudiantDao.chercherParEnt(p.getName());
+	}
+	
+	@ModelAttribute("domains")
+	Collection<Domaine> domaines(){
+		return domDao.chercherTous();
+	}
+	
 	/**
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
