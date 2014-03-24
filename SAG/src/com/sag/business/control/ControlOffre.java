@@ -7,8 +7,10 @@ import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 import javassist.expr.Instanceof;
@@ -126,6 +128,28 @@ public class ControlOffre {
 			}
 			if (!offersenvoie.isEmpty()) {
 				model.addAttribute("offers", offersenvoie);
+			}
+		}
+
+		// model.addAttribute("offers", offers);
+		logger.info("get offer's list ");
+		return "list";
+	}
+
+	@RequestMapping(value = "/domain_list", method = RequestMethod.GET)
+	public String listOffersDomain(Model model) {
+		Collection<Offre> offers = offerDao.chercherTous();
+		Collection<Offre> offersenvoie = new Vector<Offre>();
+
+		if (!offers.isEmpty()) {
+			System.out.println("js suiu dans active 3");
+
+			for (Offre offre : offers) {
+				if (offre.getStatut().equals(StatutOffre.ACTIVE))
+					offersenvoie.add(offre);
+			}
+			if (!offersenvoie.isEmpty()) {
+				model.addAttribute("offers_domaine", offersenvoie);
 			}
 		}
 
@@ -300,18 +324,20 @@ public class ControlOffre {
 
 	@RequestMapping(value = "/join_offer", method = RequestMethod.GET)
 	public String joingner_offer(@ModelAttribute("user_co") Utilisateur userCo,
-			@RequestParam(value = "ido", required = true) int idOffre, Model model) {
+			@RequestParam(value = "ido", required = true) int idOffre,
+			Model model) {
 
 		System.out.println("Je suis dans Join");
 		Offre offre = offerDao.chercherParID(idOffre);
 		if (offre.getParticipants().contains(userCo)) {
-			//model.addAttribute("message", "Vous avez déjà participé.");
+			// model.addAttribute("message", "Vous avez déjà participé.");
 			String link = "detail_offer?id=" + offre.getId();
 			return "redirect:" + link;
 
 		}
 
-		if ((userCo instanceof Etudiant) && (offre.getParticipants().size() < offre.getParticipantsMax())) {
+		if ((userCo instanceof Etudiant)
+				&& (offre.getParticipants().size() < offre.getParticipantsMax())) {
 			offre.getParticipants().add((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
 			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
@@ -320,19 +346,21 @@ public class ControlOffre {
 		}
 
 		String link = "detail_offer?id=" + offre.getId();
-		
+
 		return "redirect:" + link;
 	}
-	
+
 	@RequestMapping(value = "/giveup_offer", method = RequestMethod.GET)
-	public String unparticipe_offer(@ModelAttribute("user_co") Utilisateur userCo,
-			@RequestParam(value = "ido", required = true) int idOffre, Model model) {
+	public String unparticipe_offer(
+			@ModelAttribute("user_co") Utilisateur userCo,
+			@RequestParam(value = "ido", required = true) int idOffre,
+			Model model) {
 
 		System.out.println("Je suis dans Join");
 		Offre offre = offerDao.chercherParID(idOffre);
-		
 
-		if ((userCo instanceof Etudiant)&& offre.getParticipants().contains(userCo)) {
+		if ((userCo instanceof Etudiant)
+				&& offre.getParticipants().contains(userCo)) {
 			offre.getParticipants().remove((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
 			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
@@ -341,7 +369,7 @@ public class ControlOffre {
 		}
 
 		String link = "detail_offer?id=" + offre.getId();
-		
+
 		return "redirect:" + link;
 	}
 
@@ -373,10 +401,11 @@ public class ControlOffre {
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
 		model.addAttribute("offer", offre);
-		if(offre.getParticipants().contains((Etudiant)model.asMap().get("user_co")))
-			model.addAttribute("participe",true);
+		if (offre.getParticipants().contains(
+				(Etudiant) model.asMap().get("user_co")))
+			model.addAttribute("participe", true);
 		else
-			model.addAttribute("participe",false);
+			model.addAttribute("participe", false);
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
@@ -434,7 +463,7 @@ public class ControlOffre {
 			model.addAttribute("offre", o);
 			return "offer_propose";
 		}
-		return "offer_propose";
+		return "redirect:home";
 	}
 
 	/**
@@ -620,6 +649,21 @@ public class ControlOffre {
 							Entreprise entps = (Entreprise) getValue();
 							return String.valueOf(entps.getId());
 						}
+					}
+
+				});
+
+		b.registerCustomEditor(Collection.class, "domaines",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						List<String> listIdDom = Arrays.asList(text.split(","));
+						Collection<Domaine> listDom = new Vector<Domaine>();
+						for (String curId : listIdDom) {
+							listDom.add(domDao.chercherParID(Integer
+									.parseInt(curId)));
+						}
+						super.setValue(listDom);
 					}
 				});
 
