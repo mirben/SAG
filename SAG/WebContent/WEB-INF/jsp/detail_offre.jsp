@@ -34,8 +34,8 @@
 			<div class="panel">
 				<div class="row">
 					<ul class="clearing-thumbs" data-clearing>
-						<c:forEach items="${offer.image}" var="imgo">
-							<li><a href="${imgo.url}"><img src="${imgo.url}"></a></li>
+						<c:forEach items="${offer.images}" var="imgo">
+							<li><a href="${imgo.url}"><img src="${imgo.url}" /></a></li>
 						</c:forEach>
 					</ul>
 					<ul class="pricing-table">
@@ -52,25 +52,22 @@
 							<c:choose>
 								<c:when test="${offer.participants.contains(user_co)}">
 									<li class="cta-button"><a class="button"
-										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}&idu=${user.id}"
+										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}"
 										data-reveal-id="myModal" data-reveal>Annuler ma participation</a></li>
 								</c:when>
 								<c:otherwise>
 									<li class="cta-button"><a class="button"
-										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}&idu=${user.id}"
+										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
 										data-reveal-id="myModal" data-reveal>Participer</a></li>
 								</c:otherwise>
 							</c:choose>
-
-
-
 						</sec:authorize>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="myModal" class="reveal-modal" data-reveal>
+	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Participation effectuée.</h2>
 		<p class="lead">Votre participation Ã  l'offre a bien été prise en
 			compte.</p>

@@ -41,7 +41,14 @@
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
+				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">
+					<c:choose>
+				    <c:when test="${empty domaine.id}">Ajouter</c:when>
+				    <c:otherwise>
+				    	Enregistrer
+				    </c:otherwise>
+			    </c:choose>
+				</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>

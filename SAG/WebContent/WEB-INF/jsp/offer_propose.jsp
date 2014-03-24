@@ -140,14 +140,15 @@
 								</label>
 							</div>
 						</div>
-
-
 						<div class="row">
-							<label>
-									<input class="button" type="submit" name="action" value="Enregistrer" /> 
-									<input class="button" type="submit" name="action" value="Envoyer" /> 
-									<input class="button" type="button" onclick="window.history.back(); return false;" value="Annuler" />
-							</label>
+							<div class="large-6 columns">
+								<label> <input class="button" type="submit"
+									name="action" value="Enregistrer" /> <input class="button"
+									type="submit" name="action" value="Envoyer" /> <input
+									class="button" type="button"
+									onclick="window.history.back(); return false;" value="Annuler" />
+								</label>
+							</div>
 						</div>
 					</form:form>
 				</div>
@@ -192,7 +193,6 @@
 			}
 			return true;
 		}
-		
 	</script>
 
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />

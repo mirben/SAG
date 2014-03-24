@@ -23,6 +23,7 @@
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
   </head>
   <body>
+  	<jsp:include page="/WEB-INF/jsp/header.jsp" />
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
@@ -101,13 +102,8 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Formation
-						<form:select path="formation">
-						    <form:option value="Licence 1"/>
-						    <form:option value="Licence 2"/>
-						    <form:option value="Licence 3"/>
-						    <form:option value="Master 1"/>
-						    <form:option value="Master 2"/>
-						</form:select>
+						<form:input path="formation" placeholder="Formation de l'étudiant"/>
+						<form:errors path="formation" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -135,7 +131,14 @@
 			</form:form>
 		</div>
 		<div class="row">
-		    <a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal="">Ajouter</a>
+		    <a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal="">
+			    <c:choose>
+				    <c:when test="${empty etudiant.id}">Ajouter</c:when>
+				    <c:otherwise>
+				    	Enregistrer
+				    </c:otherwise>
+			    </c:choose>
+		    </a>
 		    <a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 		</div>
 	   </div>
