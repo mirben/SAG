@@ -140,8 +140,6 @@
 								</label>
 							</div>
 						</div>
-
-
 						<div class="row">
 							<label>
 									<input class="button" type="submit" name="action" value="Enregistrer" /> 
