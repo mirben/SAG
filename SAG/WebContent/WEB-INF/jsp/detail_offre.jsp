@@ -17,7 +17,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SAG - Détail <c:out value=${offer.titre } /></title>
+<title>SAG - Détail <c:out value="${offer.titre }" /></title>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <link rel="stylesheet"
@@ -33,7 +33,7 @@
 		<div class="large-12 columns">
 			<div class="panel">
 				<div class="row">
-					<ul class="clearing-thumbs" data-clearing>
+					<ul class="clearing-thumbs" data-clearing="">
 						<c:forEach items="${offer.images}" var="imgo">
 							<li><a href="${imgo.url}"><img src="${imgo.url}" /></a></li>
 						</c:forEach>
@@ -48,20 +48,22 @@
 						<c:if test="${offer.fournisseur!=null}">
 							<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
 						</c:if>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 							<c:choose>
-								<c:when test="${offer.participants.contains(user_co)}">
+								<c:when test="${participe}">
 									<li class="cta-button"><a class="button"
 										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}"
-										data-reveal-id="myModal" data-reveal>Annuler ma participation</a></li>
+										data-reveal-id="myModal" data-reveal = "">Annuler ma participation</a></li>
 								</c:when>
 								<c:otherwise>
 									<li class="cta-button"><a class="button"
 										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
-										data-reveal-id="myModal" data-reveal>Participer</a></li>
+										data-reveal-id="myModal" data-reveal = "">Participer</a></li>
 								</c:otherwise>
 							</c:choose>
 						</sec:authorize>
+						<li class="description"> ${message} </li>
+						
 					</ul>
 				</div>
 			</div>
@@ -69,7 +71,7 @@
 	</div>
 	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Participation effectuée.</h2>
-		<p class="lead">Votre participation Ã  l'offre a bien été prise en
+		<p class="lead">Votre participation à  l'offre a bien été prise en
 			compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
