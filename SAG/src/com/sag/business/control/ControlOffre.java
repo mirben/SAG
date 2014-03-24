@@ -323,6 +323,32 @@ public class ControlOffre {
 		
 		return "redirect:" + link;
 	}
+	
+	@RequestMapping(value = "/giveup_offer", method = RequestMethod.GET)
+	public String unparticipe_offer(@ModelAttribute("user_co") Utilisateur userCo,
+			@RequestParam(value = "ido", required = true) int idOffre, Model model) {
+
+		System.out.println("Je suis dans Join");
+		Offre offre = offerDao.chercherParID(idOffre);
+		if (offre.getParticipants().contains(userCo)) {
+			//model.addAttribute("message", "Vous avez déjà participé.");
+			String link = "detail_offer?id=" + offre.getId();
+			return "redirect:" + link;
+
+		}
+
+		if (userCo instanceof Etudiant) {
+			offre.getParticipants().add((Etudiant) userCo);
+			offerDao.sauvegarder(offre);
+			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
+			model.addAttribute("message", "Votre paricipation est sauvée.");
+
+		}
+
+		String link = "detail_offer?id=" + offre.getId();
+		
+		return "redirect:" + link;
+	}
 
 	/**
 	 * Méthode mappé sur /delete_offer et les requêtes GET supprimer une offre
@@ -352,6 +378,10 @@ public class ControlOffre {
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
 		model.addAttribute("offer", offre);
+		if(offre.getParticipants().contains((Etudiant)model.asMap().get("user_co")))
+			model.addAttribute("participe",true);
+		else
+			model.addAttribute("participe",false);
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
