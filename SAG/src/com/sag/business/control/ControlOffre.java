@@ -311,7 +311,7 @@ public class ControlOffre {
 
 		}
 
-		if (userCo instanceof Etudiant) {
+		if ((userCo instanceof Etudiant) && (offre.getParticipants().size() < offre.getParticipantsMax())) {
 			offre.getParticipants().add((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
 			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
@@ -330,18 +330,13 @@ public class ControlOffre {
 
 		System.out.println("Je suis dans Join");
 		Offre offre = offerDao.chercherParID(idOffre);
-		if (offre.getParticipants().contains(userCo)) {
-			//model.addAttribute("message", "Vous avez déjà participé.");
-			String link = "detail_offer?id=" + offre.getId();
-			return "redirect:" + link;
+		
 
-		}
-
-		if (userCo instanceof Etudiant) {
-			offre.getParticipants().add((Etudiant) userCo);
+		if ((userCo instanceof Etudiant)&& offre.getParticipants().contains(userCo)) {
+			offre.getParticipants().remove((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
 			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
-			model.addAttribute("message", "Votre paricipation est sauvée.");
+			model.addAttribute("message", "Votre paricipation est annullé.");
 
 		}
 
