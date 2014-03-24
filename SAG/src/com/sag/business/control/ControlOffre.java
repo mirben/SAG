@@ -136,27 +136,6 @@ public class ControlOffre {
 		return "list";
 	}
 
-	@RequestMapping(value = "/domain_list", method = RequestMethod.GET)
-	public String listOffersDomain(Model model) {
-		Collection<Offre> offers = offerDao.chercherTous();
-		Collection<Offre> offersenvoie = new Vector<Offre>();
-
-		if (!offers.isEmpty()) {
-			System.out.println("js suiu dans active 3");
-
-			for (Offre offre : offers) {
-				if (offre.getStatut().equals(StatutOffre.ACTIVE))
-					offersenvoie.add(offre);
-			}
-			if (!offersenvoie.isEmpty()) {
-				model.addAttribute("offers_domaine", offersenvoie);
-			}
-		}
-
-		// model.addAttribute("offers", offers);
-		logger.info("get offer's list ");
-		return "list";
-	}
 
 	/**
 	 * ------------------------------------------------------------------------
