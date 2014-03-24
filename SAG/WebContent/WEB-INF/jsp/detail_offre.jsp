@@ -48,9 +48,9 @@
 						<c:if test="${offer.fournisseur!=null}">
 							<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
 						</c:if>
-						<sec:authorize access="hasRole('ROLE_USER')">
+						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 							<c:choose>
-								<c:when test="${offer.participants.contains($user_co)}">
+								<c:when test="${participe}">
 									<li class="cta-button"><a class="button"
 										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}"
 										data-reveal-id="myModal" data-reveal = "">Annuler ma participation</a></li>
