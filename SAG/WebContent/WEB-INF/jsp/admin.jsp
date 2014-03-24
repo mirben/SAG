@@ -93,7 +93,7 @@
 																<li><a href="${pageContext.request.contextPath}/switch_role_user?id=${user.id}">Modifier rôle</a></li>
 																<li><a href="${pageContext.request.contextPath}/edit_user?id=${user.id}">Modifier informations</a></li>
 																<li><a href="${pageContext.request.contextPath}/disable_user?id=${user.id}">Désactiver</a></li>
-																<li><a href="${pageContext.request.contextPath}/delete_user?id=${user.id}">Supprimer</a></li>
+																<li><a href="${pageContext.request.contextPath}/delete_user?id=${user.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer l\'utilisateur ${user.nom} ?'));">Supprimer</a></li>
 															</ul>
 														</td>
 													</tr>
@@ -137,7 +137,7 @@
 																<li><a href="${pageContext.request.contextPath}/switch_role_user?id=${userw.id}">Modifier rôle</a></li>
 																<li><a href="${pageContext.request.contextPath}/edit_user?id=${userw.id}">Modifier informations</a></li>
 																<li><a href="${pageContext.request.contextPath}/enable_user?id=${userw.id}">Activer</a></li>
-																<li><a href="${pageContext.request.contextPath}/delete_user?id=${userw.id}">Supprimer</a></li>
+																<li><a href="${pageContext.request.contextPath}/delete_user?id=${userw.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer l\'utilisateur ${userw.nom} ?'));">Supprimer</a></li>
 															</ul></td>
 													</tr>
 												</c:forEach>
@@ -187,7 +187,7 @@
 																<li><a href="${pageContext.request.contextPath}/enable_company?id=${comp.id}">Activer</a></li>
 															</c:otherwise>
 														</c:choose>
-														<li><a href="${pageContext.request.contextPath}/delete_company?id=${comp.id}">Supprimer</a></li>
+														<li><a href="${pageContext.request.contextPath}/delete_company?id=${comp.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer l\'entreprise ${comp.nom} ?'));">Supprimer</a></li>
 													</ul></td>
 											</tr>
 										</c:forEach>
@@ -235,7 +235,7 @@
 																<ul id="drop4-${offv.id}" class="f-dropdown" data-dropdown-content = "">
 																	<li><a href="${pageContext.request.contextPath}/edit_offer?id=${offv.id}">Modifier</a></li>
 																	<li><a href="${pageContext.request.contextPath}/disable_offer?id=${offv.id}">Désactiver</a></li>
-																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offv.id}">Supprimer</a></li>
+																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offv.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer l\'offre ${offv.titre} ?'));">Supprimer</a></li>
 																</ul></td>
 														</tr>
 													</c:forEach>
@@ -273,7 +273,7 @@
 																<ul id="drop4-${offw.id}" class="f-dropdown" data-dropdown-content = "">
 																	<li><a href="${pageContext.request.contextPath}/edit_offer?id=${offw.id}">Modifier</a></li>
 																	<li><a href="${pageContext.request.contextPath}/valid_offer?id=${offw.id}">Valider</a></li>
-																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offw.id}">Supprimer</a></li>
+																	<li><a href="${pageContext.request.contextPath}/delete_offer?id=${offw.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer l\'offre ${offw.titre} ?'));">Supprimer</a></li>
 																</ul></td>
 														</tr>
 													</c:forEach>
@@ -308,7 +308,7 @@
 															data-dropdown="drop7-${dom.id}"></span></a><br/>
 														<ul id="drop7-${dom.id}" class="f-dropdown" data-dropdown-content = "">
 															<li><a href="${pageContext.request.contextPath}/edit_domain?id=${dom.id}">Modifier</a></li>
-															<li><a href="${pageContext.request.contextPath}/delete_domain?id=${dom.id}">Supprimer</a></li>
+															<li><a href="${pageContext.request.contextPath}/delete_domain?id=${dom.id}" onclick="return(confirm('Etes vous certain de vouloir supprimer le domaine ${dom.nom} ?'));">Supprimer</a></li>
 														</ul></td>
 												</tr>
 											</c:forEach>

@@ -40,7 +40,14 @@
 	        		<p><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre.</a><br />Vous désirez effectuer un achat, cela pourrait interesser d'autres étudiants, n'hésitez pas et proposez votre offre.</p>
 	        	</div>
 	        	<div class="large-4 medium-4 columns">
-	        		<p><b>Différents domaines.</b><br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>
+	        		<![CDATA[<span data-tooltip="" class="has-tip" title="]]>
+		        		<c:forEach items="${domains}" var="dom">
+							${dom.nom}<br />
+						</c:forEach>
+	        		<![CDATA[">]]>
+	        		<p><a>Différents domaines.</a>
+	        		<![CDATA[</span>]]>
+	        		<br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>
 	        	</div>        
 			</div>
       	</div>
@@ -67,6 +74,8 @@
     <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
     <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
 	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.js"><jsp:text /></script>
+	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.tooltip.js"><jsp:text /></script>
     <script>
       $(document).foundation();
     </script>
