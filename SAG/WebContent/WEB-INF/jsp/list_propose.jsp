@@ -17,7 +17,7 @@
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>SAG - Liste des offres de 
-			<c:if test="${user_co.prenom!=null}">
+			<c:if test="${not empty user_co.prenom}">
 			<c:out value="${user.prenom} " />
 			</c:if>
 			<c:out value="${user_co.nom}" />
@@ -31,7 +31,7 @@
 		    <div class="row">
 		      <div class="large-12 columns">
 		      	<div class="panel">
-		        <h3>Liste des propositions d'offre de <c:if test="${ user_co.prenom!=null }">
+		        <h3>Liste des propositions d'offre de <c:if test="${ not empty user_co.prenom }">
 		        <c:out value="${user.prenom} " /></c:if>
 		        <c:out value="${ user_co.nom }" /></h3>
 				<div class="row">
