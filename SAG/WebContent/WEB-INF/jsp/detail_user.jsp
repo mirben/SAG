@@ -111,8 +111,7 @@
 					<div class="large-6 columns">
 					  <label>Sélectionnez les domaines suivis :</label>
 					  <form:select path="domaines">
-			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${domains}" itemLabel="nom"/>
+			              <form:options items="${domains}" itemValue="id" itemLabel="nom"/>
 			          </form:select>
 					</div>
 				  </div>

@@ -477,7 +477,7 @@ public class ControlUtilisateur {
 						if (getValue() == null) {
 							return "";
 						} else
-							return new SimpleDateFormat("dd/MM/yyyy")
+							return new SimpleDateFormat("yyyy-MM-dd")
 									.format((Date) getValue());
 					}
 				});
@@ -490,7 +490,7 @@ public class ControlUtilisateur {
 					}
 				});
 		
-		b.registerCustomEditor(Domaine.class, "domaine",
+		b.registerCustomEditor(Domaine.class, "domaines",
 				new PropertyEditorSupport() {
 					@Override
 					public void setAsText(String text) {
