@@ -14,55 +14,66 @@
 		omit-xml-declaration="true" />
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Détail <c:out value=${offer.titre} /></title>
-    <link type="text/css" rel="stylesheet"
-				href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
-  </head>
-  <body>
-    <jsp:include page="/WEB-INF/jsp/header.jsp" />
-    <div class="row">
-      <div class="large-12 columns">
-      	<div class="panel">
-	        <div class="row">
-		        <ul class="clearing-thumbs" data-clearing>
-		        	<c:forEach items="${offer.image}" var="imgo">
-				  		<li><a href="${imgo.url}"><img src="${imgo.url}"></a></li>
-				 	</c:forEach>
-				</ul>
-				<ul class="pricing-table">
-				  <li class="title">${offer.titre}</li>
-				  <li class="price">${offer.prix}€</li>
-				  <li class="description">${offer.description}</li>
-				  <li class="bullet-item">${offer.dateFin}</li>
-				  <li class="bullet-item">${offer.participants.size()} participants</li>
-				  <c:if test="${offer.fournisseur!=null}">
-				  	<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
-				  </c:if>
-				  <li class="cta-button"><a class="button" href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}&idu=${user.id}" data-reveal-id="myModal" data-reveal>Participer</a></li>
-				</ul>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAG - Détail <c:out value="${offer.titre}" /></title>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+<script
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
+</head>
+<body>
+	<jsp:include page="/WEB-INF/jsp/header.jsp" />
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<div class="row">
+					<ul class="clearing-thumbs" data-clearing="">
+						<c:forEach items="${offer.images}" var="imgo">
+							<li><a href="${imgo.url}"><img src="${imgo.url}" /></a></li>
+						</c:forEach>
+					</ul>
+					<ul class="pricing-table">
+					
+						<li class="title">${offer.titre}</li>
+						<li class="price">${offer.prix}€</li>
+						<li class="description">${offer.description}</li>
+						<li class="bullet-item">${offer.dateFin}</li>
+						<li class="bullet-item">${offer.participants.size()}
+							participants</li>
+						<c:if test="${offer.fournisseur!=null}">
+							<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
+						</c:if>
+						<li class="cta-button"><a class="button"
+							href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}?idu=${user.id}"
+							data-reveal-id="myModal" data-reveal="">Participer</a></li>
+					</ul>
+				</div>
 			</div>
-      	</div>
-      </div>
-    </div>
-    <div id="myModal" class="reveal-modal" data-reveal>
+		</div>
+	</div>
+	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Participation effectuée.</h2>
-		<p class="lead">Votre participation Ã  l'offre a bien été prise en compte.</p>
+		<p class="lead">Votre participation Ã  l'offre a bien été prise en
+			compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
-    </div>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.clearing.js"><jsp:text /></script>
-    <script type="text/javascript">
+	</div>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.clearing.js"><jsp:text /></script>
+	<script type="text/javascript">
       $(document).foundation();
     </script>
-    <script type="text/javascript">
+	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
 		  if(event.keyCode == '13') {
 			search_key();
@@ -81,7 +92,7 @@
 		}
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
-  </body>
-</html>
+</body>
+	</html>
 </jsp:root>
 
