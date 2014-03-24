@@ -4,6 +4,7 @@ import java.beans.PropertyEditorSupport;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -58,6 +59,7 @@ public class ControlOffre {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
 	 * 
@@ -82,6 +84,7 @@ public class ControlOffre {
 	}
 
 	/**
+	 * -------------------------à modifier---------------------------
 	 * Méthode mappé sur /list_offer et les requêtes GET Recherche les offres
 	 * 
 	 * @param model
@@ -91,14 +94,35 @@ public class ControlOffre {
 	@RequestMapping(value = "/list_offer", method = RequestMethod.GET)
 	public String listOffers(Model model) {
 		Collection<Offre> offers = offerDao.chercherTous();
-		model.addAttribute("offers", offers);
+		Collection<Offre> offersenvoie = new Vector<Offre>();
+
+
+		
+			System.out.println("js suiu dans active1 = ");
+
+			System.out.println("js suiu dans active 2");
+			if (!offers.isEmpty()) {
+				System.out.println("js suiu dans active 3");
+
+				for (Offre offre : offers) {
+					if (offre.getStatut().equals(StatutOffre.ACTIVE))
+						offersenvoie.add(offre);
+				}
+				if (!offersenvoie.isEmpty()) {
+					model.addAttribute("offers", offersenvoie);
+				}
+			}
+			
+		
+		//model.addAttribute("offers", offers);
 		logger.info("get offer's list ");
 		return "list";
 	}
 
 	/**
-	 * Méthode mappé sur /domain_list et les requêtes GET Recherche les offres
-	 * du domaine
+	 * ------------------------------------------------------------------------
+	 * --- Méthode mappé sur /domain_list et les requêtes GET Recherche les
+	 * offres du domaine
 	 * 
 	 * @param domaine
 	 *            L'identifiant du domaine des offres retournées
@@ -124,8 +148,9 @@ public class ControlOffre {
 	}
 
 	/**
-	 * Méthode mappé sur /offer_propose et les requêtes GET Recherche les offres
-	 * proposées par l'utilisateur connecté
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * ++++++ Méthode mappé sur /offer_propose et les requêtes GET Recherche les
+	 * offres proposées par l'utilisateur connecté
 	 * 
 	 * @param model
 	 *            L'objet Model de spring
@@ -164,6 +189,7 @@ public class ControlOffre {
 	}
 
 	/**
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 * Méthode créer une nouvelle offre, ou récupérer une offre existante
 	 * 
 	 * @param idOffre
@@ -182,9 +208,9 @@ public class ControlOffre {
 	}
 
 	/**
-	 * 
-	 * Méthode mappé sur /edit_offer et les requêtes GET mettre une offre dans
-	 * dans la formule edition
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * ++++++ Méthode mappé sur /edit_offer et les requêtes GET mettre une offre
+	 * dans dans la formule edition
 	 * 
 	 * @param offre
 	 * @param result
@@ -232,7 +258,7 @@ public class ControlOffre {
 			model.addAttribute("user_co", uco);
 			return "new_offer";
 		}
-		return "redirect:admin";
+		return "new_offer";
 	}
 
 	/**
@@ -252,11 +278,21 @@ public class ControlOffre {
 	}
 
 	/**
+	 * à implémenter
+	 * @return
+	 */
+	@RequestMapping(value = "/join_offer", method = RequestMethod.POST)
+
+	public String joingner_offer(){
+		return null;
+	}
+	/**
 	 * Méthode mappé sur /delete_offer et les requêtes GET supprimer une offre
 	 * 
 	 * @param idOffre
 	 * @return
 	 */
+	
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
 	public String supprimerOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
@@ -277,10 +313,43 @@ public class ControlOffre {
 			@RequestParam(value = "id", required = true) int idOffre,
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
-		model.addAttribute(offre);
+		model.addAttribute("offer",offre);
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
+	}
+
+	/**
+	 * Méthode mappé sur /valid_offer et les requêtes GET valider une offre
+	 * 
+	 * 
+	 * @param idOffre
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/valid_offer", method = RequestMethod.GET)
+	public String validOffre(
+			@RequestParam(value = "id", required = true) int idOffre,
+			Model model) {
+		System.out.println("Je suis dans valid 1");
+		Offre offre = offerDao.chercherParID(idOffre);
+		offre.setStatut(StatutOffre.ACTIVE);
+		System.out.println("Je suis dans valid 2");
+
+		try {
+			System.out.println("Je suis dans valid 3");
+			offerDao.sauvegarder(offre);
+			logger.info("offer détail" + offre);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("erreur", "Impossible de sauvegarder l'offre");
+		}
+		model.addAttribute(offre);
+
+		return "redirect:admin";
+
 	}
 
 	/**
@@ -338,6 +407,10 @@ public class ControlOffre {
 		} else if (action.equals("Enregistrer")) {
 			offre.setStatut(StatutOffre.BROUILLON);
 		}
+
+		Calendar calendar = Calendar.getInstance();
+		offre.setDateAjout(new java.sql.Date(calendar.getTimeInMillis()));
+		
 		if (result.hasErrors() || offre == null) {
 			return "offer_propose";
 		}

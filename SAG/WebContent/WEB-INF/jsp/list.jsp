@@ -52,7 +52,7 @@
 									<td>${offer.titre}</td>
 									<td>${offer.prix}</td>
 									<td>${offer.dateFin}</td>
-									<td><a href="${pageContext.request.contextPath}/detail_offer?id=${offerd.id}" class="tiny button" onclick="this.target='_blank'">Accéder à la fiche</a></td>
+									<td><a href="${pageContext.request.contextPath}/detail_offer?id=${offer.id}" class="tiny button" onclick="this.target='_blank'">Accéder à la fiche</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
