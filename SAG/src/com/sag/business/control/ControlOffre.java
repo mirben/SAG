@@ -116,11 +116,7 @@ public class ControlOffre {
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersenvoie = new Vector<Offre>();
 
-		System.out.println("js suiu dans active1 = ");
-
-		System.out.println("js suiu dans active 2");
 		if (!offers.isEmpty()) {
-			System.out.println("js suiu dans active 3");
 
 			for (Offre offre : offers) {
 				if (offre.getStatut().equals(StatutOffre.ACTIVE))
@@ -176,18 +172,8 @@ public class ControlOffre {
 	 * @return Redirection vers un autre mapping, list_propose
 	 */
 	@RequestMapping(value = "/offer_proposed", method = RequestMethod.GET)
-	public String listOffersPropose(Model model) {
-
-		int idUser = 0;
-		String username = SecurityContextHolder.getContext()
-				.getAuthentication().getName();
-		if (username.contains("@")) {
-			idUser = entrepriseDao.chercherParEmail(
-					SecurityContextHolder.getContext().getAuthentication()
-							.getName()).getId();
-		} else {
-			idUser = etudiantDao.chercherParEnt(username).getId();
-		}
+	public String listOffersPropose(
+			@ModelAttribute("user_co") Utilisateur userCo, Model model) {
 
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersprop = new Vector<Offre>();
@@ -195,7 +181,7 @@ public class ControlOffre {
 		if (!offers.isEmpty()) {
 			for (Offre offre : offers) {
 				if (offre.getEmetteur() != null
-						&& offre.getEmetteur().getId() == idUser)
+						&& offre.getEmetteur().getId() == userCo.getId())
 					offersprop.add(offre);
 			}
 			if (!offersprop.isEmpty()) {
@@ -236,13 +222,31 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
-	public String editOffre(@ModelAttribute Offre o, Model model) {
+	public String editOffre(@ModelAttribute("user_co") Utilisateur userCo,
+			@ModelAttribute Offre o, Model model) {
 
+		Collection<Offre> offers = offerDao.chercherTous();
+		if (!offers.contains(o)) {
+			if (getAuthority().equals("ROLE_ADMIN")) {
+				return "redirect:admin";
+			}
 
-		if (getAuthority().equals("ROLE_ADMIN")) {
+			else {
+				return "redirect:offer_proposed";
+			}
+		}
+
+		if (!o.getEmetteur().equals(userCo)
+				&& !getAuthority().equals("ROLE_ADMIN")) {
+			return "redirect:offer_proposed";
+
+		}
+
+		if (getAuthority().equals("ROLE_ADMIN"))
 			return "new_offer";
-		} else
+		else
 			return "offer_propose";
+
 	}
 
 	/**
@@ -287,6 +291,10 @@ public class ControlOffre {
 	@RequestMapping(value = "/disable_offer", method = RequestMethod.GET)
 	public String desactiverOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
+		if (getAuthority().equals("ROLE_ADMIN")) {
+			return "redirect:home";
+		}
+
 		Offre offre = offerDao.chercherParID(idOffre);
 		offre.setStatut(StatutOffre.TERMINEE);
 		offerDao.sauvegarder(offre);
