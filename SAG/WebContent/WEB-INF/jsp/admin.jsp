@@ -33,6 +33,9 @@
 				<h3>
 					Administration du <b>SAG</b>
 				</h3>
+				<c:if test="${not empty erreur}">
+					<h2><c:out value="${erreur}"/></h2>
+				</c:if>
 				<div class="row">
 					<dl class="tabs" data-tab="">
 						<dd class="active">
