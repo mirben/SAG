@@ -68,7 +68,7 @@ public class ControlOffre {
 
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
-		if (getAuthority() == "ROLE_ENTR")
+		if (getAuthority().equals("ROLE_ENTR"))
 			return entrepriseDao.chercherParEmail(p.getName());
 		return etudiantDao.chercherParEnt(p.getName());
 	}
@@ -239,10 +239,7 @@ public class ControlOffre {
 	public String editOffre(@ModelAttribute Offre o, Model model) {
 
 
-
-		
-		
-		if (getAuthority() == "ROLE_ADMIN") {
+		if (getAuthority().equals("ROLE_ADMIN")) {
 			return "new_offer";
 		} else
 			return "offer_propose";
@@ -444,7 +441,7 @@ public class ControlOffre {
 			model.addAttribute("offre", o);
 			return "offer_propose";
 		}
-		return "redirect:home";
+		return "offer_propose";
 	}
 
 	/**
@@ -487,7 +484,7 @@ public class ControlOffre {
 			return "offer_propose";
 		}
 
-		logger.info("offre sauvagardé " + offre);
+		logger.info("offre sauvegardée " + offre);
 		try {
 			offerDao.sauvegarder(offre);
 		} catch (Exception e) {
@@ -496,7 +493,7 @@ public class ControlOffre {
 			return "offer_propose";
 		}
 
-		return "offer_propose";
+		return "redirect:offer_proposed";
 	}
 
 	/**

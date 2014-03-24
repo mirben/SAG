@@ -20,7 +20,7 @@
 						placeholder="Rechercher une offre" />
 				</div>
 				<div class="large-4 small-3 columns">
-					<a href="#" onclick="search_key()ers" class="button expand postfix">Rechercher</a>
+					<a href="#" onclick="search_key()" class="button expand postfix">Rechercher</a>
 				</div>
 			</div>
 		</div>
