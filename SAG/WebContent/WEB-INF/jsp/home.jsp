@@ -14,72 +14,118 @@
 		omit-xml-declaration="true" />
 
 	<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SAG - Accueil</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
-  </head>
-  <body>
-  	<jsp:include page="/WEB-INF/jsp/header.jsp" />
-    <div class="row">
-      <div class="large-12 columns">
-      	<div class="panel">
-	        <h3 id="welcome">Bienvenue 
-	        <c:if test="${ not empty user_co.prenom }"><c:out value="${user_co.prenom} " /></c:if>
-	        <c:out value="${user_co.nom}" /> !</h3>
-	        <p>Sur ce site, vous pourrez participer aux différentes offres disponibles et ainsi bénéficier de tarifs avantageux.</p>
-	        <p>Différentes fonctionnalités sont mises à votre disposition:</p>
-	        <div class="row">
-	        	<div class="large-4 medium-4 columns">
-	    			<p><a href="${pageContext.request.contextPath}/list_offer">Consulter les offres.</a><br />Consultez l'ensemble des offres disponibles et participez y si vous êtes interessé.</p>
-	    		</div>
-	        	<div class="large-4 medium-4 columns">
-	        		<p><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre.</a><br />Vous désirez effectuer un achat, cela pourrait interesser d'autres étudiants, n'hésitez pas et proposez votre offre.</p>
-	        	</div>
-	        	<div class="large-4 medium-4 columns">
-	        		<![CDATA[<span data-tooltip="" class="has-tip" title="]]>
-		        		<c:forEach items="${domains}" var="dom">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAG - Accueil</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
+<script
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js">
+	<jsp:text />
+</script>
+</head>
+<body>
+	<jsp:include page="/WEB-INF/jsp/header.jsp" />
+	<div class="row">
+		<div class="large-12 columns">
+			<div class="panel">
+				<h3 id="welcome">
+					Bienvenue
+					<c:if test="${ not empty user_co.prenom }">
+						<c:out value="${user_co.prenom} " />
+					</c:if>
+					<c:out value="${user_co.nom}" />
+					!
+				</h3>
+				<c:if test="${not empty erreur}">
+					<h2>
+						<c:out value="${erreur}" />
+					</h2>
+				</c:if>
+				<p>Sur ce site, vous pourrez participer aux différentes offres
+					disponibles et ainsi bénéficier de tarifs avantageux.</p>
+				<p>Différentes fonctionnalités sont mises à votre disposition:</p>
+				<div class="row">
+					<div class="large-4 medium-4 columns">
+						<p>
+							<a href="${pageContext.request.contextPath}/list_offer">Consulter
+								les offres.</a><br />Consultez l'ensemble des offres disponibles et
+							participez y si vous êtes interessé.
+						</p>
+					</div>
+					<div class="large-4 medium-4 columns">
+						<p>
+							<a href="${pageContext.request.contextPath}/propose_offre">Proposer
+								une offre.</a><br />Vous désirez effectuer un achat, cela pourrait
+							interesser d'autres étudiants, n'hésitez pas et proposez votre
+							offre.
+						</p>
+					</div>
+					<div class="large-4 medium-4 columns">
+						<![CDATA[<span data-tooltip="" class="has-tip" title="]]>
+						<c:forEach items="${domains}" var="dom">
 							${dom.nom}<br />
 						</c:forEach>
-	        		<![CDATA[">]]>
-	        		<p><a>Différents domaines.</a>
-	        		<![CDATA[</span>]]>
-	        		<br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>
-	        	</div>        
+						<![CDATA[">]]>
+						<p>
+							<a>Différents domaines.</a>
+							<![CDATA[</span>]]>
+							<br />Vous êtes intéressé par un domaine en particulier ?
+							Parcourez les offres d'un domaine en particulier.
+						</p>
+					</div>
+				</div>
 			</div>
-      	</div>
-      </div>
-    </div>
+		</div>
+	</div>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
-		  if(event.keyCode == '13') {
-			search_key();
-			return false;
-		  }
-		  return true;
+			if (event.keyCode == '13') {
+				search_key();
+				return false;
+			}
+			return true;
 		};
-		function search_key(){
+		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.length!=0){
-				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
+			if (chaine.length != 0) {
+				$(location).attr(
+						'href',
+						"${pageContext.request.contextPath}/search_offers?key="
+								+ chaine);
 			}
 			return true;
 		}
 	</script>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
-    <script src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.js"><jsp:text /></script>
-	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation.tooltip.js"><jsp:text /></script>
-    <script>
-      $(document).foundation();
-    </script>
-    <jsp:include page="/WEB-INF/jsp/footer.jsp" />
-  </body>
-</html>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
+		<jsp:text />
+	</script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
+		<jsp:text />
+	</script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
+		<jsp:text />
+	</script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.js">
+		<jsp:text />
+	</script>
+	<script
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.tooltip.js">
+		<jsp:text />
+	</script>
+	<script>
+		$(document).foundation();
+	</script>
+	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
+</body>
+	</html>
 </jsp:root>

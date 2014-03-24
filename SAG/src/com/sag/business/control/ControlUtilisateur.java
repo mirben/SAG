@@ -123,10 +123,13 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/delete_user", method = RequestMethod.GET)
 	public String deleteStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber) {
-		etuDao.supprimer(studentNumber);
-		logger.info("delete student " + studentNumber);
-		return "redirect:admin";
+			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
+		if(etuDao.supprimer(studentNumber)){
+			logger.info("delete student " + studentNumber);
+			return "redirect:admin";
+		}
+		model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+		return "admin";
 	}
 
 	/**
@@ -138,8 +141,12 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/disable_user", method = RequestMethod.GET)
 	public String disableStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber) {
+			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
+		if(e == null){
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+			return "admin";
+		}
 		e.setStatut(StatutUtilisateur.INACTIF);
 		etuDao.sauvegarder(e);
 		logger.info("disable student " + studentNumber);
@@ -155,8 +162,12 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/enable_user", method = RequestMethod.GET)
 	public String enableStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber) {
+			@RequestParam(value = "id", required = true) Integer studentNumber, Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
+		if(e == null){
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+			return "admin";
+		}
 		e.setStatut(StatutUtilisateur.ACTIF);
 		etuDao.sauvegarder(e);
 		logger.info("enable student " + studentNumber);
@@ -178,7 +189,7 @@ public class ControlUtilisateur {
 		Etudiant e = etuDao.chercherParID(studentNumber);
 
 		if (e == null) {
-			model.addAttribute("erreur", "Impossible de changer le rôle");
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
 			return "redirect:admin";
 		}
 
@@ -217,6 +228,10 @@ public class ControlUtilisateur {
 			@RequestParam(value = "id", required = true) Integer studentNumber,
 			Model model) {
 		Etudiant e = etuDao.chercherParID(studentNumber);
+		if(e == null){
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+			return "home";
+		}
 		model.addAttribute("etudiant", e);
 		model.addAttribute(
 				"roles",
@@ -276,7 +291,8 @@ public class ControlUtilisateur {
 							etuDao.chercherRoleParID(3)));
 			return "new_user";
 		}
-		return "redirect:admin";
+		model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+		return "home";
 	}
 
 	/**
@@ -316,10 +332,13 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/delete_company", method = RequestMethod.GET)
 	public String deleteCompany(
-			@RequestParam(value = "id", required = true) Integer companyNumber) {
-		entDao.supprimer(companyNumber);
-		logger.info("delete company " + companyNumber);
-		return "redirect:admin";
+			@RequestParam(value = "id", required = true) Integer companyNumber, Model model) {
+		if(entDao.supprimer(companyNumber)){
+			logger.info("delete company " + companyNumber);
+			return "redirect:admin";
+		}
+		model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+		return "admin";
 	}
 
 	/**
@@ -332,8 +351,12 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/disable_company", method = RequestMethod.GET)
 	public String disableCompany(
-			@RequestParam(value = "id", required = true) Integer companyNumber) {
+			@RequestParam(value = "id", required = true) Integer companyNumber, Model model) {
 		Entreprise e = entDao.chercherParID(companyNumber);
+		if (e == null) {
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+			return "redirect:admin";
+		}
 		e.setStatut(StatutUtilisateur.INACTIF);
 		entDao.sauvegarder(e);
 		logger.info("disable company " + companyNumber);
@@ -350,8 +373,12 @@ public class ControlUtilisateur {
 	 */
 	@RequestMapping(value = "/enable_company", method = RequestMethod.GET)
 	public String enableCompany(
-			@RequestParam(value = "id", required = true) Integer companyNumber) {
+			@RequestParam(value = "id", required = true) Integer companyNumber, Model model) {
 		Entreprise e = entDao.chercherParID(companyNumber);
+		if (e == null) {
+			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+			return "redirect:admin";
+		}
 		e.setStatut(StatutUtilisateur.ACTIF);
 		entDao.sauvegarder(e);
 		logger.info("enable company " + companyNumber);
@@ -375,7 +402,9 @@ public class ControlUtilisateur {
 			logger.info("detail company " + e);
 			return "detail_company";
 		}
-		return "redirect:admin";
+		model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+		return "home";
+
 	}
 
 	/**
@@ -422,7 +451,8 @@ public class ControlUtilisateur {
 			model.addAttribute("entreprise", e);
 			return "new_company";
 		}
-		return "redirect:admin";
+		model.addAttribute("erreur", "Cet utilisateur n'existe pas");
+		return "home";
 	}
 
 	/**
