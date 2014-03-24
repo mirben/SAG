@@ -136,7 +136,6 @@ public class ControlOffre {
 		return "list";
 	}
 
-
 	/**
 	 * ------------------------------------------------------------------------
 	 * --- Méthode mappé sur /domain_list et les requêtes GET Recherche les
@@ -155,12 +154,14 @@ public class ControlOffre {
 		Domaine d = domDao.chercherParID(domaineNumber);
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersdom = new Vector<Offre>();
+
 		for (Offre offre : offers) {
 			if (offre.getDomaines().contains(d))
 				offersdom.add(offre);
 		}
 		model.addAttribute("offers_domaine", offersdom);
 		model.addAttribute("domaine_courant", d);
+
 		logger.info("get domain's offers " + domaineNumber);
 		return "domain_list";
 	}
@@ -237,14 +238,14 @@ public class ControlOffre {
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute Offre o, Model model) {
 
-		Utilisateur uco = userDao.chercherParEmail(SecurityContextHolder
-				.getContext().getAuthentication().getName());
-		model.addAttribute("user_co", uco);
-		if (o != null) {
-			model.addAttribute("offre", o);
+
+
+		
+		
+		if (getAuthority() == "ROLE_ADMIN") {
 			return "new_offer";
-		}
-		return "new_offer";
+		} else
+			return "offer_propose";
 	}
 
 	/**
@@ -276,6 +277,7 @@ public class ControlOffre {
 			model.addAttribute("user_co", uco);
 			return "new_offer";
 		}
+
 		return "new_offer";
 	}
 
