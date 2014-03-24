@@ -17,13 +17,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SAG - Détail <c:out value="${offer.titre}" /></title>
+<title>SAG - Détail <c:out value=${offer.titre } /></title>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/style.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/public-ressources/css/foundation.css" />
 <script
-	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js"><jsp:text /></script>
+	src="${pageContext.request.contextPath}/public-ressources/js/vendor/modernizr.js">
+	<jsp:text />
+</script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/header.jsp" />
@@ -31,13 +33,12 @@
 		<div class="large-12 columns">
 			<div class="panel">
 				<div class="row">
-					<ul class="clearing-thumbs" data-clearing="">
+					<ul class="clearing-thumbs" data-clearing>
 						<c:forEach items="${offer.images}" var="imgo">
 							<li><a href="${imgo.url}"><img src="${imgo.url}" /></a></li>
 						</c:forEach>
 					</ul>
 					<ul class="pricing-table">
-					
 						<li class="title">${offer.titre}</li>
 						<li class="price">${offer.prix}€</li>
 						<li class="description">${offer.description}</li>
@@ -47,9 +48,20 @@
 						<c:if test="${offer.fournisseur!=null}">
 							<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
 						</c:if>
-						<li class="cta-button"><a class="button"
-							href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}?idu=${user.id}"
-							data-reveal-id="myModal" data-reveal="">Participer</a></li>
+						<sec:authorize access="hasRole('ROLE_USER')">
+							<c:choose>
+								<c:when test="${offer.participants.contains(user_co)}">
+									<li class="cta-button"><a class="button"
+										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}"
+										data-reveal-id="myModal" data-reveal>Annuler ma participation</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="cta-button"><a class="button"
+										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
+										data-reveal-id="myModal" data-reveal>Participer</a></li>
+								</c:otherwise>
+							</c:choose>
+						</sec:authorize>
 					</ul>
 				</div>
 			</div>
@@ -63,30 +75,41 @@
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
+		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
+		<jsp:text />
+	</script>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js"><jsp:text /></script>
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
+		<jsp:text />
+	</script>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
+		<jsp:text />
+	</script>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.clearing.js"><jsp:text /></script>
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.clearing.js">
+		<jsp:text />
+	</script>
 	<script type="text/javascript">
-      $(document).foundation();
-    </script>
+		$(document).foundation();
+	</script>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
-		  if(event.keyCode == '13') {
-			search_key();
-			return false;
-		  }
-		  return true;
+			if (event.keyCode == '13') {
+				search_key();
+				return false;
+			}
+			return true;
 		};
-		function search_key(){
+		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
 			console.log(chaine);
-			if(chaine.length!=0){
-				$(location).attr('href',"${pageContext.request.contextPath}/search_offers?key="+chaine);
+			if (chaine.length != 0) {
+				$(location).attr(
+						'href',
+						"${pageContext.request.contextPath}/search_offers?key="
+								+ chaine);
 			}
 			return true;
 		}
