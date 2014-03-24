@@ -441,6 +441,8 @@ public class ControlUtilisateur {
 		}
 		if (ent == null)
 			return "redirect:admin";
+		
+		ent.setStatut(StatutUtilisateur.ACTIF);
 		logger.info("save company " + ent.getNom());
 		try {
 			entDao.sauvegarder(ent);
