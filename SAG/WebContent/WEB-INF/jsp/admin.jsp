@@ -180,7 +180,7 @@
 														<li><a href="${pageContext.request.contextPath}/edit_company?id=${comp.id}">Modifier</a></li>
 														<c:choose>
 															<!-- Si la liste des utilisateurs est vide -->
-															<c:when test="${company.statut=='ACTIF'}">
+															<c:when test="${comp.statut=='ACTIF'}">
 																<li><a href="${pageContext.request.contextPath}/disable_company?id=${comp.id}">Désactiver</a></li>
 															</c:when>
 															<c:otherwise>

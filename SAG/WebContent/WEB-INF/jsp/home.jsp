@@ -28,7 +28,7 @@
       <div class="large-12 columns">
       	<div class="panel">
 	        <h3 id="welcome">Bienvenue 
-	        <c:if test="${ user_co.prenom!=null }"><c:out value="${user.prenom} " /></c:if>
+	        <c:if test="${ not empty user_co.prenom }"><c:out value="${user_co.prenom} " /></c:if>
 	        <c:out value="${user_co.nom}" /> !</h3>
 	        <p>Sur ce site, vous pourrez participer aux différentes offres disponibles et ainsi bénéficier de tarifs avantageux.</p>
 	        <p>Différentes fonctionnalités sont mises à votre disposition:</p>
@@ -40,7 +40,7 @@
 	        		<p><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre.</a><br />Vous désirez effectuer un achat, cela pourrait interesser d'autres étudiants, n'hésitez pas et proposez votre offre.</p>
 	        	</div>
 	        	<div class="large-4 medium-4 columns">
-	        		<p><a href="#dom_menu">Différents domaines.</a><br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>
+	        		<p><b>Différents domaines.</b><br />Vous êtes intéressé par un domaine en particulier ? Parcourez les offres d'un domaine en particulier.</p>
 	        	</div>        
 			</div>
       	</div>

@@ -111,6 +111,7 @@ public class ControlDomain {
 		if (result.hasErrors()) {
 			return "new_domain";
 		}
+		
 		if(d==null) return "redirect:admin";
 		logger.info("save domain " + d.getNom());
 		try {

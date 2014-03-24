@@ -51,18 +51,21 @@
 					</ul>
 					<!-- Right Nav Section -->
 					<ul id="rightmenu" class="right">
-						<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co.nom}" /></a>
-							<ul class="dropdown">
-								<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
-										<li id="infos"><a href="${pageContext.request.contextPath}/edit_user?id=${user_co.id}">Modifier mes informations</a></li>
-								</sec:authorize>
-								<sec:authorize access="hasRole('ROLE_ENTR')">
-										<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
-								</sec:authorize>
-								<li id="offers"><a href="${pageContext.request.contextPath}/offer_proposed?id=${user_co.id}">Consulter ses offres</a></li>
-								<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
-							</ul>
-						</li>
+						<c:if test="${ not empty user_co.nom}">
+							<li class="has-dropdown"><a id="username" href="#"><c:out value="${user_co.nom}" /></a>
+								<ul class="dropdown">
+									<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+											<li id="infos"><a href="${pageContext.request.contextPath}/edit_user?id=${user_co.id}">Modifier mes informations</a></li>
+									</sec:authorize>
+									<sec:authorize access="hasRole('ROLE_ENTR')">
+											<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
+									</sec:authorize>
+									<li id="offers"><a href="${pageContext.request.contextPath}/offer_proposed?id=${user_co.id}">Consulter ses offres</a></li>
+									<li><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre</a></li>
+									<li><a href="${pageContext.request.contextPath}/logout">Se déconnecter</a></li>
+								</ul>
+							</li>
+						</c:if>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="divider"></li>
 							<li><a href="${pageContext.request.contextPath}/admin">Administrer</a></li>

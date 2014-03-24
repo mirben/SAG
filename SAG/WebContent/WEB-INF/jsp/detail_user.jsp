@@ -95,13 +95,8 @@
 				  <div class="row">
 					<div class="large-4 columns">
 					  <label>Formation
-						<form:select path="formation">
-						    <form:option value="Licence 1"/>
-						    <form:option value="Licence 2"/>
-						    <form:option value="Licence 3"/>
-						    <form:option value="Master 1"/>
-						    <form:option value="Master 2"/>
-						</form:select>
+						<form:input path="formation" placeholder="Formation de l'étudiant"/>
+						<form:errors path="formation" cssClass="error" />
 					  </label>
 					</div>
 				  </div>
@@ -111,8 +106,7 @@
 					<div class="large-6 columns">
 					  <label>Sélectionnez les domaines suivis :</label>
 					  <form:select path="domaines">
-			              <form:option value="-" label="-- Sélectionnez les domaines --"/>
-			              <form:options items="${domains}" itemLabel="nom"/>
+			              <form:options items="${domains}" itemValue="id" itemLabel="nom"/>
 			          </form:select>
 					</div>
 				  </div>
