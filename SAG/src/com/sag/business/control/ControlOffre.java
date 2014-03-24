@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Vector;
 
+import javassist.expr.Instanceof;
+
 import javax.ejb.EJB;
 import javax.validation.Valid;
 
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
 
+import com.sag.business.model.Etudiant;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Utilisateur;
@@ -63,16 +66,16 @@ public class ControlOffre {
 
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
-		if(getAuthority() == "ROLE_ENTR")
+		if (getAuthority() == "ROLE_ENTR")
 			return entrepriseDao.chercherParEmail(p.getName());
 		return etudiantDao.chercherParEnt(p.getName());
 	}
-	
+
 	@ModelAttribute("domains")
-	Collection<Domaine> domaines(){
+	Collection<Domaine> domaines() {
 		return domDao.chercherTous();
 	}
-	
+
 	/**
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
@@ -99,8 +102,8 @@ public class ControlOffre {
 	}
 
 	/**
-	 * -------------------------à modifier---------------------------
-	 * Méthode mappé sur /list_offer et les requêtes GET Recherche les offres
+	 * -------------------------à modifier--------------------------- Méthode
+	 * mappé sur /list_offer et les requêtes GET Recherche les offres
 	 * 
 	 * @param model
 	 *            L'objet Model de spring
@@ -111,25 +114,22 @@ public class ControlOffre {
 		Collection<Offre> offers = offerDao.chercherTous();
 		Collection<Offre> offersenvoie = new Vector<Offre>();
 
+		System.out.println("js suiu dans active1 = ");
 
-		
-			System.out.println("js suiu dans active1 = ");
+		System.out.println("js suiu dans active 2");
+		if (!offers.isEmpty()) {
+			System.out.println("js suiu dans active 3");
 
-			System.out.println("js suiu dans active 2");
-			if (!offers.isEmpty()) {
-				System.out.println("js suiu dans active 3");
-
-				for (Offre offre : offers) {
-					if (offre.getStatut().equals(StatutOffre.ACTIVE))
-						offersenvoie.add(offre);
-				}
-				if (!offersenvoie.isEmpty()) {
-					model.addAttribute("offers", offersenvoie);
-				}
+			for (Offre offre : offers) {
+				if (offre.getStatut().equals(StatutOffre.ACTIVE))
+					offersenvoie.add(offre);
 			}
-			
-		
-		//model.addAttribute("offers", offers);
+			if (!offersenvoie.isEmpty()) {
+				model.addAttribute("offers", offersenvoie);
+			}
+		}
+
+		// model.addAttribute("offers", offers);
 		logger.info("get offer's list ");
 		return "list";
 	}
@@ -293,21 +293,44 @@ public class ControlOffre {
 	}
 
 	/**
-	 * à implémenter
+	 * 
+	 * @param idOffre
 	 * @return
 	 */
-	@RequestMapping(value = "/join_offer", method = RequestMethod.POST)
 
-	public String joingner_offer(){
-		return null;
+	@RequestMapping(value = "/join_offer", method = RequestMethod.GET)
+	public String joingner_offer(@ModelAttribute("user_co") Utilisateur userCo,
+			@RequestParam(value = "ido", required = true) int idOffre, Model model) {
+
+		System.out.println("Je suis dans Join");
+		Offre offre = offerDao.chercherParID(idOffre);
+		if (offre.getParticipants().contains(userCo)) {
+			//model.addAttribute("message", "Vous avez déjà participé.");
+			String link = "detail_offer?id=" + offre.getId();
+			return "redirect:" + link;
+
+		}
+
+		if (userCo instanceof Etudiant) {
+			offre.getParticipants().add((Etudiant) userCo);
+			offerDao.sauvegarder(offre);
+			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
+			model.addAttribute("message", "Votre paricipation est sauvée.");
+
+		}
+
+		String link = "detail_offer?id=" + offre.getId();
+		
+		return "redirect:" + link;
 	}
+
 	/**
 	 * Méthode mappé sur /delete_offer et les requêtes GET supprimer une offre
 	 * 
 	 * @param idOffre
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
 	public String supprimerOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
@@ -328,7 +351,7 @@ public class ControlOffre {
 			@RequestParam(value = "id", required = true) int idOffre,
 			Model model) {
 		Offre offre = offerDao.chercherParID(idOffre);
-		model.addAttribute("offer",offre);
+		model.addAttribute("offer", offre);
 		logger.info("offer détail" + offre);
 
 		return "detail_offre";
@@ -355,7 +378,6 @@ public class ControlOffre {
 			System.out.println("Je suis dans valid 3");
 			offerDao.sauvegarder(offre);
 			logger.info("offer détail" + offre);
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -425,7 +447,7 @@ public class ControlOffre {
 
 		Calendar calendar = Calendar.getInstance();
 		offre.setDateAjout(new java.sql.Date(calendar.getTimeInMillis()));
-		
+
 		if (result.hasErrors() || offre == null) {
 			return "offer_propose";
 		}
