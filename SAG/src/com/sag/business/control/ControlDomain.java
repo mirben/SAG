@@ -9,7 +9,6 @@ import javax.ejb.EJB;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,7 +94,8 @@ public class ControlDomain {
 			model.addAttribute("domain", d);
 			return "new_domain";
 		}
-		return "redirect:admin";
+		model.addAttribute("erreur", "Ce domaine n'existe pas");
+		return "admin";
 	}
 	
 	/**
@@ -133,9 +133,13 @@ public class ControlDomain {
 	 */
 	@RequestMapping(value = "/delete_domain", method = RequestMethod.GET)
 	public String deleteDomain(
-			@RequestParam(value = "id", required = true) Integer domaineNumber) {
-		domDao.supprimer(domaineNumber);
-		logger.info("delete domain " + domaineNumber);
-		return "redirect:admin";
+			@RequestParam(value = "id", required = true) Integer domaineNumber, Model model) {
+		if(domDao.supprimer(domaineNumber)){
+			logger.info("delete domain " + domaineNumber);
+			return "redirect:admin";	
+		}
+		model.addAttribute("erreur", "Ce domaine n'existe pas");
+		return "admin";
+		
 	}
 }
