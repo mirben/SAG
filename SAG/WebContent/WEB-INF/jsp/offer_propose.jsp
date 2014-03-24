@@ -67,7 +67,7 @@
 							<div class="large-4 columns">
 
 								<c:choose>
-									<c:when test="${entreprise!=null}">
+									<c:when test="${ user_co.role.nom=='ROLE_ENTR' }">
 										<form:hidden path="type" value="CONCRET" />
 									</c:when>
 									<c:otherwise>
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<c:choose>
-							<c:when test="${entreprise!=null}">
+							<c:when test="${user_co.role.nom=='ROLE_ENTR'}">
 								<div class="row">
 									<div class="large-4 columns">
 										<label>Fournisseur <form:input path="fournisseur"
