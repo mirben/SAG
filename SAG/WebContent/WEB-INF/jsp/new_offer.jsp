@@ -163,15 +163,17 @@
 					</form:form>
 				</div>
 				<div class="row">
-					<a class="button" data-reveal-id="myModal" data-reveal="">Sauvegarder</a> <a
-						class="button" onclick="window.history.back(); return false;">Annuler</a>
+					<a class="button"
+						onclick="document.forms[0].submit(); return false;"	data-reveal-id="myModal" data-reveal="">Sauvegarder</a> <a
+						class="button" onclick="window.history.back(); return false;"
+						href="#">Annuler</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div id="myModal" class="reveal-modal" data-reveal="">
 		<h2>Offre sauvegardée.</h2>
-		<p class="lead">La sauvegarde a bien été prise en compte.</p>
+		<p class="lead">La sauvegarde a bien été pris en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
@@ -198,11 +200,6 @@
 			}
 			return true;
 		};
-		
-		$(document).on('closed', '#myModal', function () {
-			document.forms[0].submit(); return false;
-		});
-		
 		function add_image() {
 			var nbinput = $("#imginput").children().size();
 			var numi = nbinput + 1;
@@ -210,13 +207,11 @@
 
 			return true;
 		}
-		
 		function del_image() {
 			$("#imginput label:last-child").remove();
 			
 			return true;
 		}
-		
 		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();

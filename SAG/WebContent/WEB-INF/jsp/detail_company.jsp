@@ -75,7 +75,7 @@
 			  </div>
 			  <div class="row">
 				<a class="button" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
-				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
+				<a class="button" onclick="window.history.back(); return false;">Annuler</a>
 			  </div>
 			</div>
 		</div>
