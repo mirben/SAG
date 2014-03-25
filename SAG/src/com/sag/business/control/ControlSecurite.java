@@ -55,9 +55,13 @@ public class ControlSecurite {
 	
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
-		if(getAuthority().equals("ROLE_ENTR"))
-			return companyDao.chercherParEmail(p.getName());
-		return etuDao.chercherParEnt(p.getName());
+		if(p != null)
+		{
+			if(getAuthority().equals("ROLE_ENTR"))
+				return companyDao.chercherParEmail(p.getName());
+			return etuDao.chercherParEnt(p.getName());
+		}
+		return null;
 	}
 	
 	@ModelAttribute("domains")
