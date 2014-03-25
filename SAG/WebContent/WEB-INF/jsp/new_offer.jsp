@@ -146,21 +146,20 @@
 								</form:select>
 							</div>
 						</div>
-							<FIELDSET id="fieldimg">
-								<LEGEND>Images de l'offre</LEGEND>
-								<div class="row">
-									<a class="small button" href="#" onclick="add_image()">Ajouter une image</a>
-									<a class="small button" href="#" onclick="del_image()">Supprimer une image</a>
-								</div>
-								<div id="imginput">
-									<c:forEach items="${offre.images}" var="image" varStatus="status">
-										<label>Image <c:out value="${status.index}" />
-										<form:input path="images[${status.index}]" value="image.url" />
-										</label>
-									</c:forEach>
-								</div>
-							</FIELDSET>
-							
+						<FIELDSET id="fieldimg">
+							<LEGEND>Images de l'offre</LEGEND>
+							<div class="row">
+								<a class="small button" href="#" onclick="add_image()">Ajouter une image</a>
+								<a class="small button" href="#" onclick="del_image()">Supprimer une image</a>
+							</div>
+							<div id="imginput">
+								<c:forEach items="${offre.images}" var="image" varStatus="status">
+									<label>Image <c:out value="${status.index}" />
+									<form:input path="images" value="${image.url}" />
+									</label>
+								</c:forEach>
+							</div>
+						</FIELDSET>
 					</form:form>
 				</div>
 				<div class="row">
@@ -206,7 +205,7 @@
 		function add_image() {
 			var nbinput = $("#imginput").children().size();
 			var numi = nbinput + 1;
-			$("#imginput").append($('<label>Image '+numi+'<form:input type="text" path="offre.images" /></label>'));
+			$("#imginput").append($('<label>Image '+numi+'<form:input type="text" path="offre.images" value="http://url_image_default" /></label>'));
 
 			return true;
 		}

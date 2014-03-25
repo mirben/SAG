@@ -55,35 +55,9 @@ public class OffreDaoImlp implements OffreDao {
 		return em.createQuery("FROM Offre", Offre.class).setFirstResult(offset)
 				.setMaxResults(limite).getResultList();
 	}
-
-//	public void sauvegarder_image(Image img){
-//		if(img!=null)
-//			em.persist(img);
-//	}
-//	
-//	public Image chercherImageParUrl(String url){
-//		try {
-//			return em.createQuery("SELECT I FROM Image I WHERE I.url = :url", Image.class).setParameter("url", url).getSingleResult();
-//		}
-//		catch(NoResultException e){
-//			return null;
-//		}
-//	}
 	
 	@Override
 	public Offre sauvegarder(Offre offre) {
-//		Collection<Image> ldefimg = new Vector<Image>();
-//		for (Image img : offre.getImages()){
-//			Image img_bdd = chercherImageParUrl(img.getUrl());
-//			if(img_bdd==null){
-//				sauvegarder_image(img);
-//				ldefimg.add(img);
-//			}
-//			else{
-//				ldefimg.add(img);
-//			}
-//		}
-//		offre.setImages(ldefimg);
 		
 		return em.merge(offre);
 	}

@@ -148,6 +148,20 @@
 								</form:select>
 							</div>
 						</div>
+						<FIELDSET id="fieldimg">
+							<LEGEND>Images de l'offre</LEGEND>
+							<div class="row">
+								<a class="small button" href="#" onclick="add_image()">Ajouter une image</a>
+								<a class="small button" href="#" onclick="del_image()">Supprimer une image</a>
+							</div>
+							<div id="imginput">
+								<c:forEach items="${offre.images}" var="image" varStatus="status">
+									<label>Image <c:out value="${status.index}" />
+									<form:input path="images" value="${image.url}" />
+									</label>
+								</c:forEach>
+							</div>
+						</FIELDSET>
 						<div class="row">
 							<div class="large-6 columns">
 								<label> <input class="button" type="submit"
@@ -189,6 +203,21 @@
 			}
 			return true;
 		};
+		
+		function add_image() {
+			var nbinput = $("#imginput").children().size();
+			var numi = nbinput + 1;
+			$("#imginput").append($('<label>Image '+numi+'<form:input type="text" path="offre.images" value="http://url_image_default" /></label>'));
+
+			return true;
+		}
+		
+		function del_image() {
+			$("#imginput label:last-child").remove();
+			
+			return true;
+		}
+		
 		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();

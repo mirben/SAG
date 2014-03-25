@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.Vector;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -86,7 +87,7 @@ public class Offre implements Serializable {
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "DOMAINE_ID"))
 	private Collection<Domaine> domaines;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "PHOTO_ID"))
 	private Collection<Image> images;
