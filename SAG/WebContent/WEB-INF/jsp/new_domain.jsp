@@ -26,7 +26,14 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-			<h3>Nouveau domaine</h3>
+			<c:choose>
+      		<c:when test="${empty domaine.nom}">
+	    		<h3>Nouveau domaine</h3>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<h3><c:out value="${domaine.nom}" /></h3>
+	    	</c:otherwise>
+	    </c:choose>
 			<div class="row">
 				<form:form method="post" commandName="domaine" accept-charset="utf-8">
 				<form:errors path="*" cssClass="errorblock" element="div" />

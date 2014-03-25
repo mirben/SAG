@@ -27,7 +27,14 @@
     <div class="row">
       <div class="large-12 columns">
       	<div class="panel">
-			<h3>Nouvelle entreprise</h3>
+			<c:choose>
+	      		<c:when test="${empty entreprise.nom}">
+		    		<h3>Nouvelle entreprise</h3>
+		    	</c:when>
+		    	<c:otherwise>
+		    		<h3><c:out value="Entreprise ${entreprise.nom}" /></h3>
+		    	</c:otherwise>
+		    </c:choose>
 			<div class="row">
 				<form:form method="post" commandName="entreprise" accept-charset="utf-8">
 				<form:errors path="*" cssClass="errorblock" element="div" />
@@ -82,7 +89,7 @@
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">
+				<a class="button" data-reveal-id="myModal" data-reveal="">
 					<c:choose>
 				    <c:when test="${empty entreprise.id}">Ajouter</c:when>
 				    <c:otherwise>
@@ -96,8 +103,8 @@
 		</div>
 	  </div>
     <div id="myModal" class="reveal-modal" data-reveal="">
-		<h2>Nouvelle entreprise sauvegardée.</h2>
-		<p class="lead">L'ajout a bien été pris en compte.</p>
+		<h2>Entreprise sauvegardée.</h2>
+		<p class="lead">La sauvegarde a bien été prise en compte.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
     </div>
@@ -115,6 +122,9 @@
 		  }
 		  return true;
 		};
+		$(document).on('closed', '#myModal', function () {
+			document.forms[0].submit(); return false;
+		});
 		function search_key(){
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
