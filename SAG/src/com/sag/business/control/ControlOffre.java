@@ -202,15 +202,14 @@ public class ControlOffre {
 	 * @return L'objet offre récupéré
 	 */
 	@ModelAttribute
-	public Offre newOffre(@ModelAttribute("user_co") Utilisateur u,
-			@RequestParam(value = "id", required = false) Integer idOffre) {
+	public Offre newOffre(@RequestParam(value = "id", required = false) Integer idOffre, Model model) {
 		if (idOffre != null) {
 			logger.info("offre trouvé" + idOffre);
 			return offerDao.chercherParID(idOffre);
 		}
 		Offre o = new Offre();
 		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
-		o.setEmetteur(u);
+		o.setEmetteur((Utilisateur) model.asMap().get("user_co"));
 		logger.info("----------------- new offer  = " + o);
 		return o;
 	}
