@@ -56,9 +56,20 @@
 										data-reveal-id="myModal2" data-reveal = "">Annuler ma participation</a></li>
 								</c:when>
 								<c:otherwise>
-									<li class="cta-button"><a class="button"
-										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
-										data-reveal-id="myModal1" data-reveal = "">Participer</a></li>
+									<c:choose>
+										<c:when test="${offer.participantsMax>=offer.participants.size()}"> 
+											<li class="cta-button">
+											<a class="button"
+											href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
+											data-reveal-id="myModal1" data-reveal = "" disabled="disabled">Participer</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="cta-button">
+											<a class="button"
+											href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
+											data-reveal-id="myModal1" data-reveal = "">Participer</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</sec:authorize>
