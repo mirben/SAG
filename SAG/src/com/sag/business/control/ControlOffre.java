@@ -202,7 +202,7 @@ public class ControlOffre {
 	 * @return L'objet offre récupéré
 	 */
 	@ModelAttribute
-	public Offre newOffre(
+	public Offre newOffre(@ModelAttribute("user_co") Utilisateur u,
 			@RequestParam(value = "id", required = false) Integer idOffre) {
 		if (idOffre != null) {
 			logger.info("offre trouvé" + idOffre);
@@ -210,6 +210,7 @@ public class ControlOffre {
 		}
 		Offre o = new Offre();
 		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
+		o.setEmetteur(u);
 		logger.info("----------------- new offer  = " + o);
 		return o;
 	}
