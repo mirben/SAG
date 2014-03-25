@@ -134,7 +134,6 @@
 	  $(document).foundation();
 	</script>
 	<script type="text/javascript">
-	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
 		  if(event.keyCode == '13') {
 			search_key();
@@ -154,7 +153,6 @@
 			}
 			return true;
 		}
-	</script>
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
   </body>

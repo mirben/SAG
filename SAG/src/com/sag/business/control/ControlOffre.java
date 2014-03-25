@@ -99,6 +99,10 @@ public class ControlOffre {
 		System.out.println("Je cherche par la clé");
 		System.out.println("test -------------------------------------------");
 		Collection<Offre> offersmatch = offerDao.chercherParMotCle(keyword);
+		for (Offre offre : offersmatch) {
+			if(offre.getStatut()!=StatutOffre.ACTIVE)
+				offersmatch.remove(offre);
+		}
 		model.addAttribute("offers", offersmatch);
 		logger.info("search offers with " + keyword);
 		return "list";

@@ -115,11 +115,11 @@
 		<jsp:text />
 	</script>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation.js">
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js">
 		<jsp:text />
 	</script>
 	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation.tooltip.js">
+		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js">
 		<jsp:text />
 	</script>
 	<script>
