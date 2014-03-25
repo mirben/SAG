@@ -164,11 +164,10 @@
 						</FIELDSET>
 						<div class="row">
 							<div class="large-6 columns">
-								<label> <input class="button" type="submit"
-									name="action" value="Enregistrer" /> <input class="button"
-									type="submit" name="action" value="Envoyer" /> <input
-									class="button" type="button"
-									onclick="window.history.back(); return false;" value="Annuler" />
+								<label> 
+								<input class="button" type="submit" name="action" data-reveal-id="myModal1" data-reveal="" value="Enregistrer" /> 
+								<input class="button" type="submit" name="action" data-reveal-id="myModal2" data-reveal="" value="Envoyer" />
+								<input class="button" type="button" onclick="window.history.back(); return false;" value="Annuler" />
 								</label>
 							</div>
 						</div>

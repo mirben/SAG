@@ -124,8 +124,8 @@
 						</form:form>
 					</div>
 					<div class="row">
-						<a class="button" onclick="document.forms[0].submit();  return false;" href="#" data-reveal-id="myModal" data-reveal="">Envoyer</a>
-		    			<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
+						<a class="button" data-reveal-id="myModal" data-reveal="">Envoyer</a>
+		    			<a class="button" onclick="window.history.back(); return false;">Annuler</a>
 					</div>
 				 </div>
 			</div>
@@ -143,6 +143,11 @@
 	<script src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js"><jsp:text /></script>
 	<script>
 	  $(document).foundation();
+	</script>
+	<script type="text/javascript">
+		$(document).on('closed', '#myModal', function () {
+			document.forms[0].submit(); return false;
+		});
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
   </body>
