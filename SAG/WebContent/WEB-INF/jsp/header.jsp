@@ -58,7 +58,7 @@
 											<li id="infos"><a href="${pageContext.request.contextPath}/detail_user?id=${user_co.id}">Modifier mes informations</a></li>
 									</sec:authorize>
 									<sec:authorize access="hasRole('ROLE_ENTR')">
-											<li id="infosc"><a href="${pageContext.request.contextPath}/edit_company?id=${user_co.id}">Modifier mes informations</a></li>
+											<li id="infosc"><a href="${pageContext.request.contextPath}/detail_company?id=${user_co.id}">Modifier mes informations</a></li>
 									</sec:authorize>
 									<li id="offers"><a href="${pageContext.request.contextPath}/offer_proposed?id=${user_co.id}">Consulter ses offres</a></li>
 									<li><a href="${pageContext.request.contextPath}/propose_offre">Proposer une offre</a></li>

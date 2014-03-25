@@ -59,9 +59,10 @@
 									<c:choose>
 										<c:when test="${offer.participantsMax>=offer.participants.size()}"> 
 											<li class="cta-button">
-											<a class="button"
+											<a class="button disabled"
 											href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
-											data-reveal-id="myModal1" data-reveal = "" disabled="disabled">Participer</a></li>
+											data-reveal-id="myModal1" data-reveal = "">Participer</a></li>
+											<span>Le nombre de participants maximum est atteint.</span>
 										</c:when>
 										<c:otherwise>
 											<li class="cta-button">
