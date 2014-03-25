@@ -86,6 +86,8 @@ public class ControlUtilisateur {
 			return entDao.chercherParID(companyNumber);
 		}
 		Entreprise c = new Entreprise();
+		c.setRole(entDao.chercherRoleParID(3));
+		c.setStatut(StatutUtilisateur.ACTIF);
 		logger.info("new company = " + c);
 
 		return c;
