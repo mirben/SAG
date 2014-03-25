@@ -273,7 +273,7 @@ public class ControlOffre {
 			return "new_offer";
 		}
 
-		return "admin";
+		return "redirect:admin";
 	}
 
 	/**
