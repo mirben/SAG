@@ -163,10 +163,8 @@
 					</form:form>
 				</div>
 				<div class="row">
-					<a class="button"
-						onclick="document.forms[0].submit(); return false;"	data-reveal-id="myModal" data-reveal="">Sauvegarder</a> <a
-						class="button" onclick="window.history.back(); return false;"
-						href="#">Annuler</a>
+					<a class="button" data-reveal-id="myModal" data-reveal="">Sauvegarder</a> <a
+						class="button" onclick="window.history.back(); return false;" >Annuler</a>
 				</div>
 			</div>
 		</div>
@@ -178,9 +176,7 @@
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
-		
-	</script>
+		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js"><jsp:text /></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
 		<jsp:text />
@@ -200,6 +196,11 @@
 			}
 			return true;
 		};
+		
+		$(document).on('closed', '#myModal', function () {
+			document.forms[0].submit(); return false;
+		});
+		
 		function add_image() {
 			var nbinput = $("#imginput").children().size();
 			var numi = nbinput + 1;
@@ -207,11 +208,13 @@
 
 			return true;
 		}
+		
 		function del_image() {
 			$("#imginput label:last-child").remove();
 			
 			return true;
 		}
+		
 		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
