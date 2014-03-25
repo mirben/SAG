@@ -153,9 +153,9 @@
 									<a class="small button" href="#" onclick="del_image()">Supprimer une image</a>
 								</div>
 								<div id="imginput">
-									<c:forEach items="${offre.images}" var="image" varStatus="index">
-										<label>Image <c:out value="${index}" />
-										<form:input path="image" value="images.url" />
+									<c:forEach items="${offre.images}" var="image" varStatus="status">
+										<label>Image <c:out value="${status.index}" />
+										<form:input path="images[${status.index}]" value="image.url" />
 										</label>
 									</c:forEach>
 								</div>
@@ -206,7 +206,7 @@
 		function add_image() {
 			var nbinput = $("#imginput").children().size();
 			var numi = nbinput + 1;
-			$("#imginput").append($('<label>Image '+numi+'<input type="text" /></label>'));
+			$("#imginput").append($('<label>Image '+numi+'<form:input type="text" path="offre.images" /></label>'));
 
 			return true;
 		}

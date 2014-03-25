@@ -3,15 +3,18 @@ package com.sag.business.service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remote;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.sag.business.model.Image;
 import com.sag.business.model.Offre;
 
 /**
@@ -53,8 +56,35 @@ public class OffreDaoImlp implements OffreDao {
 				.setMaxResults(limite).getResultList();
 	}
 
+//	public void sauvegarder_image(Image img){
+//		if(img!=null)
+//			em.persist(img);
+//	}
+//	
+//	public Image chercherImageParUrl(String url){
+//		try {
+//			return em.createQuery("SELECT I FROM Image I WHERE I.url = :url", Image.class).setParameter("url", url).getSingleResult();
+//		}
+//		catch(NoResultException e){
+//			return null;
+//		}
+//	}
+	
 	@Override
 	public Offre sauvegarder(Offre offre) {
+//		Collection<Image> ldefimg = new Vector<Image>();
+//		for (Image img : offre.getImages()){
+//			Image img_bdd = chercherImageParUrl(img.getUrl());
+//			if(img_bdd==null){
+//				sauvegarder_image(img);
+//				ldefimg.add(img);
+//			}
+//			else{
+//				ldefimg.add(img);
+//			}
+//		}
+//		offre.setImages(ldefimg);
+		
 		return em.merge(offre);
 	}
 

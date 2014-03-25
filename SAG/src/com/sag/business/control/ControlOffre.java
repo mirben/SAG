@@ -35,6 +35,7 @@ import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
 
 import com.sag.business.model.Etudiant;
+import com.sag.business.model.Image;
 import com.sag.business.model.Offre;
 import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Utilisateur;
@@ -642,6 +643,21 @@ public class ControlOffre {
 									.parseInt(curId)));
 						}
 						super.setValue(listDom);
+					}
+				});
+		
+		b.registerCustomEditor(Collection.class, "images",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						System.out.println(text);
+						List<String> listUrlImg = Arrays.asList(text.split(","));
+						Collection<Image> listImg = new Vector<Image>();
+						for (String curUrl : listUrlImg) {
+							Image nimg = new Image(0,curUrl);
+							listImg.add(nimg);
+						}
+						super.setValue(listImg);
 					}
 				});
 
