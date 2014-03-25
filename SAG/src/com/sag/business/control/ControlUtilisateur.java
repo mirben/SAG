@@ -419,7 +419,7 @@ public class ControlUtilisateur {
 	public String detailCompany(@ModelAttribute Entreprise ent,
 			BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "new_company";
+			return "detail_company";
 		}
 		if (ent == null)
 			return "redirect:admin";
@@ -429,7 +429,7 @@ public class ControlUtilisateur {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("erreur", "Nom d'entreprise déjà utilisé");
-			return "new_company";
+			return "detail_company";
 		}
 		return "redirect:admin";
 	}

@@ -74,7 +74,7 @@
 				</form:form>
 			  </div>
 			  <div class="row">
-				<a class="button" onclick="document.forms[0].submit(); return false;" href="#" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
+				<a class="button" data-reveal-id="myModal" data-reveal="">Enregistrer</a>
 				<a class="button" onclick="window.history.back(); return false;" href="#">Annuler</a>
 			  </div>
 			</div>
@@ -100,6 +100,9 @@
 		  }
 		  return true;
 		};
+		$(document).on('closed', '#myModal', function () {
+			document.forms[0].submit(); return false;
+		});
 		function search_key(){
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();

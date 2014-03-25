@@ -209,6 +209,7 @@ public class ControlOffre {
 			return offerDao.chercherParID(idOffre);
 		}
 		Offre o = new Offre();
+		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
 		logger.info("----------------- new offer  = " + o);
 		return o;
 	}
@@ -227,27 +228,19 @@ public class ControlOffre {
 			@ModelAttribute Offre o, Model model) {
 
 		Collection<Offre> offers = offerDao.chercherTous();
-		if (!offers.contains(o)) {
-			if (getAuthority().equals("ROLE_ADMIN")) {
-				return "redirect:admin";
+		if (offers.contains(o)) {
+			if (o.getEmetteur().equals(userCo)){
+				return "offer_propose";
 			}
-
-			else {
-				return "redirect:offer_proposed";
-			}
+			else if(getAuthority().equals("ROLE_ADMIN"))
+				return "new_offer";
+			else
+				return "denied";
 		}
-
-		if (!o.getEmetteur().equals(userCo)
-				&& !getAuthority().equals("ROLE_ADMIN")) {
-			return "redirect:offer_proposed";
-
-		}
-
 		if (getAuthority().equals("ROLE_ADMIN"))
 			return "new_offer";
 		else
 			return "offer_propose";
-
 	}
 
 	/**
@@ -280,7 +273,7 @@ public class ControlOffre {
 			return "new_offer";
 		}
 
-		return "new_offer";
+		return "admin";
 	}
 
 	/**

@@ -149,8 +149,8 @@
 						<FIELDSET id="fieldimg">
 							<LEGEND>Images de l'offre</LEGEND>
 							<div class="row">
-								<a class="small button" href="#" onclick="add_image()">Ajouter une image</a>
-								<a class="small button" href="#" onclick="del_image()">Supprimer une image</a>
+								<a class="small button" onclick="add_image()">Ajouter une image</a>
+								<a class="small button" onclick="del_image()">Supprimer une image</a>
 							</div>
 							<div id="imginput">
 								<c:forEach items="${offre.images}" var="image" varStatus="status">

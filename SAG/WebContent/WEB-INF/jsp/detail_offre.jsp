@@ -35,7 +35,7 @@
 				<div class="row">
 					<ul class="clearing-thumbs" data-clearing="">
 						<c:forEach items="${offer.images}" var="imgo">
-							<li><a href="${imgo.url}"><img src="${imgo.url}" /></a></li>
+							<li><a href="${imgo.url}"><img src="${imgo.url}" width="200" /></a></li>
 						</c:forEach>
 					</ul>
 					<ul class="pricing-table">
@@ -53,12 +53,12 @@
 								<c:when test="${participe}">
 									<li class="cta-button"><a class="button"
 										href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}"
-										data-reveal-id="myModal" data-reveal = "">Annuler ma participation</a></li>
+										data-reveal-id="myModal2" data-reveal = "">Annuler ma participation</a></li>
 								</c:when>
 								<c:otherwise>
 									<li class="cta-button"><a class="button"
 										href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
-										data-reveal-id="myModal" data-reveal = "">Participer</a></li>
+										data-reveal-id="myModal1" data-reveal = "">Participer</a></li>
 								</c:otherwise>
 							</c:choose>
 						</sec:authorize>
@@ -69,10 +69,16 @@
 			</div>
 		</div>
 	</div>
-	<div id="myModal" class="reveal-modal" data-reveal="">
+	<div id="myModal1" class="reveal-modal" data-reveal="">
 		<h2>Participation effectuée.</h2>
 		<p class="lead">Votre participation à  l'offre a bien été prise en
 			compte.</p>
+		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+	<div id="myModal2" class="reveal-modal" data-reveal="">
+		<h2>Participation annulée.</h2>
+		<p class="lead">Votre participation à  l'offre a bien été annulée.</p>
 		<p>Vous pouvez fermer cette fenêtre l'esprit tranquille.</p>
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
@@ -103,6 +109,13 @@
 			}
 			return true;
 		};
+		$(document).on('closed', '#myModal1', function () {
+			window.location.href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}";
+		});
+		$(document).on('closed', '#myModal2', function () {
+			window.location.href="${pageContext.request.contextPath}/giveup_offer?ido=${offer.id}";
+		});
+		
 		function search_key() {
 			var chaine = document.getElementById("search_in").value;
 			chaine = chaine.toUpperCase();
