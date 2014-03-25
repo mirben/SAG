@@ -33,11 +33,13 @@
 		<div class="large-12 columns">
 			<div class="panel">
 				<div class="row">
-					<ul class="clearing-thumbs" data-clearing="">
-						<c:forEach items="${offer.images}" var="imgo">
-							<li><a href="${imgo.url}"><img src="${imgo.url}" width="200" /></a></li>
-						</c:forEach>
-					</ul>
+					<c:if test="${not empty offer.images}">
+						<ul class="clearing-thumbs" data-clearing="">
+							<c:forEach items="${offer.images}" var="imgo">
+								<li><a href="${imgo.url}"><img src="${imgo.url}" width="200" /></a></li>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<ul class="pricing-table">
 						<li class="title">${offer.titre}</li>
 						<li class="price">${offer.prix}€</li>
@@ -57,12 +59,8 @@
 								</c:when>
 								<c:otherwise>
 									<c:choose>
-										<c:when test="${offer.participantsMax>=offer.participants.size()}"> 
-											<li class="cta-button">
-											<a class="button disabled"
-											href="${pageContext.request.contextPath}/join_offer?ido=${offer.id}"
-											data-reveal-id="myModal1" data-reveal = "">Participer</a></li>
-											<span>Le nombre de participants maximum est atteint.</span>
+										<c:when test="${offer.participants.size()>=offer.participantsMax}"> 
+											<li class="description">Le nombre de participants maximum est atteint.</li>
 										</c:when>
 										<c:otherwise>
 											<li class="cta-button">
