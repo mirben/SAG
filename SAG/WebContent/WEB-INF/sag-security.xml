@@ -9,7 +9,6 @@
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
 		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logoutconfirm" access="permitAll" />
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/*company*" access="hasAnyRole('ROLE_ENTR','ROLE_ADMIN')" />
