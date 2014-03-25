@@ -189,8 +189,6 @@
 		<p>Un email vous sera envoyé dès que votre offre aura été activée.</p>
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
-
-
 	<script type="text/javascript">
 		$(document).foundation();
 	</script>
@@ -230,7 +228,6 @@
 			return true;
 		}
 	</script>
-
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
 	</html>

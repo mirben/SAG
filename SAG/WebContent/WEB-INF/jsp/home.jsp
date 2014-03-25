@@ -81,6 +81,24 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
+		<jsp:text />
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
+		<jsp:text />
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js">
+		<jsp:text />
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
+		<jsp:text />
+	</script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js">
+		<jsp:text />
+	</script>
+	<script type="text/javascript">
+		$(document).foundation();
+	</script>
 	<script type="text/javascript">
 		document.getElementById("search_in").onkeydown = function(event) {
 			if (event.keyCode == '13') {
@@ -101,29 +119,6 @@
 			}
 			return true;
 		}
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
-		<jsp:text />
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
-		<jsp:text />
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
-		<jsp:text />
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js">
-		<jsp:text />
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js">
-		<jsp:text />
-	</script>
-	<script>
-		$(document).foundation();
 	</script>
 	<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 </body>
