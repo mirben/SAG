@@ -320,7 +320,6 @@ public class ControlOffre {
 				&& (offre.getParticipants().size() < offre.getParticipantsMax())) {
 			offre.getParticipants().add((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
-			System.out.println("fick fdsf dsqfqf" + offre.getParticipants());
 			model.addAttribute("message", "Votre paricipation est sauvée.");
 
 		}
