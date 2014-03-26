@@ -23,7 +23,7 @@
     <script type="text/javascript">
 		//Redirige vers la page d'authentification après 5 secondes
 		window.setTimeout("location=('${pageContext.request.contextPath}/login');",
-				10000);
+				5000);
 	</script>
 </head>
 <body>
