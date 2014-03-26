@@ -7,7 +7,10 @@ import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Vector;
 
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -203,6 +206,20 @@ public class ControlSecurite {
 						} else
 							return new SimpleDateFormat("dd/MM/yyyy")
 									.format((Date) getValue());
+					}
+				});
+		
+		b.registerCustomEditor(Collection.class, "domaines",
+				new PropertyEditorSupport() {
+					@Override
+					public void setAsText(String text) {
+						List<String> listIdDom = Arrays.asList(text.split(","));
+						Collection<Domaine> listDom = new Vector<Domaine>();
+						for (String curId : listIdDom) {
+							listDom.add(domDao.chercherParID(Integer
+									.parseInt(curId)));
+						}
+						super.setValue(listDom);
 					}
 				});
 
