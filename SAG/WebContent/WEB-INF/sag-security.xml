@@ -9,12 +9,17 @@
 
 	<http entry-point-ref="casEntryPoint" use-expressions="true">
 		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/register" access="permitAll" />
+		<intercept-url pattern="/public-ressources/**" access="permitAll" />
+		<intercept-url pattern="/home" access="isAuthenticated()" />
 		<intercept-url pattern="/logoutconfirm" access="permitAll" />
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/*company*" access="hasAnyRole('ROLE_ENTR','ROLE_ADMIN')" />
-		<intercept-url pattern="/*user*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-		<intercept-url pattern="/edit_user*" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/**company**" access="hasAnyRole('ROLE_ENTR','ROLE_ADMIN')" />
+		<intercept-url pattern="/**user**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/edit_user**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/edit_company**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/delete_user" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/delete_company" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<access-denied-handler error-page="/accessdenied" />
 		<form-login login-page="/login" default-target-url="/home"
