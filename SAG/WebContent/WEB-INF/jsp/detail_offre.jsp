@@ -4,6 +4,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
 	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:spring="http://www.springframework.org/tags"
 	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=UTF-8"
@@ -42,9 +43,12 @@
 					</c:if>
 					<ul class="pricing-table">
 						<li class="title">${offer.titre}</li>
-						<li class="price">${offer.prix}€</li>
+						<li class="price">${fn:replace(offer.prix,".",",")}€</li>
 						<li class="description">${offer.description}</li>
-						<li class="bullet-item"><c:out value="Expire le : ${offer.dateFin}" /></li>
+						<li class="bullet-item"><c:out value="Expire le : " />
+							<fmt:setLocale value="fr_FR" />
+            				<fmt:formatDate value="${offer.dateFin}"/>
+            			</li>
 						<li class="bullet-item"><c:out value="Nombre de participants : ${offer.participants.size()}" /></li>
 						<li class="bullet-item"><c:out value="Limite de participants : ${offer.participantsMax}" /></li>
 						
