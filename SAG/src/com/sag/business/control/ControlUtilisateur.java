@@ -226,21 +226,20 @@ public class ControlUtilisateur {
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.GET)
-	public String detailStudent(
-			@RequestParam(value = "id", required = true) Integer studentNumber,
-			Model model) {
-		Etudiant e = etuDao.chercherParID(studentNumber);
-		if(e == null){
+	public String detailStudent(Model model) {
+		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
+		if(userCo == null || !(userCo instanceof Etudiant)){
 			model.addAttribute("erreur", "Cet utilisateur n'existe pas");
 			return "home";
 		}
-		model.addAttribute("etudiant", e);
+		Etudiant etuCo = (Etudiant) userCo;
+		model.addAttribute("etudiant", etuCo);
 		model.addAttribute(
 				"roles",
 				Arrays.asList(etuDao.chercherRoleParID(1),
 						etuDao.chercherRoleParID(2),
 						etuDao.chercherRoleParID(3)));
-		logger.info("detail student " + studentNumber);
+		logger.info("detail student " + etuCo);
 		return "detail_user";
 	}
 
