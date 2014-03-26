@@ -42,6 +42,45 @@
 				à la page d'authentification</jsp:text></a>
 				</div>
 			</div>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/vendor/jquery.js">
+				<jsp:text />
+			</script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation.min.js">
+				<jsp:text />
+			</script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.js">
+				<jsp:text />
+			</script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.topbar.js">
+				<jsp:text />
+			</script>
+			<script type="text/javascript" src="${pageContext.request.contextPath}/public-ressources/js/foundation/foundation.tooltip.js">
+				<jsp:text />
+			</script>
+			<script type="text/javascript">
+				$(document).foundation();
+			</script>
+			<script type="text/javascript">
+				document.getElementById("search_in").onkeydown = function(event) {
+					if (event.keyCode == '13') {
+						search_key();
+						return false;
+					}
+					return true;
+				};
+				function search_key() {
+					var chaine = document.getElementById("search_in").value;
+					chaine = chaine.toUpperCase();
+					console.log(chaine);
+					if (chaine.length != 0) {
+						$(location).attr(
+								'href',
+								"${pageContext.request.contextPath}/search_offers?key="
+										+ chaine);
+					}
+					return true;
+				}
+			</script>
 			<jsp:include page="/WEB-INF/jsp/footer.jsp" />
 		</body>
 	</html>

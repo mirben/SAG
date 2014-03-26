@@ -69,9 +69,15 @@ public class ControlOffre {
 
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
-		if (getAuthority().equals("ROLE_ENTR"))
-			return entrepriseDao.chercherParEmail(p.getName());
-		return etudiantDao.chercherParEnt(p.getName());
+		if(p != null)
+		{
+			if(getAuthority().equals("ROLE_ENTR"))
+				return entrepriseDao.chercherParEmail(p.getName());
+			Etudiant e = etudiantDao.chercherParEnt(p.getName());
+			System.out.println("userco = " +e );
+			return e;
+		}
+		return null;
 	}
 
 	@ModelAttribute("domains")
@@ -79,6 +85,26 @@ public class ControlOffre {
 		return domDao.chercherTous();
 	}
 
+	/**
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * Méthode créer une nouvelle offre, ou récupérer une offre existante
+	 * 
+	 * @param idOffre
+	 * @return L'objet offre récupéré
+	 */
+	@ModelAttribute("offre")
+	public Offre newOffre(@RequestParam(value = "id", required = false) Integer idOffre, Model model) {
+		if (idOffre != null) {
+			logger.info("offre trouvé" + idOffre);
+			return offerDao.chercherParID(idOffre);
+		}
+		Offre o = new Offre();
+		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
+		o.setEmetteur((Utilisateur) model.asMap().get("user_co"));
+		logger.info("----------------- new offer  = " + o);
+		return o;
+	}
+	
 	/**
 	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
@@ -198,25 +224,7 @@ public class ControlOffre {
 		return "list_propose";
 	}
 
-	/**
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * Méthode créer une nouvelle offre, ou récupérer une offre existante
-	 * 
-	 * @param idOffre
-	 * @return L'objet offre récupéré
-	 */
-	@ModelAttribute
-	public Offre newOffre(@RequestParam(value = "id", required = false) Integer idOffre, Model model) {
-		if (idOffre != null) {
-			logger.info("offre trouvé" + idOffre);
-			return offerDao.chercherParID(idOffre);
-		}
-		Offre o = new Offre();
-		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
-		o.setEmetteur((Utilisateur) model.asMap().get("user_co"));
-		logger.info("----------------- new offer  = " + o);
-		return o;
-	}
+
 
 	/**
 	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -228,9 +236,8 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
-	public String editOffre(@ModelAttribute("user_co") Utilisateur userCo,
-			@ModelAttribute Offre o, Model model) {
-
+	public String editOffre(@ModelAttribute("offre") Offre o, Model model) {
+		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
 		Collection<Offre> offers = offerDao.chercherTous();
 		if (offers.contains(o)) {
 			if (o.getEmetteur().equals(userCo)){

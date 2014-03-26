@@ -44,7 +44,16 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<div class="panel">
-				<h3>Nouvelle proposition d'offre</h3>
+				<c:choose>
+					<c:when test="${empty offre.titre}">
+						<h3>Nouvelle proposition d'offre</h3>
+					</c:when>
+					<c:otherwise>
+						<h3>
+							<c:out value="Offre ${offre.titre}" />
+						</h3>
+					</c:otherwise>
+				</c:choose>
 				<div class="row">
 					<form:form method="post" commandName="offre" accept-charset="utf-8">
 						<div class="row">
