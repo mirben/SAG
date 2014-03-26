@@ -200,9 +200,6 @@ public class ControlUtilisateur {
 			e.setRole(etuDao.chercherRoleParID(2));
 			break;
 		case 2:
-			e.setRole(etuDao.chercherRoleParID(3));
-			break;
-		case 3:
 			e.setRole(etuDao.chercherRoleParID(1));
 			break;
 		default:
