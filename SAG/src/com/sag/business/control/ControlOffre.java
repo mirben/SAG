@@ -296,12 +296,12 @@ public class ControlOffre {
 	@RequestMapping(value = "/disable_offer", method = RequestMethod.GET)
 	public String desactiverOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
-		if (getAuthority().equals("ROLE_ADMIN")) {
+		if (!getAuthority().equals("ROLE_ADMIN")) {
 			return "redirect:home";
 		}
 
 		Offre offre = offerDao.chercherParID(idOffre);
-		offre.setStatut(StatutOffre.TERMINEE);
+		offre.setStatut(StatutOffre.ENVOYEE);
 		offerDao.sauvegarder(offre);
 		logger.info("offer désactivé" + offre);
 		return "redirect:admin";
