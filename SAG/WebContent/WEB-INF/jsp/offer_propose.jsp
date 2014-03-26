@@ -174,8 +174,8 @@
 						<div class="row">
 							<div class="large-6 columns">
 								<label> 
-								<input id="bsave" class="button" type="submit" name="action" data-reveal-id="myModal1" data-reveal="" value="Enregistrer" /> 
-								<input id="bsend" class="button" type="submit" name="action" data-reveal-id="myModal2" data-reveal="" value="Envoyer" />
+								<input id="bsave" class="button" type="submit" name="action" value="Enregistrer" /> 
+								<input id="bsend" class="button" type="submit" name="action" value="Envoyer" />
 								<input class="button" type="button" onclick="window.history.back(); return false;" value="Annuler" />
 								</label>
 							</div>
