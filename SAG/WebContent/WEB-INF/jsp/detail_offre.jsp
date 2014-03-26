@@ -44,12 +44,18 @@
 						<li class="title">${offer.titre}</li>
 						<li class="price">${offer.prix}€</li>
 						<li class="description">${offer.description}</li>
-						<li class="bullet-item">${offer.dateFin}</li>
-						<li class="bullet-item">${offer.participants.size()}
-							participants</li>
-						<c:if test="${offer.fournisseur!=null}">
-							<li class="bullet-item"><a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
-						</c:if>
+						<li class="bullet-item"><c:out value="Expire le : ${offer.dateFin}" /></li>
+						<li class="bullet-item"><c:out value="Nombre de participants : ${offer.participants.size()}" /></li>
+						<li class="bullet-item"><c:out value="Limite de participants : ${offer.participantsMax}" /></li>
+						
+						<c:choose>
+							<c:when test="${not empty offer.fournisseur}">
+								<li class="bullet-item">Fournisseur : <a href="${offer.siteWeb}">${offer.fournisseur}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="bullet-item">Aucun fournisseur actuellement.</li>
+							</c:otherwise>
+						</c:choose>
 						<sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
 							<c:choose>
 								<c:when test="${participe}">
