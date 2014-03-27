@@ -8,48 +8,91 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Classe entité correspondant aux Domaines
+ * @author Benjamin MIRETTI
+ *
+ */
 @Entity
 public class Domaine implements Serializable{
 
 	/**
-	 * 
+	 * Id pour la sérialisation
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id du domaine
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	/**
+	 * Nom du domaine
+	 */
 	@Column(unique = true)
 	private String nom;
 	
+	/**
+	 * Constructeur vide de Domaine
+	 */
 	public Domaine(){
 		super();
 	}
 	
+	/**
+	 * Constructeur de Domaine
+	 * @param nom Le nom du domaine
+	 */
 	public Domaine(String nom) {
 		super();
 		this.nom = nom;
 	}
 	
+	/**
+	 * 
+	 * @return L'Id du domaine 
+	 */
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * 
+	 * @param id L'Id à attribuler au domaine
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	/**
+	 * 
+	 * @return Le nom du domaine
+	 */
 	public String getNom() {
 		return nom;
 	}
+	
+	/**
+	 * 
+	 * @param nom Le nom à attribue au domaine
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * @return une String décrivant l'objet
+	 */
 	@Override
 	public String toString() {
 		return "Domaine [id=" + id + ", nom=" + nom + "]";
 	}
 
+	/**
+	 * @return un int représentant le hashcode de l'objet
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,6 +102,10 @@ public class Domaine implements Serializable{
 		return result;
 	}
 
+	/**
+	 * @param obj L'objet auquel l'objet courant sera comparé
+	 * @return un booléen définissant si l'objet est égal à celui passé en paramètre
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

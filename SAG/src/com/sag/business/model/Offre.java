@@ -1,3 +1,7 @@
+/**
+ * @author Benjamin MIRETTI
+ * @author Tuan NGUYEN (annotations de validation)
+ */
 package com.sag.business.model;
 
 import java.io.Serializable;
@@ -25,73 +29,136 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * Classe entité correspondant aux Offres
+ * @author Benjamin MIRETTI
+ * @author Tuan NGUYEN (annotations de validation)
+ *
+ */
 @Entity
 public class Offre implements Serializable {
 
+	/**
+	 * Id pour la sérialisation
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * L'Id de l'offre
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	/**
+	 * Le titre de l'offre
+	 */
 	@NotEmpty(message = "Le titre est obligatoire")
 	private String titre;
 
-	@NotEmpty(message = "Le description est obligatoire")
+	/**
+	 * La description de l'offre
+	 */
+	@NotEmpty(message = "La description est obligatoire")
 	private String description;
 
+	/**
+	 * Le type de l'offre
+	 */
 	@Enumerated(EnumType.ORDINAL)
 	private Type type;
 
+	/**
+	 * Le nombre de participants minimum pour l'offre
+	 */
 	@Min(0)
 	private int participantsMin;
 	
+	/**
+	 * Le nombre de participants maximum pour l'offre
+	 */
 	@Min(0)
 	private int participantsMax;
 
+	/**
+	 * Le prix de l'offre
+	 */
 	@Min(0)
 	private double prix;
 
+	/**
+	 * Le statut de l'offre
+	 */
 	@Enumerated(EnumType.ORDINAL)
 	private StatutOffre statut;
 
-	@NotNull(message = "La date de début est incorrect")
+	/**
+	 * La date de début de l'offre
+	 */
+	@NotNull(message = "La date de début est incorrecte")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	// @Past(message = "La date de naissance doit être passé")
 	private Date dateDebut;
 
-	@NotNull(message = "La date de fin est incorrect")
+	/**
+	 * La date de fin de l'offre
+	 */
+	@NotNull(message = "La date de fin est incorrecte")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	// @Past(message = "La date de naissance doit être passé")
 	private Date dateFin;
 
+	/**
+	 * La date d'ajout de l'offre
+	 */
 	private Date dateAjout;
 
+	/**
+	 * L'adresse web externe associée à l'offre
+	 */
 	private String siteWeb;
 
+	/**
+	 * L'Utilisateur émetteur de l'offre
+	 */
 	@ManyToOne
 	@JoinColumn(name = "ID_EMETTEUR")
 	private Utilisateur emetteur;
 
+	/**
+	 * Le fournisseur de l'offre
+	 */
 	@ManyToOne
 	@JoinColumn(name = "ID_FOURNISSEUR")
 	private Entreprise fournisseur;
 
+	/**
+	 * La liste des participants à l'offre
+	 */
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "ETUDIANT_ID"))
 	private Collection<Etudiant> participants;
 
+	/**
+	 * La liste des domaines de l'offre
+	 */
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "DOMAINE_ID"))
 	private Collection<Domaine> domaines;
 
+	/**
+	 * La liste des images de l'offre
+	 */
 	@OneToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(inverseJoinColumns = @JoinColumn(name = "PHOTO_ID"))
 	private Collection<Image> images;
 
+	/**
+	 * Constructeur vide d'Offre
+	 */
 	public Offre() {
 		super();
 		participants = new Vector<Etudiant>();
@@ -99,6 +166,25 @@ public class Offre implements Serializable {
 		images = new Vector<Image>();
 	}
 
+	/**
+	 * Constructeur d'Offre
+	 * @param titre Le titre de l'offre
+	 * @param description La description de l'offre
+	 * @param type Le type de l'offre
+	 * @param participantsMin Le nombre de participants minimum pour l'offre
+	 * @param participantsMax Le nombre de participants maximum pour l'offre
+	 * @param prix Le prix de l'offre
+	 * @param statut Le statut de l'offre
+	 * @param dateDebut La date de début de l'offre
+	 * @param dateFin La date de fin de l'offre
+	 * @param dateAjout La date d'ajout de l'offre
+	 * @param siteWeb L'adresse web externe associée à l'offre
+	 * @param emetteur L'Utilisateur émetteur de l'offre
+	 * @param fournisseur Le fournisseur de l'offre
+	 * @param participants La liste des participants à l'offre
+	 * @param domaines La liste des domaines de l'offre
+	 * @param images La liste des images de l'offre
+	 */
 	public Offre(String titre, String description, Type type,
 			int participantsMin, int participantsMax, double prix,
 			StatutOffre statut, Date dateDebut, Date dateFin, Date dateAjout,
@@ -125,142 +211,281 @@ public class Offre implements Serializable {
 		this.images = (images != null) ? images : new Vector<Image>();
 	}
 
+	/**
+	 * 
+	 * @return L'Id de l'offre
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id L'Id à attribuer à l'offre
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return Le titre de l'offre
+	 */
 	public String getTitre() {
 		return titre;
 	}
 
+	/**
+	 * 
+	 * @param titre Le titre à attribuer à l'offre
+	 */
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
 
+	/**
+	 * 
+	 * @return description La description de l'offre
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * 
+	 * @param description La description à attribuer à l'offre
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * 
+	 * @return Le type de l'offre
+	 */
 	public Type getType() {
 		return type;
 	}
 
+	/**
+	 * 
+	 * @param type Le type à attribuer à l'offre
+	 */
 	public void setType(Type type) {
 		this.type = type;
 	}
 
+	/**
+	 * 
+	 * @return Le nombre de participants minimum pour l'offre
+	 */
 	public int getParticipantsMin() {
 		return participantsMin;
 	}
 
+	/**
+	 * 
+	 * @param participantsMin La nombre de participants minimum à attribuer à l'offre
+	 */
 	public void setParticipantsMin(int participantsMin) {
 		this.participantsMin = participantsMin;
 	}
 
+	/**
+	 * 
+	 * @return Le nombre de participants maximum pour l'offre
+	 */
 	public int getParticipantsMax() {
 		return participantsMax;
 	}
 
+	/**
+	 * 
+	 * @param participantsMax Le nombre de participants maximum à attribuer à l'offre
+	 */
 	public void setParticipantsMax(int participantsMax) {
 		this.participantsMax = participantsMax;
 	}
 
+	/**
+	 * 
+	 * @return Le prix de l'offre
+	 */
 	public double getPrix() {
 		return prix;
 	}
 
+	/**
+	 * 
+	 * @param prix La prix à attribuer à l'offre
+	 */
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
+	/**
+	 * 
+	 * @return Le statut de l'offre
+	 */
 	public StatutOffre getStatut() {
 		return statut;
 	}
 
+	/**
+	 * 
+	 * @param statut Le statut à attribuer à l'offre
+	 */
 	public void setStatut(StatutOffre statut) {
 		this.statut = statut;
 	}
 
+	/**
+	 * 
+	 * @return La date de début de l'offre
+	 */
 	public Date getDateDebut() {
 		return dateDebut;
 	}
 
+	/**
+	 * 
+	 * @param dateDebut La date de début à attribuer à l'offre
+	 */
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
+	/**
+	 * 
+	 * @return La date de fin de l'offre
+	 */
 	public Date getDateFin() {
 		return dateFin;
 	}
 
+	/**
+	 * 
+	 * @param dateFin La date de fin à attribuer à l'offre
+	 */
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}
 
+	/**
+	 * 
+	 * @return La date d'ajout de l'offre
+	 */
 	public Date getDateAjout() {
 		return dateAjout;
 	}
 
+	/**
+	 * 
+	 * @param dateAjout La date d'ajout à attribuer à l'offre
+	 */
 	public void setDateAjout(Date dateAjout) {
 		this.dateAjout = dateAjout;
 	}
 
+	/**
+	 * 
+	 * @return L'adresse web externe associée à l'offre
+	 */
 	public String getSiteWeb() {
 		return siteWeb;
 	}
 
+	/**
+	 * 
+	 * @param siteWeb L'adresse web externe à attribuer à l'offre
+	 */
 	public void setSiteWeb(String siteWeb) {
 		this.siteWeb = siteWeb;
 	}
 
+	/**
+	 * 
+	 * @return L'Utilisateur émetteur de l'offre
+	 */
 	public Utilisateur getEmetteur() {
 		return emetteur;
 	}
 
+	/**
+	 * 
+	 * @param emetteur L'Utilisateur émetteur à attribuer à l'offre
+	 */
 	public void setEmetteur(Utilisateur emetteur) {
 		this.emetteur = emetteur;
 	}
 
+	/**
+	 * 
+	 * @return Le fournisseur de l'offre
+	 */
 	public Entreprise getFournisseur() {
 		return fournisseur;
 	}
 
+	/**
+	 * 
+	 * @param fournisseur Le fournisseur à attribuer à l'offre
+	 */
 	public void setFournisseur(Entreprise fournisseur) {
 		this.fournisseur = fournisseur;
 	}
 
+	/**
+	 * 
+	 * @return La liste des participants à l'offre
+	 */
 	public Collection<Etudiant> getParticipants() {
 		return participants;
 	}
 
+	/**
+	 * 
+	 * @param participants La liste des participants à attribuer à l'offre
+	 */
 	public void setParticipants(Collection<Etudiant> participants) {
 		this.participants = participants;
 	}
 
+	/**
+	 * 
+	 * @return La liste des domaines de l'offre
+	 */
 	public Collection<Domaine> getDomaines() {
 		return domaines;
 	}
 
+	/**
+	 * 
+	 * @param domaines La liste des domaines à attribuer à l'offre
+	 */
 	public void setDomaines(Collection<Domaine> domaines) {
 		this.domaines = domaines;
 	}
 
+	/**
+	 * 
+	 * @return La liste des images de l'offre
+	 */
 	public Collection<Image> getImages() {
 		return images;
 	}
 
+	/**
+	 * 
+	 * @param images La liste des images à attribuer à l'offre
+	 */
 	public void setImages(Collection<Image> images) {
 		this.images = images;
 	}
 
+	/**
+	 * @return une String décrivant l'objet
+	 */
 	@Override
 	public String toString() {
 		return "Offre [id=" + id + ", titre=" + titre + ", description="
@@ -274,6 +499,9 @@ public class Offre implements Serializable {
 				+ images + "]";
 	}
 
+	/**
+	 * @return un int représentant le hashcode de l'objet
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -307,6 +535,10 @@ public class Offre implements Serializable {
 		return result;
 	}
 
+	/**
+	 * @param obj L'objet auquel l'objet courant sera comparé
+	 * @return un booléen définissant si l'objet est égal à celui passé en paramètre
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

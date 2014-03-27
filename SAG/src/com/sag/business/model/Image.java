@@ -7,48 +7,92 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Classe entité correspondant aux Images
+ * @author Benjamin MIRETTI
+ *
+ */
 @Entity
 public class Image implements Serializable{
 
+	/**
+	 * Id pour la sérialisation
+	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Id de l'image
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	/**
+	 * L'URL de l'image
+	 */
 	private String url;
 	
+	/**
+	 * Constructeur vide d'Image
+	 */
 	public Image(){
 		super();
 	}
 
+	/**
+	 * Constructeur d'Image
+	 * @param id L'Id de l'image
+	 * @param url L'URL de l'image
+	 */
 	public Image(int id, String url) {
 		super();
 		this.id = id;
 		this.url = url;
 	}
 
+	/**
+	 * 
+	 * @return L'Id de l'image
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id L'Id à attribuer à l'image
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return L'URL de l'image
+	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * 
+	 * @param url L'URL à attribuer à l'image
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
+	/**
+	 * @return une String décrivant l'objet
+	 */
 	@Override
 	public String toString() {
 		return "Image [id=" + id + ", url=" + url + "]";
 	}
 
+	/**
+	 * @return un int représentant le hashcode de l'objet
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,6 +102,10 @@ public class Image implements Serializable{
 		return result;
 	}
 
+	/**
+	 * @param obj L'objet auquel l'objet courant sera comparé
+	 * @return un booléen définissant si l'objet est égal à celui passé en paramètre
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
