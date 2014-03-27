@@ -106,7 +106,6 @@ public class ControlOffre {
 	}
 	
 	/**
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
 	 * 
@@ -230,7 +229,6 @@ public class ControlOffre {
 	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 * ++++++ Méthode mappé sur /edit_offer et les requêtes GET mettre une offre
 	 * dans dans la formule edition
-	 * 
 	 * @param offre
 	 * @param result
 	 * @return
@@ -238,8 +236,13 @@ public class ControlOffre {
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute("offre") Offre o, Model model) {
 		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
-		Collection<Offre> offers = offerDao.chercherTous();
-		if (offers.contains(o)) {
+		
+		System.out.print(o);
+		if(o==null){
+			return "denied";
+		}
+		
+		{
 			if (o.getEmetteur().equals(userCo)){
 				return "offer_propose";
 			}
@@ -248,10 +251,6 @@ public class ControlOffre {
 			else
 				return "denied";
 		}
-		if (getAuthority().equals("ROLE_ADMIN"))
-			return "new_offer";
-		else
-			return "offer_propose";
 	}
 
 	/**
