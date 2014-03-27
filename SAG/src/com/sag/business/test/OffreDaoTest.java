@@ -80,7 +80,7 @@ public class OffreDaoTest {
 	}
     
 	@Test
-	public void testSauvagarder() {
+	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode testSauvegarder ****");
 		Calendar dateA = Calendar.getInstance();
 		Calendar dateF = Calendar.getInstance();

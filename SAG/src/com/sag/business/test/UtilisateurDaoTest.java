@@ -16,6 +16,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.StatutUtilisateur;
@@ -144,20 +145,10 @@ public class UtilisateurDaoTest {
 	@Test
 	public void testChercherTousIntInt() {
 		System.out.println("**** Test de la méthode chercherTous [a, b] ****");
-		int expected = utilisateurDao.chercherTous().size();
-		Collection<Utilisateur> users = utilisateurDao.chercherTous();
-		Iterator<Utilisateur> it = users.iterator();
+		System.out.println("Nombre de maximum d'utilisateurs à trouver : 2");
 
-		while (it.hasNext()) // tant que j'ai un element non parcouru
-		{
-			System.err.println("------Utilisateur -------");
-			System.err.println(it.next());
-			// mes opérations
-		}
-
-		Collection<Utilisateur> users1 = utilisateurDao.chercherTous(0, 1);
-
-		int actual = utilisateurDao.chercherTous(0, 2).size();
+		int actual = utilisateurDao.chercherTous(1, 2).size();
+		int expected = 2;
 		System.err.println("expected : " + expected);
 		System.err.println("actual : " + actual);
 		assertEquals(expected, actual);

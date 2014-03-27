@@ -69,7 +69,7 @@ public class EntrepriseDaoTest {
 	}
 
 	@Test
-	public void testSauvagarder() {
+	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
 
 		// Test ajout
