@@ -16,24 +16,41 @@ import org.junit.Test;
 import com.sag.business.model.Domaine;
 import com.sag.business.service.DomaineDao;
 
+/**
+ * Classe de test pour DomaineDaoImpl
+ * @author Benjamin MIRETTI
+ */
 public class DomaineDaoTest {
 	
-
+	/**
+	 *Le contexte de l'application 
+	 */
 	private static Context initial;
+	
+	/**
+	 * La Dao des domaines
+	 */
 	private static DomaineDao domaineDao;
+	
+	/**
+	 * Liste des domaines de test
+	 */
 	public static Vector<Domaine> domainesTest;
 	
+	/**
+	 * Méthode Afterclass qui nettoie les données de test inséré dans la base
+	 */
 	@AfterClass
 	public static void clean(){
 		for (Domaine curDom : domainesTest) {
 			domaineDao.supprimer(curDom.getId());
 		}
 	}
+	
     /**
-     * 
+     * Méthode Beforeclass qui récupère la Dao et initialise les données de test
      * @throws NamingException
      */
-
     @BeforeClass
 	public static void init()throws NamingException{
         initial = new InitialContext();
@@ -53,6 +70,9 @@ public class DomaineDaoTest {
 	}
 	
 
+	/**
+	 * Méthode de test pour sauvegarder()
+	 */
 	@Test
 	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode testSauvegarder ****");
@@ -75,6 +95,9 @@ public class DomaineDaoTest {
 		domainesTest.add(modifiedDomaine);
 	}
 	
+	/**
+	 * Méthode de test pour chercherParID()
+	 */
 	@Test
 	public void testChercherParID() {
 		System.out.println("**** Test de la méthode ChercherParID ****");
@@ -88,6 +111,9 @@ public class DomaineDaoTest {
 		assertNull(domaineDao.chercherParID(-99));
 	}
 	
+	/**
+	 * Méthode de test pour chercherParNom()
+	 */
 	@Test
 	public void testChercherParNom(){
 		System.out.println("**** Test de la méthode ChercherParNom ****");
@@ -98,12 +124,18 @@ public class DomaineDaoTest {
 		assertEquals(domaine, fetchedDomaine);
 	}
 
+	/**
+	 * Méthode de test pour chercherParNom() avec valeurs erronées
+	 */
 	@Test
 	public void testChercherParNomFaux(){
 		//Test avec un nom inexistant
 	assertNull(domaineDao.chercherParNom("BlaBla"));
 	}
 	
+	/**
+	 * Méthode de test pour chercherTous()
+	 */
 	@Test
 	public void testChercherTous() {
 		System.out.println("**** Test de la méthode ChercherTous ****");
@@ -112,6 +144,9 @@ public class DomaineDaoTest {
 		assertTrue(fetchedDomains.size() >= domainesTest.size() );
 	}
 
+	/**
+	 * Méthode de test pour chercherParTous(int, int)
+	 */
 	@Test
 	public void testChercherTousIntInt() {
 		System.out.println("**** Test de la méthode ChercherTous avec bornes ****");
@@ -122,6 +157,9 @@ public class DomaineDaoTest {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Méthode de test pour supprimer()
+	 */
 	@Test
 	public void testSupprimer() {
 		System.out.println("**** Test de la méthode Supprimer ****");
@@ -138,6 +176,9 @@ public class DomaineDaoTest {
 		
 	}
 	
+	/**
+	 * Méthode de test pour supprimer() avec valeurs erronées
+	 */
 	@Test
 	public void testSupprimerErreur(){
 		assertFalse(domaineDao.supprimer(-99));
