@@ -24,7 +24,10 @@ import com.sag.business.model.StatutOffre;
 import com.sag.business.model.Type;
 import com.sag.business.service.OffreDao;
 
-@Transactional
+/**
+ * Classe de test pour OffreDaoImpl
+ * @author Benjamin MIRETTI
+ */
 public class OffreDaoTest {
 	
 	/**
