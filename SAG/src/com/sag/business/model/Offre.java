@@ -21,10 +21,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.apache.bval.constraints.NotEmpty;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -621,5 +623,20 @@ public class Offre implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+//	@AssertTrue(message="Dates incorrects")
+//	public boolean checkDate(){
+//		if(dateDebut.before(dateAjout))
+//			return false;
+//		if(dateFin.before(dateDebut))
+//			return false;
+//		return true;
+//	}
+//	
+//	@AssertTrue(message="Nombre de participants incorrects")
+//	public boolean checkNbParticipants(){
+//		if(participantsMax<participantsMin)
+//			return false;
+//		return true;
+//	}
 }

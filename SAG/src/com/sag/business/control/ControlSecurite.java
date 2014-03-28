@@ -17,6 +17,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -119,6 +120,7 @@ public class ControlSecurite {
 	 */
 	@RequestMapping(value = "/logoutconfirm", method = RequestMethod.GET)
 	public String logout(Model model) {
+		SecurityContextHolder.getContext().setAuthentication(null);
 		return "logout_confirm";
 	}
 

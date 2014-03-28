@@ -78,7 +78,7 @@
 										<div class="row">
 											<div class="large-4 columns">
 												<label>Date de naissance <form:input
-														path="dateNaiss" placeholder="Date de naissance" /> <form:errors
+														path="dateNaiss" placeholder="Date de naissance" type="date" /> <form:errors
 														path="dateNaiss" cssClass="error" />
 												</label>
 											</div>
