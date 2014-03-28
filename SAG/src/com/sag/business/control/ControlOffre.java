@@ -69,12 +69,11 @@ public class ControlOffre {
 
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
-		if(p != null)
-		{
-			if(getAuthority().equals("ROLE_ENTR"))
+		if (p != null) {
+			if (getAuthority().equals("ROLE_ENTR"))
 				return entrepriseDao.chercherParEmail(p.getName());
 			Etudiant e = etudiantDao.chercherParEnt(p.getName());
-			System.out.println("userco = " +e );
+			System.out.println("userco = " + e);
 			return e;
 		}
 		return null;
@@ -93,19 +92,26 @@ public class ControlOffre {
 	 * @return L'objet offre récupéré
 	 */
 	@ModelAttribute("offre")
-	public Offre newOffre(@RequestParam(value = "id", required = false) Integer idOffre, Model model) {
+	public Offre newOffre(
+			@RequestParam(value = "id", required = false) Integer idOffre,
+			Model model) {
+		Offre o = null;
 		if (idOffre != null) {
 			logger.info("offre trouvé" + idOffre);
-			return offerDao.chercherParID(idOffre);
+			o = offerDao.chercherParID(idOffre);
 		}
-		Offre o = new Offre();
-		o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
-		o.setEmetteur((Utilisateur) model.asMap().get("user_co"));
-		logger.info("----------------- new offer  = " + o);
+		else
+			o = new Offre();
+		if(o != null){
+			o.setDateAjout(new Date(Calendar.getInstance().getTimeInMillis()));
+			o.setEmetteur((Utilisateur) model.asMap().get("user_co"));
+			logger.info("----------------- new offer  = " + o);
+		}
 		return o;
 	}
-	
+
 	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
 	 * 
@@ -125,7 +131,7 @@ public class ControlOffre {
 		System.out.println("test -------------------------------------------");
 		Collection<Offre> offersmatch = offerDao.chercherParMotCle(keyword);
 		for (Offre offre : offersmatch) {
-			if(offre.getStatut()!=StatutOffre.ACTIVE)
+			if (offre.getStatut() != StatutOffre.ACTIVE)
 				offersmatch.remove(offre);
 		}
 		model.addAttribute("offers", offersmatch);
@@ -223,12 +229,11 @@ public class ControlOffre {
 		return "list_propose";
 	}
 
-
-
 	/**
 	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 * ++++++ Méthode mappé sur /edit_offer et les requêtes GET mettre une offre
 	 * dans dans la formule edition
+	 * 
 	 * @param offre
 	 * @param result
 	 * @return
@@ -236,21 +241,18 @@ public class ControlOffre {
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute("offre") Offre o, Model model) {
 		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
-		
-		System.out.print(o);
 		if(o==null){
-			return "denied";
+			return "404";
 		}
 		
-		{
-			if (o.getEmetteur().equals(userCo)){
-				return "offer_propose";
-			}
-			else if(getAuthority().equals("ROLE_ADMIN"))
-				return "new_offer";
-			else
-				return "denied";
-		}
+		if (getAuthority().equals("ROLE_ADMIN"))
+			return "new_offer";
+		else if (o.getEmetteur().equals(userCo)) {
+			return "offer_propose";
+		} 
+		else
+			return "denied";
+
 	}
 
 	/**
@@ -295,12 +297,12 @@ public class ControlOffre {
 	@RequestMapping(value = "/disable_offer", method = RequestMethod.GET)
 	public String desactiverOffre(
 			@RequestParam(value = "id", required = true) int idOffre) {
-		if (!getAuthority().equals("ROLE_ADMIN")) {
+		if (getAuthority().equals("ROLE_ADMIN")) {
 			return "redirect:home";
 		}
 
 		Offre offre = offerDao.chercherParID(idOffre);
-		offre.setStatut(StatutOffre.ENVOYEE);
+		offre.setStatut(StatutOffre.TERMINEE);
 		offerDao.sauvegarder(offre);
 		logger.info("offer désactivé" + offre);
 		return "redirect:admin";
@@ -655,7 +657,7 @@ public class ControlOffre {
 						super.setValue(listDom);
 					}
 				});
-		
+
 		b.registerCustomEditor(Collection.class, "images",
 				new PropertyEditorSupport() {
 					@Override
@@ -664,7 +666,7 @@ public class ControlOffre {
 						List<String> listUrlImg = Arrays.asList(text.split(","));
 						Collection<Image> listImg = new Vector<Image>();
 						for (String curUrl : listUrlImg) {
-							Image nimg = new Image(0,curUrl);
+							Image nimg = new Image(0, curUrl);
 							listImg.add(nimg);
 						}
 						super.setValue(listImg);
