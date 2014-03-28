@@ -25,25 +25,45 @@ import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
 /**
- * 
- * @author Joël Karcher
- *
+ * Classe du contrôleur des domaines
+ * @author Joël KARCHER
+ * @author Banjamin MIRETTI
  */
 @Controller()
 @RequestMapping("/")
 public class ControlDomain {
-
+	
+	/**
+	* Dao des domaines
+	*/
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
+	/**
+	 * Dao des utilisateurs
+	 */
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	/**
+	 * Dao des étudiants
+	 */
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
+	/**
+	 * Dao des entreprises
+	 */
 	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao companyDao;
 
+	/**
+	 * Objet chargé des logs 
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
-	
+
+	/**
+	 * méthode générant un attribut du modèle représentant l'utilisateur authentifié
+	 * @param p utilisateur spring authentifié
+	 * @return l'objet Utilisateur correspondant à l'utilisateur authentifié
+	 */
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
 		if(getAuthority().equals("ROLE_ENTR"))
@@ -51,6 +71,10 @@ public class ControlDomain {
 		return etuDao.chercherParEnt(p.getName());
 	}
 	
+	/**
+	 * méthode générant un attribut du modèle représentant la liste des domaines
+	 * @return La liste de tous les domaines
+	 */
 	@ModelAttribute("domains")
 	Collection<Domaine> domaines(){
 		return domDao.chercherTous();
@@ -60,8 +84,7 @@ public class ControlDomain {
 	 * Créer un domaine, à partir de la base de données si l'argument existe,
 	 * ou ex-nihilo sinon
 	 * 
-	 * @param id
-	 *            L'indentifiant du domaine
+	 * @param id L'indentifiant du domaine
 	 * @return Le domaine récupéré depuis la base de données
 	 */
 	@ModelAttribute
@@ -81,10 +104,8 @@ public class ControlDomain {
 	/**
 	 * Méthode mappé sur /edit_domain et les requêtes GET Modifie ou crée un domaine
 	 * 
-	 * @param d
-	 *            Le domaine recupéré
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param d Le domaine recupéré
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, new_domain, ou redirection vers la
 	 *          page admin si domaine null
 	 */
@@ -101,8 +122,7 @@ public class ControlDomain {
 	/**
 	 * Méthode mappé sur /edit_domain et les requêtes POST Modifie ou crée un domaine
 	 * 
-	 * @param d
-	 *            Le domaine recupéré
+	 * @param d Le domaine recupéré
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_domain", method = RequestMethod.POST)
@@ -127,8 +147,7 @@ public class ControlDomain {
 	/**
 	 * Méthode mappé sur /delete_domain et les requêtes GET Supprime un domaine
 	 * 
-	 * @param domaineNumber
-	 *            L'identifiant du domaine à supprimer
+	 * @param domaineNumber L'identifiant du domaine à supprimer
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/delete_domain", method = RequestMethod.GET)
