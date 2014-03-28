@@ -29,22 +29,50 @@ import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.OffreDao;
 import com.sag.business.service.UtilisateurDao;
 
+/**
+ * Classe du contrôleur d'administration'
+ * @author Joël KARCHER
+ * @author Benjamin MIRETTI
+ */
 @Controller()
 @RequestMapping("/")
 public class ControlAdmin {
+	/**
+	 * Dao des domaines
+	 */
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
+	/**
+	 * Dao des utilisateurs
+	 */
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	/**
+	 * Dao des entreprises
+	 */
 	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao companyDao;
+	/**
+	 * Dao des étudiants
+	 */
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
+	/**
+	 * Dao des offres
+	 */
 	@EJB(mappedName = "java:global/SAG/offreDao!com.sag.business.service.OffreDao")
 	OffreDao offerDao;
 	
+	/**
+	 * Objet chargé des logs 
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 	
+	/**
+	 * méthode générant un attribut du modèle représentant l'utilisateur authentifié
+	 * @param p utilisateur spring authentifié
+	 * @return l'objet Utilisateur correspondant à l'utilisateur authentifié
+	 */
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
 		if(getAuthority().equals("ROLE_ENTR"))
@@ -52,6 +80,10 @@ public class ControlAdmin {
 		return etuDao.chercherParEnt(p.getName());
 	}
 	
+	/**
+	 * méthode générant un attribut du modèle représentant la liste des domaines
+	 * @return La liste de tous les domaines
+	 */
 	@ModelAttribute("domains")
 	Collection<Domaine> domaines(){
 		return domDao.chercherTous();
