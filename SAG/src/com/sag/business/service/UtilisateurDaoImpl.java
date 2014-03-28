@@ -17,9 +17,10 @@ import com.sag.business.model.StatutUtilisateur;
 import com.sag.business.model.Utilisateur;
 
 /**
- * @version 1
- * @author Benjamin MIRETTI
- * 
+ * Implémentation de UtilisateurDao
+ * @author NGUYEN Tuan
+ * @author MIRETTI Benjamin
+ *
  */
 @Remote(value = UtilisateurDao.class)
 @Stateless(name = "utilisateurDao", description = "Dao pour utilisateur")

@@ -3,28 +3,23 @@ package com.sag.business.service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Vector;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remote;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.sag.business.model.Image;
 import com.sag.business.model.Offre;
 
 /**
- * classe implémentation de OfferDao
- * 
- * @version 1
- * @author NGUYENtuan
+ * Implémentation de OffreDao
+ * @author NGUYEN Tuan
  * @author MIRETTI Benjamin
+ *
  */
-
 @Remote(value = OffreDao.class)
 @Stateless(name = "offreDao", description = "Dao pour offre")
 @Startup

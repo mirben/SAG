@@ -16,11 +16,11 @@ import com.sag.business.model.Role;
 import com.sag.business.model.StatutUtilisateur;
 
 /**
- * @version 1
- * @author NGUYEN tuan
- * @author MIRETTI Benjamin Interface d'objet d'accès aux données Etudiant.
+ * Implémentation de EtudiantDao
+ * @author NGUYEN Tuan
+ * @author MIRETTI Benjamin
+ *
  */
-
 @Remote(value = EtudiantDao.class)
 @Stateless(name = "etudiantDao", description = "Dao pour étudiant")
 @Startup

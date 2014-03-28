@@ -15,7 +15,7 @@ import com.sag.business.model.Entreprise;
 import com.sag.business.model.Role;
 
 /**
- * @version1
+ * Implémentation de EntrepriseDao
  * @author NGUYEN Tuan
  * @author MIRETTI Benjamin
  *

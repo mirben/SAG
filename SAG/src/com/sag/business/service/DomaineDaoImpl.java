@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 
 import com.sag.business.model.Domaine;
 /**
- * @version1
+ * Implémentation de Domaine Dao
  * @author NGUYEN Tuan
  * @author MIRETTI Benjamin
  *
