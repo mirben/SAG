@@ -13,8 +13,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
-import javassist.expr.Instanceof;
-
 import javax.ejb.EJB;
 import javax.validation.Valid;
 
@@ -33,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sag.business.model.Domaine;
 import com.sag.business.model.Entreprise;
-
 import com.sag.business.model.Etudiant;
 import com.sag.business.model.Image;
 import com.sag.business.model.Offre;
@@ -321,24 +318,24 @@ public class ControlOffre {
 
 		System.out.println("Je suis dans Join");
 		Offre offre = offerDao.chercherParID(idOffre);
+		if(offre == null)
+			return "404";
 		if (offre.getParticipants().contains(userCo)) {
-			// model.addAttribute("message", "Vous avez déjà participé.");
-			String link = "detail_offer?id=" + offre.getId();
-			return "redirect:" + link;
+			String link = "redirect:detail_offer?id=" + offre.getId();
+			return  link;
 
 		}
 
 		if ((userCo instanceof Etudiant)
-				&& (offre.getParticipants().size() < offre.getParticipantsMax())) {
+				&& (offre.getParticipants().size() < offre.getParticipantsMax())
+				&& offre.getStatut() == StatutOffre.ACTIVE) {
 			offre.getParticipants().add((Etudiant) userCo);
 			offerDao.sauvegarder(offre);
-			model.addAttribute("message", "Votre paricipation est sauvée.");
-
 		}
 
-		String link = "detail_offer?id=" + offre.getId();
+		String link = "redirect:detail_offer?id=" + offre.getId();
 
-		return "redirect:" + link;
+		return link;
 	}
 
 	@RequestMapping(value = "/giveup_offer", method = RequestMethod.GET)
@@ -347,7 +344,6 @@ public class ControlOffre {
 			@RequestParam(value = "ido", required = true) int idOffre,
 			Model model) {
 
-		System.out.println("Je suis dans Join");
 		Offre offre = offerDao.chercherParID(idOffre);
 
 		if ((userCo instanceof Etudiant)
@@ -372,12 +368,24 @@ public class ControlOffre {
 	 */
 
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
-	public String supprimerOffre(
-			@RequestParam(value = "id", required = true) int idOffre) {
-
-		offerDao.supprimer(idOffre);
-		logger.info("offer supprimé" + idOffre);
-		return "redirect:admin";
+	public String supprimerOffre(@RequestParam(value = "id", required = true) int idOffre, Model model) {
+		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
+		
+		Offre o = offerDao.chercherParID(idOffre);
+		if(o == null)
+			return "404";
+		if(getAuthority().equals("ROLE_ADMIN") || (o.getEmetteur().equals(userCo) && (o.getStatut() != StatutOffre.ACTIVE) && (o.getStatut() != StatutOffre.TERMINEE))){
+			if(!offerDao.supprimer(idOffre)){
+				model.addAttribute("erreur", "Impossible de supprimer l'offre");
+				return "home";
+			}
+			logger.info("offre supprimée" + idOffre);
+			if(getAuthority().equals("ROLE_ADMIN"))
+				return "redirect:admin";
+			return "redirect:offer_proposed";
+		}
+		else
+			return "denied";
 	}
 
 	/**
@@ -387,19 +395,24 @@ public class ControlOffre {
 	 * @return
 	 */
 	@RequestMapping(value = "/detail_offer", method = RequestMethod.GET)
-	public String detailOffre(
-			@RequestParam(value = "id", required = true) int idOffre,
-			Model model) {
+	public String detailOffre(@RequestParam(value = "id", required = true) int idOffre,
+								Model model) {
+		Utilisateur userCo = (Utilisateur) model.asMap().get("user_co");
 		Offre offre = offerDao.chercherParID(idOffre);
 		model.addAttribute("offer", offre);
-		if (offre.getParticipants().contains(
-				(Etudiant) model.asMap().get("user_co")))
-			model.addAttribute("participe", true);
-		else
-			model.addAttribute("participe", false);
-		logger.info("offer détail" + offre);
-
-		return "detail_offre";
+		if(offre == null)
+			return "404";
+		if(getAuthority().equals("ROLE_ADMIN") || offre.getEmetteur().equals(userCo) || (offre.getStatut() == StatutOffre.ACTIVE) || (offre.getStatut() == StatutOffre.TERMINEE)){
+			if (offre.getParticipants().contains(
+					(Etudiant) userCo))
+				model.addAttribute("participe", true);
+			else
+				model.addAttribute("participe", false);
+			
+			logger.info("offer détail" + offre);
+			return "detail_offre";
+		}
+		return "denied";	
 	}
 
 	/**

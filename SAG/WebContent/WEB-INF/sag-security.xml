@@ -16,8 +16,15 @@
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/edit_user**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/edit_company**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/delete_user" access="hasRole('ROLE_ADMIN')"/>
-		<intercept-url pattern="/delete_company" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/edit_domain**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/delete_user**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/delete_company**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/delete_domain**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/valid_offer**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/delete_offer**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+		<intercept-url pattern="/disable_offer**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/join_offer**" access="!hasRole('ROLE_ENTR')"/>
+		<intercept-url pattern="/giveup_offer**" access="!hasRole('ROLE_ENTR')"/>
 		<intercept-url pattern="/**company**" access="hasAnyRole('ROLE_ENTR','ROLE_ADMIN')" />
 		<intercept-url pattern="/**user**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
