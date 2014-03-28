@@ -43,27 +43,52 @@ import com.sag.business.service.OffreDao;
 import com.sag.business.service.UtilisateurDao;
 
 /**
- * 
+ * Classe du contrôleur des offres
  * @author Joël Karcher
+ * @author Tuan NGUYEN
+ * @author Benjamin MIRETTI
  * 
  */
 @Controller()
 @RequestMapping("/")
 public class ControlOffre {
 
+	/**
+	 * Dao des offres
+	 */
 	@EJB(mappedName = "java:global/SAG/offreDao!com.sag.business.service.OffreDao")
 	OffreDao offerDao;
+	/**
+	 * Dao des domaines
+	 */
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
+	/**
+	 * Dao des utilisateurs
+	 */
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	/**
+	 * Dao des étudiants
+	 */
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etudiantDao;
+	/**
+	 * Dao des entreprises
+	 */
 	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao entrepriseDao;
-
+	
+	/**
+	 * Objet chargé des logs 
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * méthode générant un attribut du modèle représentant l'utilisateur authentifié
+	 * @param p utilisateur spring authentifié
+	 * @return l'objet Utilisateur correspondant à l'utilisateur authentifié
+	 */
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
 		if (p != null) {
@@ -76,16 +101,19 @@ public class ControlOffre {
 		return null;
 	}
 
+	/**
+	 * méthode générant un attribut du modèle représentant la liste des domaines
+	 * @return La liste de tous les domaines
+	 */
 	@ModelAttribute("domains")
 	Collection<Domaine> domaines() {
 		return domDao.chercherTous();
 	}
 
 	/**
-	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * Méthode créer une nouvelle offre, ou récupérer une offre existante
+	 * Méthode qui crée une nouvelle offre, ou récupère une offre existante en modèle attribut
 	 * 
-	 * @param idOffre
+	 * @param idOffre L'id de l'offre à récupérer
 	 * @return L'objet offre récupéré
 	 */
 	@ModelAttribute("offre")
@@ -108,14 +136,11 @@ public class ControlOffre {
 	}
 
 	/**
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * Méthode mappé sur /search_offers et les requêtes GET Recherche les offres
+	 * Méthode mappée sur /search_offers et les requêtes GET Recherche les offres
 	 * correspondantes au mot clé
 	 * 
-	 * @param keyword
-	 *            Le mot clé à rechercher
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param keyword Le mot clé à rechercher
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, list
 	 */
 	@RequestMapping(value = "/search_offers", method = RequestMethod.GET)
@@ -137,11 +162,9 @@ public class ControlOffre {
 	}
 
 	/**
-	 * -------------------------à modifier--------------------------- Méthode
-	 * mappé sur /list_offer et les requêtes GET Recherche les offres
+	 * Méthode mappée sur /list_offer et les requêtes GET Recherche les offres
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, list
 	 */
 	@RequestMapping(value = "/list_offer", method = RequestMethod.GET)
@@ -166,14 +189,12 @@ public class ControlOffre {
 	}
 
 	/**
-	 * ------------------------------------------------------------------------
-	 * --- Méthode mappé sur /domain_list et les requêtes GET Recherche les
+
+	 * Méthode mappé sur /domain_list et les requêtes GET Recherche les
 	 * offres du domaine
 	 * 
-	 * @param domaine
-	 *            L'identifiant du domaine des offres retournées
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param domaine L'identifiant du domaine des offres retournées
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, domain_list
 	 */
 	@RequestMapping(value = "/domain_list", method = RequestMethod.GET)
@@ -199,8 +220,7 @@ public class ControlOffre {
 	 * Méthode mappé sur /offer_propose et les requêtes GET Recherche les
 	 * offres proposées par l'utilisateur connecté
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, list_propose
 	 */
 	@RequestMapping(value = "/offer_proposed", method = RequestMethod.GET)
@@ -226,13 +246,12 @@ public class ControlOffre {
 	}
 
 	/**
-	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	 * ++++++ Méthode mappé sur /edit_offer et les requêtes GET mettre une offre
+	 * Méthode mappé sur /edit_offer et les requêtes GET mettre une offre
 	 * dans dans la formule edition
 	 * 
-	 * @param offre
-	 * @param result
-	 * @return
+	 * @param offre L'offre à éditer
+	 * @param model Le modèle Spring
+	 * @return Les vues correspondant à l'édition d'offre
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.GET)
 	public String editOffre(@ModelAttribute("offre") Offre o, Model model) {
@@ -255,11 +274,10 @@ public class ControlOffre {
 	 * Méthode mappé sur /edit_offer et les requêtes POST Sauvegarder une offre
 	 * en brouillon
 	 * 
-	 * @param offre
+	 * @param offre L'offre à éditer
 	 * @param result
-	 * @param model
-	 *            L'objet Model de spring
-	 * @return
+	 * @param model L'objet Model de spring
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/edit_offer", method = RequestMethod.POST)
 	public String editOffre(@ModelAttribute @Valid Offre offre,
@@ -286,9 +304,9 @@ public class ControlOffre {
 
 	/**
 	 * Méthode mappé sur /disable_offer et les requêtes GET désactivé une offre
-	 * 
-	 * @param idOffre
-	 * @return
+	 *
+	 * @param idOffre L'id de l'offre à désactiver
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/disable_offer", method = RequestMethod.GET)
 	public String desactiverOffre(
@@ -305,11 +323,12 @@ public class ControlOffre {
 	}
 
 	/**
-	 * 
-	 * @param idOffre
-	 * @return
+	 * Méthode mappée sur /join_offer en GET pour participer à une offre
+	 * @param userCo l'utilisateur authentifié'
+	 * @param idOffre l'id de l'offre à rejoindre
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
-
 	@RequestMapping(value = "/join_offer", method = RequestMethod.GET)
 	public String joingner_offer(@ModelAttribute("user_co") Utilisateur userCo,
 			@RequestParam(value = "ido", required = true) int idOffre,
@@ -337,6 +356,13 @@ public class ControlOffre {
 		return link;
 	}
 
+	/**
+	 * Méthode mappée sur /giveup_offer en GET pour se dégager d'une offre
+	 * @param userCo l'utilisateur authentifié'
+	 * @param ido l'id de l'offre à abandonner
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
+	 */
 	@RequestMapping(value = "/giveup_offer", method = RequestMethod.GET)
 	public String unparticipe_offer(
 			@ModelAttribute("user_co") Utilisateur userCo,
@@ -362,8 +388,9 @@ public class ControlOffre {
 	/**
 	 * Méthode mappé sur /delete_offer et les requêtes GET supprimer une offre
 	 * 
-	 * @param idOffre
-	 * @return
+	 * @param id l'id de l'offre à supprimer
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
 
 	@RequestMapping(value = "/delete_offer", method = RequestMethod.GET)
@@ -390,8 +417,9 @@ public class ControlOffre {
 	/**
 	 * Méthode mappé sur /détail_offer et les requêtes GET supprimer une offre
 	 * 
-	 * @param idOffre
-	 * @return
+	 * @param idOffre L'offre pour laquelle afficher les détails'
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/detail_offer", method = RequestMethod.GET)
 	public String detailOffre(@RequestParam(value = "id", required = true) int idOffre,
@@ -418,9 +446,9 @@ public class ControlOffre {
 	 * Méthode mappé sur /valid_offer et les requêtes GET valider une offre
 	 * 
 	 * 
-	 * @param idOffre
-	 * @param model
-	 * @return
+	 * @param idOffre l'offre à valider
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/valid_offer", method = RequestMethod.GET)
 	public String validOffre(
@@ -450,13 +478,12 @@ public class ControlOffre {
 	 * * Méthode mappé sur /propose_offre et les requêtes GET
 	 * 
 	 * 
-	 * @param o
-	 * @param model
-	 * @return
+	 * @param o L'offre à ajouter'
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.GET)
 	public String proposeOffre(@ModelAttribute Offre o, Model model) {
-		System.out.println("Je suis dans la GET");
 		Entreprise entreprise = entrepriseDao
 				.chercherParEmail(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
@@ -474,10 +501,10 @@ public class ControlOffre {
 	 * offre envoé
 	 * 
 	 * 
-	 * @param offre
-	 * @param model
+	 * @param offre L'offre à ajouter
+	 * @param model le modèle Spring mvc
 	 * @param result
-	 * @return
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST)
 	public String proposeOffre(@ModelAttribute @Valid Offre offre,
@@ -525,9 +552,10 @@ public class ControlOffre {
 	 * Méthode mappé sur /save_offer et les requêtes POST Sauvagarder une offre
 	 * en brouillon
 	 * 
-	 * @param offre
-	 * @param result
-	 * @return
+	 * @param offre L'offre à enregistrer
+	 * @param result 
+	 * @param model le modèle Spring mvc
+	 * @return redirection vers un autre mapping
 	 */
 	@RequestMapping(value = "/propose_offre", method = RequestMethod.POST, params = "enregistre")
 	public String sauvegardeOffre(@ModelAttribute @Valid Offre offre,
@@ -563,6 +591,9 @@ public class ControlOffre {
 		return "offer_propose";
 	}
 
+	/**
+	 * Classe anonyme récupérant les objets complexes du formulaire
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder b) {
 		b.registerCustomEditor(java.sql.Date.class, "dateDebut",
