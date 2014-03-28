@@ -24,14 +24,32 @@ import com.sag.business.model.Utilisateur;
 import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
+/**
+ * Classe de test pour UtilisateurDaoImpl
+ * @author Benjamin MIRETTI
+ */
 public class UtilisateurDaoTest {
 
+	/**
+	 *Le contexte de l'application 
+	 */
 	private static Context initial;
+	
+	/**
+	 * La Dao des utilisateurs
+	 */
 	private static UtilisateurDao utilisateurDao;
+	
+	/**
+	 * Liste des utilisateurs de test
+	 */
 	private static Vector<Utilisateur> utilisateursTest;
 
 	Utilisateur utilisateur = new Utilisateur();
 
+	/**
+	 * Méthode Afterclass qui nettoie les données de test inséré dans la base
+	 */
 	@AfterClass
 	public static void clean() {
 		for (Utilisateur curEtd : utilisateursTest) {
@@ -40,6 +58,10 @@ public class UtilisateurDaoTest {
 		DomaineDaoTest.clean();
 	}
 
+    	/**
+	 * Méthode Beforeclass qui récupère la Dao et initialise les données de test
+	 * @throws NamingException
+	 */
 	@BeforeClass
 	public static void init() throws NamingException {
 		initial = new InitialContext();
@@ -63,6 +85,9 @@ public class UtilisateurDaoTest {
 
 	}
 
+	/**
+	 * Méthode de test pour sauvegarder()
+	 */
 	@Test
 	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
@@ -84,6 +109,9 @@ public class UtilisateurDaoTest {
 
 	}
 
+	/**
+	 * Méthode de test pour chercherParID()
+	 */
 	@Test
 	public void testChercherParID() {
 		System.out.println("**** Test de la méthode chercherParID ****");
@@ -98,6 +126,9 @@ public class UtilisateurDaoTest {
 
 	}
 
+	/**
+	 * Méthode de test pour chercherParEmail()
+	 */
 	@Test
 	public void testChercherParEmail() {
 		System.out.println("**** Test de la méthode chercherParEmail ****");
@@ -116,6 +147,9 @@ public class UtilisateurDaoTest {
 		assertNull(utilisateurDao.chercherParEmail("nop@nop.com"));
 	}
 
+	/**
+	 * Méthode de test pour chercherParStatut()
+	 */
 	@Test
 	public void testChercherParStatut() {
 		System.out
@@ -126,6 +160,9 @@ public class UtilisateurDaoTest {
 		assertTrue(experted.contains(utilisateursTest.firstElement()));
 	}
 
+	/**
+	 * Méthode de test pour chercherTous()
+	 */
 	@Test
 	public void testChercherTous() {
 		
@@ -142,6 +179,9 @@ public class UtilisateurDaoTest {
 
 	}
 
+	/**
+	 * Méthode de test pour chercherTous(int, int)
+	 */
 	@Test
 	public void testChercherTousIntInt() {
 		System.out.println("**** Test de la méthode chercherTous [a, b] ****");
@@ -154,6 +194,9 @@ public class UtilisateurDaoTest {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Méthode de test pour supprimer()
+	 */
 	@Test
 	public void testSupprimer() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
@@ -175,6 +218,9 @@ public class UtilisateurDaoTest {
 		assertFalse(utilisateurDao.supprimer(0));
 	}
 
+	/**
+	 * Méthode de test pour chercherRoleParID()
+	 */
 	@Test
 	public void testChercherRoleParID() {
 		System.out.println("**** Test de la méthode ChercherRoleParID  ****");
