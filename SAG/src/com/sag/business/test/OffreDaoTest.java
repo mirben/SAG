@@ -26,10 +26,25 @@ import com.sag.business.service.OffreDao;
 
 @Transactional
 public class OffreDaoTest {
+	
+	/**
+	 *Le contexte de l'application 
+	 */
 	private static Context initial;
+	
+	/**
+	 * La Dao des offres
+	 */
 	private static OffreDao offreDao;
+	
+	/**
+	 * Liste des offres de test
+	 */
 	private static Vector<Offre> offresTest;
 	
+	/**
+	 * Méthode Afterclass qui nettoie les données de test inséré dans la base
+	 */
 	@AfterClass
 	public static void clean(){
 		for (Offre curOffre : offresTest) {
@@ -39,11 +54,11 @@ public class OffreDaoTest {
 		EntrepriseDaoTest.clean();
 		DomaineDaoTest.clean();
 	}
+	
     /**
-     * 
+     * Méthode Beforeclass qui récupère la Dao et initialise les données de test
      * @throws NamingException
      */
-
     @BeforeClass
 	public static void init() throws NamingException{
         initial = new InitialContext();
@@ -79,6 +94,9 @@ public class OffreDaoTest {
 		offresTest.add(offreDao.sauvegarder(testOffre2));
 	}
     
+	/**
+	 * Méthode de test pour sauvegarder()
+	 */
 	@Test
 	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode testSauvegarder ****");
@@ -109,6 +127,9 @@ public class OffreDaoTest {
 		offresTest.add(modifiedOffre);
 	}
 	
+	/**
+	 * Méthode de test pour chercherParID()
+	 */
 	@Test
 	public void testChercherParID() {
 		System.out.println("**** Test de la méthode ChercherParID ****");
@@ -122,6 +143,9 @@ public class OffreDaoTest {
 		assertNull(offreDao.chercherParID(-99));
 	}
 
+	/**
+	 * Méthode de test pour chercherTous()
+	 */
 	@Test
 	public void testChercherTous() {
 		System.out.println("**** Test de la méthode ChercherTous ****");
@@ -130,6 +154,9 @@ public class OffreDaoTest {
 		assertTrue(fetchedOffers.size() >= offresTest.size() );
 	}
 
+	/**
+	 * Méthode de test pour chercherTous(int, int)
+	 */
 	@Test
 	public void testChercherTousIntInt() {
 		System.out.println("**** Test de la méthode ChercherTous avec bornes ****");
@@ -140,6 +167,9 @@ public class OffreDaoTest {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Méthode de test pour chercherParMotCle()
+	 */
 	@Test
 	public void testChercherParMotCle(){
 		System.out.println("**** Test de la méthode ChercherParMotCle ****");
@@ -149,12 +179,18 @@ public class OffreDaoTest {
 		assertTrue(fetchedOffers.size() >= 2 );
 	}
 	
+	/**
+	 * Méthode de test pour chercherParMotCle() avec valeurs erronées
+	 */
 	@Test
 	public void testChercherParMotCleFaux(){
 		//Test avec un nom inexistant
 	assertEquals(0,offreDao.chercherParMotCle("BlaBla").size());
 	}
 
+	/**
+	 * Méthode de test pour supprimer() 
+	 */
 	@Test
 	public void testSupprimer() {
 		System.out.println("**** Test de la méthode Supprimer ****");
@@ -170,7 +206,10 @@ public class OffreDaoTest {
 		assertEquals(expected, fetchedOffers.size());
 		
 	}
-	
+
+	/**
+	 * Méthode de test pour supprimer() avec valeurs erronées
+	 */	
 	@Test
 	public void testSupprimerErreur(){
 		assertFalse(offreDao.supprimer(-99));
