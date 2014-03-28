@@ -39,25 +39,46 @@ import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
 /**
- * 
- * @author Joël Karcher
+ * Classe du contrôleur des utilisateurs
+ * @author Joël KARCHER
+ * @author Benjamin MIRETTI
  * 
  */
 @Controller()
 @RequestMapping("/")
 public class ControlUtilisateur {
 
+	/**
+	 * Dao des étudiants
+	 */
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
+	/**
+	 * Dao des entreprises
+	 */
 	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao entDao;
+	/**
+	 * Dao des utilisateurs
+	 */
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	/**
+	 * Dao des domaines
+	 */
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
-
+	
+	/**
+	 * Objet chargé des logs 
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * méthode générant un attribut du modèle représentant l'utilisateur authentifié
+	 * @param p utilisateur spring authentifié
+	 * @return l'objet Utilisateur correspondant à l'utilisateur authentifié
+	 */
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
 		if(getAuthority().equals("ROLE_ENTR"))
@@ -65,6 +86,10 @@ public class ControlUtilisateur {
 		return etuDao.chercherParEnt(p.getName());
 	}
 
+	/**
+	 * méthode générant un attribut du modèle représentant la liste des domaines
+	 * @return La liste de tous les domaines
+	 */
 	@ModelAttribute("domains")
 	Collection<Domaine> domaines() {
 		return domDao.chercherTous();
@@ -74,8 +99,7 @@ public class ControlUtilisateur {
 	 * Créer une entreprise, à partir de la base de données si l'argument
 	 * existe, ou ex-nihilo sinon
 	 * 
-	 * @param id
-	 *            L'indentifiant de l'entreprise
+	 * @param id L'indentifiant de l'entreprise
 	 * @return L'entreprise récupérée depuis la base de données
 	 */
 	@ModelAttribute
@@ -97,8 +121,7 @@ public class ControlUtilisateur {
 	 * Créer un etudiant, à partir de la base de données si l'argument existe,
 	 * ou ex-nihilo sinon
 	 * 
-	 * @param id
-	 *            L'indentifiant de l'etudiant
+	 * @param id L'indentifiant de l'etudiant
 	 * @return L'etudiant récupéré depuis la base de données
 	 */
 	@ModelAttribute
@@ -119,8 +142,7 @@ public class ControlUtilisateur {
 	/**
 	 * Méthode mappé sur /delete_user et les requêtes GET Supprime un etudiant
 	 * 
-	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à supprimer
+	 * @param studentNumber L'identifiant de l'etudiant à supprimer
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/delete_user", method = RequestMethod.GET)
@@ -137,8 +159,7 @@ public class ControlUtilisateur {
 	/**
 	 * Méthode mappé sur /disable_user et les requêtes GET Désactive un etudiant
 	 * 
-	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à désactiver.
+	 * @param studentNumber L'identifiant de l'etudiant à désactiver.
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/disable_user", method = RequestMethod.GET)
@@ -158,8 +179,7 @@ public class ControlUtilisateur {
 	/**
 	 * Méthode mappé sur /enable_user et les requêtes GET Active un etudiant
 	 * 
-	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à activer.
+	 * @param studentNumber L'identifiant de l'etudiant à activer.
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/enable_user", method = RequestMethod.GET)
@@ -180,8 +200,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /switch_role_user et les requêtes GET change le rôle
 	 * d'un etudiant
 	 * 
-	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à modifier.
+	 * @param studentNumber L'identifiant de l'etudiant à modifier.
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/switch_role_user", method = RequestMethod.GET)
@@ -216,10 +235,8 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /detail_user et les requêtes GET affiche les détails
 	 * d'un etudiant
 	 * 
-	 * @param studentNumber
-	 *            L'identifiant de l'etudiant à afficher.
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param studentNumber L'identifiant de l'etudiant à afficher.
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.GET)
@@ -244,8 +261,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /detail_user et les requêtes POST Modifie ou crée un
 	 * etudiant
 	 * 
-	 * @param ent
-	 *            L'etudiant recupérée
+	 * @param ent L'etudiant recupérée
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_user", method = RequestMethod.POST)
@@ -271,10 +287,8 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /edit_user et les requêtes GET Modifie ou crée un
 	 * etudiant
 	 * 
-	 * @param e
-	 *            L'etudiant recupéré
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param e L'etudiant recupéré
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, new_user, ou redirection vers la
 	 *         page admin si etudiant null
 	 */
@@ -297,8 +311,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /edit_user et les requêtes POST Modifie ou crée un
 	 * etudiant
 	 * 
-	 * @param etu
-	 *            L'etudiant recupéré
+	 * @param etu L'etudiant recupéré
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_user", method = RequestMethod.POST)
@@ -324,8 +337,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /delete_company et les requêtes GET Supprime une
 	 * entreprise
 	 * 
-	 * @param companyNumber
-	 *            L'identifiant de l'entreprise à supprimer
+	 * @param companyNumber L'identifiant de l'entreprise à supprimer
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/delete_company", method = RequestMethod.GET)
@@ -343,8 +355,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /disable_company et les requêtes GET Désactive une
 	 * entreprise
 	 * 
-	 * @param companyNumber
-	 *            L'identifiant de l'entreprise à désactiver.
+	 * @param companyNumber L'identifiant de l'entreprise à désactiver.
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/disable_company", method = RequestMethod.GET)
@@ -365,8 +376,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /enable_company et les requêtes GET Active une
 	 * entreprise
 	 * 
-	 * @param companyNumber
-	 *            L'identifiant de l'entreprise à activer.
+	 * @param companyNumber L'identifiant de l'entreprise à activer.
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/enable_company", method = RequestMethod.GET)
@@ -387,10 +397,8 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /detail_company et les requêtes GET affiche les détails
 	 * d'une entreprise
 	 * 
-	 * @param companyNumber
-	 *            L'identifiant de l'entreprise à afficher.
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param companyNumber L'identifiant de l'entreprise à afficher.
+	 * @param model L'objet Model de spring
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_company", method = RequestMethod.GET)
@@ -409,8 +417,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /detail_company et les requêtes POST Modifie ou crée une
 	 * entreprise
 	 * 
-	 * @param ent
-	 *            L'entreprise recupérée
+	 * @param ent L'entreprise recupérée
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/detail_company", method = RequestMethod.POST)
@@ -436,10 +443,8 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /edit_company et les requêtes GET Modifie ou crée une
 	 * entreprise
 	 * 
-	 * @param e
-	 *            L'entreprise recupérée
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param e L'entreprise recupérée
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, new_company, ou redirection vers la
 	 *         page admin si entreprise null
 	 */
@@ -457,8 +462,7 @@ public class ControlUtilisateur {
 	 * Méthode mappé sur /edit_company et les requêtes POST Modifie ou crée une
 	 * entreprise
 	 * 
-	 * @param ent
-	 *            L'entreprise recupérée
+	 * @param ent L'entreprise recupérée
 	 * @return Redirection vers un autre mapping, admin
 	 */
 	@RequestMapping(value = "/edit_company", method = RequestMethod.POST)
@@ -482,6 +486,9 @@ public class ControlUtilisateur {
 		return "redirect:admin";
 	}
 
+	/**
+	 * Classe anonyme récupérant les objets complexes du formulaire
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder b) {
 		b.registerCustomEditor(java.sql.Date.class, "dateNaiss",
