@@ -37,25 +37,46 @@ import com.sag.business.service.EtudiantDao;
 import com.sag.business.service.UtilisateurDao;
 
 /**
- * 
- * @author Joël Karcher
+ * Classe du contrôleur de sécurité
+ * @author Joël KARCHER
+ * @author Benjamin MIRETTI
  * 
  */
 @Controller()
 @RequestMapping("/")
 public class ControlSecurite {
 
+	/**
+	 * Objet chargé des logs 
+	 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * Dao des étudiants
+	 */
 	@EJB(mappedName = "java:global/SAG/etudiantDao!com.sag.business.service.EtudiantDao")
 	EtudiantDao etuDao;
+	/**
+	 * Dao des utilisateurs
+	 */
 	@EJB(mappedName = "java:global/SAG/utilisateurDao!com.sag.business.service.UtilisateurDao")
 	UtilisateurDao userDao;
+	/**
+	 * Dao des domaines
+	 */
 	@EJB(mappedName = "java:global/SAG/domaineDao!com.sag.business.service.DomaineDao")
 	DomaineDao domDao;
+	/**
+	 * Dao des entreprises
+	 */
 	@EJB(mappedName = "java:global/SAG/entrepriseDao!com.sag.business.service.EntrepriseDao")
 	EntrepriseDao companyDao;
 	
+	/**
+	 * méthode générant un attribut du modèle représentant l'utilisateur authentifié
+	 * @param p utilisateur spring authentifié
+	 * @return l'objet Utilisateur correspondant à l'utilisateur authentifié
+	 */
 	@ModelAttribute("user_co")
 	Utilisateur username(Principal p) {
 		if(p != null)
@@ -67,13 +88,17 @@ public class ControlSecurite {
 		return null;
 	}
 	
+	/**
+	 * méthode générant un attribut du modèle représentant la liste des domaines
+	 * @return La liste de tous les domaines
+	 */
 	@ModelAttribute("domains")
 	Collection<Domaine> domaines(){
 		return domDao.chercherTous();
 	}
 	
 	/**
-	 * Créer un etudiant
+	 * Créer un etudiant gardé dans le modèle
 	 * 
 	 * @return L'etudiant crée
 	 */
@@ -88,8 +113,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /login et les requêtes GET
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, login
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -101,8 +125,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /accessdenied et les requêtes GET
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, denied
 	 */
 	@RequestMapping(value = "/accessdenied", method = RequestMethod.GET)
@@ -114,8 +137,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /logoutconfirmn et les requêtes GET
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, logout_confirm
 	 */
 	@RequestMapping(value = "/logoutconfirm", method = RequestMethod.GET)
@@ -127,8 +149,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /register et les requêtes GET
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, register
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -143,8 +164,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /register et les requêtes POST Crée un etudiant
 	 * 
-	 * @param d
-	 *            L'etudiant recupéré
+	 * @param d L'etudiant recupéré
 	 * @return Redirection vers un autre mapping, login
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -169,8 +189,7 @@ public class ControlSecurite {
 	/**
 	 * Méthode mappé sur /home et les requêtes GET
 	 * 
-	 * @param model
-	 *            L'objet Model de spring
+	 * @param model L'objet Model de spring
 	 * @return Le nom de la jsp à afficher, home
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -178,6 +197,9 @@ public class ControlSecurite {
 		return "home";
 	}
 
+	/**
+	 * Classe anonyme récupérant les objets complexes du formulaire
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder b) {
 		b.registerCustomEditor(java.sql.Date.class, "dateNaiss",
