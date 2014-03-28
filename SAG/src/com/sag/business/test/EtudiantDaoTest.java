@@ -23,17 +23,31 @@ import com.sag.business.service.EtudiantDao;
 /**
  * Classe de test des méthode de EtudiantDao
  * 
- * @version 1
- * @author tuan
+ * @author Tuan NGUYEN
  * 
  */
 public class EtudiantDaoTest {
+	
+	/**
+	 *Le contexte de l'application 
+	 */
 	private static Context initial;
+	
+	/**
+	 * La Dao des étudiants
+	 */
 	private static EtudiantDao etudiantDao;
+	
+	/**
+	 * Liste des étudiants de test
+	 */
 	private static Vector<Etudiant> etudiantsTest;
 
 	Etudiant etudiant = new Etudiant();
 
+	/**
+	 * Méthode Afterclass qui nettoie les données de test inséré dans la base
+	 */
 	@AfterClass
 	public static void clean() {
 		for (Etudiant curEtd : etudiantsTest) {
@@ -42,6 +56,10 @@ public class EtudiantDaoTest {
 		DomaineDaoTest.clean();
 	}
 
+        /**
+         * Méthode Beforeclass qui récupère la Dao et initialise les données de test
+         * @throws NamingException
+         */
 	@BeforeClass
 	public static void init() throws NamingException {
 		initial = new InitialContext();
@@ -75,6 +93,9 @@ public class EtudiantDaoTest {
 		System.out.println(etudiantsTest.firstElement());
 	}
 
+	/**
+	 * Méthode de test pour sauvegarder()
+	 */
 	@Test
 	public void testSauvegarder() {
 		System.out.println("**** Test de la méthode sauvagarder ****");
@@ -106,6 +127,9 @@ public class EtudiantDaoTest {
 
 	}
 
+	/**
+	 * Méthode de test pour chercherParID()
+	 */
 	@Test
 	public void testChercherParID() {
 		System.out.println("**** Test de la méthode chercherParID ****");
@@ -123,7 +147,10 @@ public class EtudiantDaoTest {
 		assertNull(etudiantDao.chercherParID(0));
 
 	}
-
+	
+	/**
+	 * Méthode de test pour chercherParEnt()
+	 */
 	@Test
 	public void testChercherParEnt() {
 		System.out.println("**** Test de la méthode chercherParLogENT ****");
@@ -141,6 +168,9 @@ public class EtudiantDaoTest {
 		assertNull(etudiantDao.chercherParEnt("nob000"));
 	}
 
+	/**
+	 * Méthode de test pour chercherParDomaine()
+	 */
 	@Test
 	public void testChercherParDomaine() {
 		System.out.println("**** Test de la méthode chercherParDomaine ****");
@@ -158,6 +188,9 @@ public class EtudiantDaoTest {
 				etudiantsTest.firstElement()));
 	}
 
+	/**
+	 * Méthode de test pour chercherParStatut()
+	 */
 	@Test
 	public void testChercherParStatut() {
 		System.out
@@ -172,6 +205,9 @@ public class EtudiantDaoTest {
 		assertTrue(experted.contains(etudiantsTest.elementAt(1)));
 	}
 
+	/**
+	 * Méthode de test pour chercherTous()
+	 */
 	@Test
 	public void testChercherTous() {
 		System.out.println("**** Test de la méthode chercherTous ****");
@@ -179,6 +215,9 @@ public class EtudiantDaoTest {
 		assertTrue(etudiantDao.chercherTous().size() >= etudiantsTest.size());
 	}
 
+	/**
+	 * Méthode de test pour chercherTous(int, int)
+	 */
 	@Test
 	public void testChercherTousIntInt() {
 		System.out.println("**** Test de la méthode chercherTous [a, b] ****");
@@ -190,6 +229,9 @@ public class EtudiantDaoTest {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Méthode de test pour supprimer()
+	 */
 	@Test
 	public void testSupprimer() {
 		System.out.println("**** Test de la méthode Supprimer  ****");
@@ -213,6 +255,9 @@ public class EtudiantDaoTest {
 		assertFalse(etudiantDao.supprimer(0));
 	}
 
+	/**
+	 * Méthode de test pour chercherRoleParID()
+	 */
 	@Test
 	public void TestChercherRoleParID() {
 		System.out.println("**** Test de la méthode ChercherRoleParID  ****");
